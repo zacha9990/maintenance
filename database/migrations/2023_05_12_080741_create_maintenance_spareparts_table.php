@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('factories', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('location');
+        Schema::create('maintenance_spareparts', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->foreignId('maintenance_id')->constrained();
+            $table->foreignId('sparepart_id')->constrained();
+            $table->integer('quantity');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('factories');
+        Schema::dropIfExists('maintenance_spareparts');
     }
 };

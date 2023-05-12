@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('factories', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('location');
+        Schema::create('tool_conditions', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->foreignId('tool_id')->constrained();
+            $table->string('current_condition', 255);
+            $table->date('last_inspection_date');
+            $table->string('last_inspection_result', 255)->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('factories');
+        Schema::dropIfExists('tool_conditions');
     }
 };

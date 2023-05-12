@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('factories', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('location');
+        Schema::create('positions', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name', 255);
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('factories');
+        Schema::dropIfExists('positions');
     }
 };

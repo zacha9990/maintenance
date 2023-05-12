@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('factories', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('location');
+        Schema::create('tool_specifications', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->foreignId('tool_id')->constrained()->onDelete('cascade');
+            $table->string('specification_key');
+            $table->text('specification_value')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('factories');
+        Schema::dropIfExists('tool_specifications');
     }
 };
