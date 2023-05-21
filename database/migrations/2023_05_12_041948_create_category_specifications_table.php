@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('category_specifications', function (Blueprint $table) {
-            $table->bigIncrements('id');;
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('specification_id');
             $table->timestamps();
