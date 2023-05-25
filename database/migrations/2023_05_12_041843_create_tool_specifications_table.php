@@ -16,11 +16,15 @@ return new class extends Migration
         Schema::create('tool_specifications', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->foreignId('tool_id')->constrained()->onDelete('cascade');
+            $table->foreignId('spec_id')->constrained('category_specifications')->onDelete('cascade');
             $table->string('specification_key');
+            $table->string('unit');
             $table->text('specification_value')->nullable();
             $table->timestamps();
         });
     }
+
+    // misalnya nama tool pump, spesifikasi, kode serial number, merk, dll
 
     /**
      * Reverse the migrations.

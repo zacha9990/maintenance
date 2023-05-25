@@ -21,6 +21,9 @@ use App\Http\Controllers\RlthController;
 use App\Http\Controllers\LandingPage;
 use App\Http\Controllers\ChangePasswordController;
 
+
+use App\Http\Controllers\ToolController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,6 +45,8 @@ Auth::routes([
 
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', RoleController::class);
+
+    Route::resource('tools', ToolController::class);
 
     Route::get('/user/list', [App\Http\Controllers\UserController::class, 'list'])->name('user.list');
     Route::resource('users', UserController::class);

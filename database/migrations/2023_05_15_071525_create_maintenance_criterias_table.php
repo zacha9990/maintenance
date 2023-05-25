@@ -20,6 +20,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->timestamps();
         });
+
+        // example criterias: tekanan uap stabil, dinding retak atau pecah, untuk tool lain: tidak retak, tidak bocor
     }
 
     /**

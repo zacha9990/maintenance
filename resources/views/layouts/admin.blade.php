@@ -4,10 +4,10 @@
     <head>
 
         <meta charset="utf-8" />
-        <title>Dashboard | E-Persik - Admin & Dashboard Template</title>
+        <title>Dashboard | KBM Perhutani</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-        <meta content="Themesdesign" name="author" />
+        <meta content="KBM Perhutani" name="description" />
+        <meta content="Themesdesign" name="zacharias" />
         <meta name="csrf-token" content="{{ csrf_token() }}" />
         <!-- App favicon -->
         <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
@@ -73,7 +73,7 @@
                                         height="22">
                                 </span>
                                 <span class="logo-lg">
-                                    <img src="{{ asset('assets/images/logo-light.png') }}" alt="logo-light"
+                                    <img src="{{ asset('assets/images/logo-perhutani .png') }}" alt="logo-light"
                                         height="20">
                                 </span>
                             </a>
@@ -122,7 +122,7 @@
                                 id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
                                 <img class="rounded-circle header-profile-user"
-                                    src="{{ asset('assets/images/logo-perkim.png') }}" alt="Header Avatar">
+                                    src="{{ asset('assets/images/logo-perhutani.png') }}" alt="Header Avatar">
                                 <span class="d-none d-xl-inline-block ms-1">{{ Auth::user()->name }}</span>
                                 <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                             </button>
@@ -172,7 +172,7 @@
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a href="javascript: void(0);">Aplikasi
-                                                E-Persik</a>
+                                                Maintenance KBM Perhutani</a>
                                         </li>
                                         <li class="breadcrumb-item active">Dashboard</li>
                                     </ol>
@@ -193,7 +193,7 @@
                             <div class="col-sm-6">
                                 <script>
                                     document.write(new Date().getFullYear())
-                                </script> © E-Persik.
+                                </script> © KBM Perhutani.
                             </div>
                             <div class="col-sm-6">
                                 <div class="text-sm-end d-none d-sm-block">
@@ -225,6 +225,8 @@
         <script src="{{ asset('assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
         <!-- Buttons examples -->
 
+        <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+
 
         {{-- <script src="{{ asset('assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js') }}"></script>
         <script src="{{ asset('assets/libs/datatables.net-select/js/dataTables.select.min.js') }}"></script> --}}
@@ -240,6 +242,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"
             integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="{{ asset('assets/js/pages/dashboard.init.js') }}"></script>
         <script src="{{ asset('assets/js/app-admin.js') }}"></script>
         @yield('scripts')
     </body>

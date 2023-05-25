@@ -4,7 +4,7 @@
 <head>
 
     <meta charset="utf-8" />
-    <title>Login | E-Persik - Admin & Dashboard</title>
+    <title>Login | KBM Perhutani - Admin & Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesdesign" name="author" />
@@ -30,15 +30,15 @@
                     <div class="text-center mt-4">
                         <div class="mb-3">
                             <a href="javascript:void()" class="auth-logo">
-                                <img src="{{ asset('assets/images/logo-perkim.png') }}" height="200"
+                                <img src="{{ asset('assets/images/logo-perhutani.png') }}" height="200"
                                     class="logo-dark mx-auto" alt="">
-                                <img src="{{ asset('assets/images/logo-perkim.png') }}" height="200"
+                                <img src="{{ asset('assets/images/logo-perhutani.png') }}" height="200"
                                     class="logo-light mx-auto" alt="">
                             </a>
                         </div>
                     </div>
 
-                    <h4 class="text-muted text-center font-size-18"><b>Sign In - Aplikasi e-persik</b></h4>
+                    <h4 class="text-muted text-center font-size-18"><b>Sign In - KBM MAINTENANCE</b></h4>
 
                     <div class="p-3">
                         <form method="POST" class="form-horizontal mt-3" action="{{ route('login') }}">

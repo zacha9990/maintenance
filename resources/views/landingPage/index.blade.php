@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <!-- site metas -->
-    <title>Welcome to e-persik.id</title>
+    <title>Welcome to e-maintenance</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -74,9 +74,8 @@
                                 <div class="col-md-6">
                                     <div class="padding_left_0">
                                         <h4 class="retailer_text p-0">Selamat Datang</h4>
-                                        <h4 class="retailer_text p-0"> e-persik.id</h4>
-                                        <p class="search_text">Aplikasi Pengajuan Pembangunan Perumahan Anda Lebih Mudah
-                                            Sekarang!</p>
+                                        <h4 class="retailer_text p-0"> e-maintenance</h4>
+                                        <p class="search_text">Aplikasi Maintenance Peralatan Pabrik!</p>
                                         <div class="btn_main">
                                             <div class="more_bt"><a href="{{ route('dashboard.index') }}">Ajukan
                                                     Sekarang</a></div>
