@@ -4,10 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Faker\Factory as Faker;
-use App\Models\ToolCategory;
-use App\Models\Factory;
 use App\Models\Tool;
+use App\Models\Factory;
+use App\Models\ToolCategory;
+use Faker\Factory as FakerFactory;
 
 class ToolSeeder extends Seeder
 {
@@ -18,24 +18,26 @@ class ToolSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker::create();
-        $toolCategories = ToolCategory::pluck('id');
-        $factories = Factory::pluck('id');
+        $faker = FakerFactory::create();
 
-        for ($i = 0; $i < 100; $i++) {
-            $tool = [
-                'name' => $faker->word,
-                'serial_number' => $faker->unique()->numberBetween(1000, 9999),
-                'function' => $faker->sentence,
-                'brand' => $faker->word,
-                'serial_type' => $faker->word,
-                'purchase_date' => $faker->date(),
-                'technical_specification' => $faker->paragraph,
-                'tool_type_id' => $toolCategories->random(),
-                'factory_id' => $factories->random(),
-            ];
+        $factories = Factory::all();
 
-            Tool::create($tool);
-        }
+        $factories->each(function ($factory) use ($faker) {
+            $category = ToolCategory::inRandomOrder()->first();
+
+            for ($i = 0; $i < 20; $i++) {
+                Tool::create([
+                    'name' => $faker->word,
+                    'serial_number' => $faker->unique()->numerify('SN#####'),
+                    'function' => $faker->sentence,
+                    'brand' => $faker->company,
+                    'serial_type' => $faker->randomElement(['Type A', 'Type B', 'Type C']),
+                    'purchase_date' => $faker->date(),
+                    'technical_specification' => $faker->paragraph,
+                    'tool_type_id' => $category->id,
+                    'factory_id' => $factory->id,
+                ]);
+            }
+        });
     }
 }

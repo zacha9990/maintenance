@@ -4,7 +4,9 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\CategorySpecification;
 use App\Models\ToolCategory;
+use App\Models\ToolSpecification;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,6 +24,8 @@ class DatabaseSeeder extends Seeder
             ToolCategories::class,
             FactorySeeder::class,
             ToolSeeder::class,
+            CategorySpecificationSeeder::class, //
+            ToolSpecificationSeeder::class, ///
         ]);
     }
 }
