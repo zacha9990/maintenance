@@ -21,7 +21,7 @@ class Maintenance extends Model
 
 
     public function maintenanceHistories(){
-        return $this->hasMany(MaintenanceHistory::class)
+        return $this->hasMany(MaintenanceHistory::class);
     }
 
     public function maintenanceDetail(){

@@ -11,5 +11,6 @@ class ToolSparepart extends Model
 {
     use HasFactory;
     protected $primaryKey = ['tool_id', 'sparepart_id'];
+    public $incrementing = false;
 
 }
