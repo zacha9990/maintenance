@@ -23,14 +23,47 @@ class CreateAdminUserSeeder extends Seeder
         ]);
 
         $role = Role::create(['name' => 'SuperAdmin']);
-        Role::create(['name' => 'Developer']);
-        Role::create(['name' => 'Kecamatan']);
-        Role::create(['name' => 'Admin']);
 
-        $permissions = Permission::pluck('id','id')->all();
+        $permissions = Permission::pluck('id', 'id')->all();
 
         $role->syncPermissions($permissions);
 
         $user->assignRole([$role->id]);
+
+        // --------------------------------
+
+        $userOperator = User::create([
+            'name' => 'Operator Perhutani',
+            'email' => 'operator@gmail.com',
+            'password' => bcrypt('123456')
+        ]);
+
+        $operatorRole = Role::create(['name' => 'Operator']);
+
+        $userOperator->assignRole([$operatorRole->id]);
+
+        // --------------------------------
+
+        $userManager = User::create([
+            'name' => 'Manager Perhutani',
+            'email' => 'manager@gmail.com',
+            'password' => bcrypt('123456')
+        ]);
+
+        $managerRole = Role::create(['name' => 'Manager']);
+
+        $userManager->assignRole([$managerRole->id]);
+
+        // --------------------------------
+
+        $userTeknisi = User::create([
+            'name' => 'Teknisi Perhutani',
+            'email' => 'teknisi@gmail.com',
+            'password' => bcrypt('123456')
+        ]);
+
+        $teknisiRole = Role::create(['name' => 'Teknisi']);
+
+        $userTeknisi->assignRole([$teknisiRole->id]);
     }
 }
