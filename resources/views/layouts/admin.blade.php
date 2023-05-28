@@ -225,7 +225,9 @@
         <script src="{{ asset('assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
         <!-- Buttons examples -->
 
-        <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+        @if(request()->route()->getName() === 'dashboard.index')
+            <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+        @endif
 
 
         {{-- <script src="{{ asset('assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js') }}"></script>
@@ -242,7 +244,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"
             integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="{{ asset('assets/js/pages/dashboard.init.js') }}"></script>
+        @if(request()->route()->getName() === 'dashboard.index')
+            <script src="{{ asset('assets/js/pages/dashboard.init.js') }}"></script>
+        @endif
         <script src="{{ asset('assets/js/app-admin.js') }}"></script>
         @yield('scripts')
     </body>

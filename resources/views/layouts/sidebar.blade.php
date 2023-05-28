@@ -40,6 +40,7 @@
                         <span>Master Data</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('factories.index') }}">Pabrik</a></li>
                         <li><a href="{{ route('tools.index') }}">Peralatan</a></li>
                         <li><a href="email-read.html">Sparepart</a></li>
                         <li><a href="email-read.html">Staff</a></li>

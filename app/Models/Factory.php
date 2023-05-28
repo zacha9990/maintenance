@@ -10,6 +10,8 @@ class Factory extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'location'];
+
     public function tools(){
         return $this->hasMany(Tool::class);
     }
