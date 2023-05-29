@@ -10,6 +10,7 @@ use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ToolController;
 use App\Http\Controllers\FactoryController;
+use App\Http\Controllers\ToolCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,16 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/{id}', [FactoryController::class, 'update']);
         Route::delete('/{id}', [FactoryController::class, 'destroy'])->name('factories.destroy');
     });
+
+    Route::prefix('tool_categories')->group(function () {
+        Route::get('/', [ToolCategoryController::class, 'index'])->name('tool_categories.index');
+        Route::get('/datatables', [ToolCategoryController::class, 'datatable'])->name('tool_categories.datatables');
+        Route::post('/', [ToolCategoryController::class, 'store'])->name('tool_categories.store');
+        Route::put('/{tool_category}', [ToolCategoryController::class, 'update'])->name('tool_categories.update');
+        Route::delete('/{tool_category}', [ToolCategoryController::class, 'destroy'])->name('tool_categories.destroy');
+    });
+
+
 
     Route::resource('tools', ToolController::class);
 
