@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('tool_spareparts', function (Blueprint $table) {
             $table->foreignId('tool_id')->constrained();
             $table->foreignId('sparepart_id')->constrained();
-            $table->integer('quantity');
             $table->primary(['tool_id', 'sparepart_id']);
             $table->timestamps();
         });

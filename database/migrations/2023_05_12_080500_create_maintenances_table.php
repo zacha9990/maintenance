@@ -16,16 +16,18 @@ return new class extends Migration
         Schema::create('maintenances', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('tool_id');
-            $table->unsignedBigInteger('repair_id');
-            $table->string('type');
-            $table->date('asign_date');
-            $table->date('completed_date');
-            $table->time('time');
-            $table->unsignedBigInteger('responsible_technician');
-            $table->text('result');
-            $table->text('details');
-            $table->string('action_taken_internal');
-            $table->string('action_taken_external');
+            $table->unsignedBigInteger('repair_id')->nullable();
+            $table->date('scheduled_date')->nullable();
+            $table->string('type')->nullable();
+            $table->date('assign_date')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('completed_date')->nullable();
+            $table->time('time')->nullable();
+            $table->unsignedBigInteger('responsible_technician')->nullable();
+            $table->text('result')->nullable();
+            $table->text('details')->nullable();
+            $table->string('action_taken_internal')->nullable();
+            $table->string('action_taken_external')->nullable();
             $table->timestamps();
 
             $table->foreign('tool_id')->references('id')->on('tools');

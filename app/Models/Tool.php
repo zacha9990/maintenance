@@ -21,12 +21,24 @@ class Tool extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'serial_number',
+        'function',
+        'brand',
+        'serial_type',
+        'purchase_date',
+        'technical_specification',
+        'tool_type_id',
+        'factory_id',
+    ];
+
     public function category(){
         return $this->belongsTo(ToolCategory::class, 'category_id');
     }
 
     public function spareparts(){
-        return $this->belongsToMany(Sparepart::class);
+        return $this->belongsToMany(Sparepart::class, 'tool_spareparts');
     }
 
     public function maintenanceDetail(){

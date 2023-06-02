@@ -2,18 +2,122 @@
 
 namespace App\Http\Controllers;
 
+use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
+use App\Models\{
+    ToolCategory,
+    Factory,
+    Sparepart,
+    Inventory,
+    MaintenancePeriod,
+    Tool
+};
 
 class ToolController extends Controller
 {
 
-    public function index() {
+    public function index(){
         return view('tools.index');
+    }
+
+    public function list()
+    {
+        $tools = Tool::with('spareparts', 'maintenancePeriod')->get();
+
+        return DataTables::of($tools)
+            ->addColumn('information_buttons', function ($tool) {
+                return '<button class="btn btn-primary btn-sm btn-spareparts" data-bs-toggle="modal"
+                data-bs-target="#spareparts-modal" data-tool-id="' . $tool->id . '"><i class="fas fa-tools"></i></button>'. " ".
+                '<button class="btn btn-primary btn-sm btn-maintenance" data-bs-toggle="modal"
+                data-bs-target="#maintenance-modal" data-tool-id="' . $tool->id . '"><i class="fas fa-calendar"></i></button>';
+            })
+            ->rawColumns(['information_buttons'])
+            ->make(true);
+
+    }
+
+    public function getToolSpareparts(Request $request, Tool $tool)
+    {
+        $spareparts = $tool->spareparts()->select('sparepart_name', 'sparepart_quantity')->get();
+
+        return response()->json([
+            'data' => $spareparts
+        ]);
+    }
+
+    public function getToolMaintenancePeriod(Request $request, Tool $tool)
+    {
+        $maintenancePeriods = $tool->maintenancePeriod()->select('maintenance_period', 'maintenance_type')->get();
+
+        return response()->json([
+            'data' => $maintenancePeriods
+        ]);
     }
 
     public function create()
     {
-        return view('tools.create');
+        $toolTypes = ToolCategory::all();
+        $factories = Factory::all();
+        $spareparts = Sparepart::all();
+
+        return view('tools.create', compact('toolTypes', 'factories', 'spareparts'));
     }
 
+    public function store(Request $request)
+    {
+        // Validasi input form
+        $validatedData = $request->validate([
+            'name' => 'required|string',
+            'serial_number' => 'required|string|unique:tools',
+            'function' => 'required|string',
+            'brand' => 'required|string',
+            'serial_type' => 'required|string',
+            'purchase_date' => 'required|date',
+            'technical_specification' => 'required|string',
+            'tool_type_id' => 'required|exists:tool_categories,id',
+            'factory_id' => 'required|exists:factories,id',
+            'spareparts' => 'nullable|array',
+            'spareparts.*' => 'exists:spareparts,id',
+            'tool_quantity' => 'required|integer',
+            'tool_location' => 'required|string',
+            'tool_status' => 'required|string',
+            'maintenance_period' => 'required|integer',
+            'maintenance_type' => 'required|string|in:weekly,monthly,yearly',
+        ]);
+
+        // Simpan data peralatan (tools)
+        $tool = new Tool();
+        $tool->name = $validatedData['name'];
+        $tool->serial_number = $validatedData['serial_number'];
+        $tool->function = $validatedData['function'];
+        $tool->brand = $validatedData['brand'];
+        $tool->serial_type = $validatedData['serial_type'];
+        $tool->purchase_date = $validatedData['purchase_date'];
+        $tool->technical_specification = $validatedData['technical_specification'];
+        $tool->tool_type_id = $validatedData['tool_type_id'];
+        $tool->factory_id = $validatedData['factory_id'];
+        $tool->save();
+
+        // Simpan data inventaris (inventories)
+        $inventory = new Inventory();
+        $inventory->tool_id = $tool->id;
+        $inventory->tool_quantity = $validatedData['tool_quantity'];
+        $inventory->tool_location = $validatedData['tool_location'];
+        $inventory->tool_status = $validatedData['tool_status'];
+        $inventory->save();
+
+        // Simpan data periode perawatan (maintenance_periods)
+        $maintenancePeriod = new MaintenancePeriod();
+        $maintenancePeriod->tool_id = $tool->id;
+        $maintenancePeriod->maintenance_period = $validatedData['maintenance_period'];
+        $maintenancePeriod->maintenance_type = $validatedData['maintenance_type'];
+        $maintenancePeriod->save();
+
+        // Simpan data relasi antara peralatan dan sparepart (tool_spareparts)
+        if (!empty($validatedData['spareparts'])) {
+            $tool->spareparts()->attach($validatedData['spareparts']);
+        }
+
+        return redirect()->route('tools.index')->with('success', 'Data peralatan berhasil disimpan.');
+    }
 }

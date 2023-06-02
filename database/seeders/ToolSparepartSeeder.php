@@ -33,7 +33,6 @@ class ToolSparepartSeeder extends Seeder
                 $toolSparepart = new ToolSparepart();
                 $toolSparepart->tool_id = $tool->id;
                 $toolSparepart->sparepart_id = $sparepart->id;
-                $toolSparepart->quantity = $faker->numberBetween(1, 10);
                 $toolSparepart->save();
             }
         }

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\ChangePasswordController;
+// use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ToolController;
 use App\Http\Controllers\FactoryController;
@@ -50,12 +50,15 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 
+    Route::get('tools/list', [ToolController::class, 'list'])->name('tools.list');
+    Route::get('tools/{tool}/spareparts', [ToolController::class, 'getToolSpareparts'])->name('tools.sparepart');
+    Route::get('tools/{tool}/maintenance', [ToolController::class, 'getToolMaintenancePeriod'])->name('tools.maintenance');
     Route::resource('tools', ToolController::class);
 
     Route::prefix('dashboard')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
     });
-    Route::resource('changePassword', ChangePasswordController::class);
+    // Route::resource('changePassword', ChangePasswordController::class);
 });
 
 Route::get('/', [LoginController::class, 'showLoginForm']);
