@@ -21,18 +21,18 @@
                 <li class="menu-title">Menu</li>
 
                 <li>
-                    <a href="index.html" class="waves-effect">
+                    <a href="{{ route('dashboard.index') }}" class="waves-effect">
                         <i class="ri-dashboard-line"></i><span class="badge rounded-pill bg-success float-end">3</span>
                         <span>Dashboard</span>
                     </a>
                 </li>
 
-                <li>
+                {{-- <li>
                     <a href="calendar.html" class=" waves-effect">
                         <i class="ri-calendar-2-line"></i>
                         <span>Jadwal Perawatan</span>
                     </a>
-                </li>
+                </li> --}}
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -43,12 +43,12 @@
                         <li><a href="{{ route('factories.index') }}">Pabrik</a></li>
                         <li><a href="{{ route('tool_categories.index') }}">Kategori Peralatan</a></li>
                         <li><a href="{{ route('tools.index') }}">Peralatan</a></li>
-                        <li><a href="email-read.html">Sparepart</a></li>
-                        <li><a href="email-read.html">Staff</a></li>
+                        <li><a href="{{ route('spareparts.index') }}">Sparepart</a></li>
+                        <li><a href="{{ route('users.index') }}">Staff</a></li>
                     </ul>
                 </li>
 
-                <li>
+                {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="fab fa-wpforms"></i>
                         <span>Laporan</span>
@@ -58,7 +58,7 @@
                         <li><a href="email-read.html">Laporan B</a></li>
                         <li><a href="email-read.html">Laporan C</a></li>
                     </ul>
-                </li>
+                </li> --}}
 
 
 

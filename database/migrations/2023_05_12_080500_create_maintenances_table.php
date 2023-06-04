@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('repair_id')->nullable();
             $table->date('scheduled_date')->nullable();
             $table->string('type')->nullable();
+            $table->string('status')->nullable()->comment('cancelled', 'scheduled', 'finished');
             $table->date('assign_date')->nullable();
             $table->date('start_date')->nullable();
             $table->date('completed_date')->nullable();
@@ -30,9 +31,9 @@ return new class extends Migration
             $table->string('action_taken_external')->nullable();
             $table->timestamps();
 
-            $table->foreign('tool_id')->references('id')->on('tools');
-            $table->foreign('repair_id')->references('id')->on('repair_requests');
-            $table->foreign('responsible_technician')->references('id')->on('staffs');
+            $table->foreign('tool_id')->references('id')->on('tools')->cascadeOnDelete();
+            $table->foreign('repair_id')->references('id')->on('repair_requests')->cascadeOnDelete();
+            $table->foreign('responsible_technician')->references('id')->on('staffs')->cascadeOnDelete();
         });
     }
 

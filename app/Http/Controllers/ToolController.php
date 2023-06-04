@@ -16,7 +16,8 @@ use App\Models\{
 class ToolController extends Controller
 {
 
-    public function index(){
+    public function index()
+    {
         return view('tools.index');
     }
 
@@ -26,14 +27,16 @@ class ToolController extends Controller
 
         return DataTables::of($tools)
             ->addColumn('information_buttons', function ($tool) {
-                return '<button class="btn btn-primary btn-sm btn-spareparts" data-bs-toggle="modal"
-                data-bs-target="#spareparts-modal" data-tool-id="' . $tool->id . '"><i class="fas fa-tools"></i></button>'. " ".
+            return
+                '<button class="btn btn-primary btn-sm btn-spareparts" data-bs-toggle="modal"
+                data-bs-target="#spareparts-modal" data-tool-id="' . $tool->id . '"><i class="fas fa-tools"></i></button>' . " " .
                 '<button class="btn btn-primary btn-sm btn-maintenance" data-bs-toggle="modal"
-                data-bs-target="#maintenance-modal" data-tool-id="' . $tool->id . '"><i class="fas fa-calendar"></i></button>';
+                data-bs-target="#maintenance-modal" data-tool-id="' . $tool->id . '"><i class="fas fa-calendar"></i></button>' . " " .
+            '<a class="btn btn-primary btn-sm btn-edit" href="' . route('tools.edit', $tool->id) . '"><i class="fas fa-edit  "></i></a>' . " " .
+            '<a class="btn btn-danger btn-sm btn-maintenance-schedule" href="' . route('maintenances.show', $tool->id) . '"><i class="fas fa-calendar  "></i></a>';
             })
             ->rawColumns(['information_buttons'])
-            ->make(true);
-
+        ->make(true);
     }
 
     public function getToolSpareparts(Request $request, Tool $tool)
@@ -119,5 +122,82 @@ class ToolController extends Controller
         }
 
         return redirect()->route('tools.index')->with('success', 'Data peralatan berhasil disimpan.');
+    }
+
+    public function edit($id)
+    {
+        $tool = Tool::findOrFail($id);
+        $toolTypes = ToolCategory::all();
+        $factories = Factory::all();
+        $spareparts = Sparepart::all();
+
+        return view('tools.edit', compact('tool', 'toolTypes', 'factories', 'spareparts'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Validasi input form
+        $validatedData = $request->validate([
+            'name' => 'required|string',
+            'serial_number' => 'required|string|unique:tools,serial_number,' . $id,
+            'function' => 'required|string',
+            'brand' => 'required|string',
+            'serial_type' => 'required|string',
+            'purchase_date' => 'required|date',
+            'technical_specification' => 'required|string',
+            'tool_type_id' => 'required|exists:tool_categories,id',
+            'factory_id' => 'required|exists:factories,id',
+            'spareparts' => 'nullable|array',
+            'spareparts.*' => 'exists:spareparts,id',
+            'tool_quantity' => 'required|integer',
+            'tool_location' => 'required|string',
+            'tool_status' => 'required|string',
+            'maintenance_period' => 'required|integer',
+            'maintenance_type' => 'required|string|in:weekly,monthly,yearly',
+        ]);
+
+        $tool = Tool::findOrFail($id);
+
+        // Update data peralatan (tools)
+        $tool->name = $validatedData['name'];
+        $tool->serial_number = $validatedData['serial_number'];
+        $tool->function = $validatedData['function'];
+        $tool->brand = $validatedData['brand'];
+        $tool->serial_type = $validatedData['serial_type'];
+        $tool->purchase_date = $validatedData['purchase_date'];
+        $tool->technical_specification = $validatedData['technical_specification'];
+        $tool->tool_type_id = $validatedData['tool_type_id'];
+        $tool->factory_id = $validatedData['factory_id'];
+        $tool->save();
+
+        // Update data inventaris (inventories)
+        $inventory = $tool->inventory;
+        if (!$inventory) {
+            $inventory = new Inventory();
+            $inventory->tool_id = $tool->id;
+        }
+        $inventory->tool_quantity = $validatedData['tool_quantity'];
+        $inventory->tool_location = $validatedData['tool_location'];
+        $inventory->tool_status = $validatedData['tool_status'];
+        $inventory->save();
+
+        // Update data periode perawatan (maintenance_periods)
+        $maintenancePeriod = $tool->maintenancePeriod;
+        if (!$maintenancePeriod) {
+            $maintenancePeriod = new MaintenancePeriod();
+            $maintenancePeriod->tool_id = $tool->id;
+        }
+        $maintenancePeriod->maintenance_period = $validatedData['maintenance_period'];
+        $maintenancePeriod->maintenance_type = $validatedData['maintenance_type'];
+        $maintenancePeriod->save();
+
+        // Update data relasi antara peralatan dan sparepart (tool_spareparts)
+        if (!empty($validatedData['spareparts'])) {
+            $tool->spareparts()->sync($validatedData['spareparts']);
+        } else {
+            $tool->spareparts()->detach();
+        }
+
+        return redirect()->route('tools.index')->with('success', 'Data peralatan berhasil diperbarui.');
     }
 }

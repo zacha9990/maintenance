@@ -30,6 +30,8 @@ class DatabaseSeeder extends Seeder
             SparepartSeeder::class,
             ToolSparepartSeeder::class, //
             InventorySeeder::class, //
+            PositionSeeder::class, //
+            StaffSeeder::class, //
         ]);
     }
 }

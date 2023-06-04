@@ -51,14 +51,17 @@ class ToolCategoryController extends Controller
                     'name'
                 ])->orderBy('id', 'ASC');
 
+
         return DataTables::of($tool_categories)
-                // ->addIndexColumn()
+            ->editColumn('rownum', function ($tool_category) {
+                return substr($tool_category->rownum, 1);
+            })
             ->addColumn('action', function ($tool_category) {
                 $editButton = '<button class="btn btn-sm btn-primary edit" data-id="' . $tool_category->id . '">Edit</button>';
                 $deleteButton = '<button class="btn btn-sm btn-danger delete" data-id="' . $tool_category->id . '">Delete</button>';
                 return $editButton . ' ' . $deleteButton;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'rownum'])
             ->make(true);
     }
 }

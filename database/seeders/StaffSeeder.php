@@ -8,6 +8,8 @@ use App\Models\Staff;
 use App\Models\User;
 use App\Models\Position;
 use Faker\Factory as FakerFactory;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class StaffSeeder extends Seeder
 {
@@ -21,16 +23,22 @@ class StaffSeeder extends Seeder
         $faker = FakerFactory::create('id_ID');
 
         // Get all users and positions
-        $users = User::all();
         $positions = Position::all();
 
         // Create 5 staffs for each position
         foreach ($positions as $position) {
             for ($i = 0; $i < 5; $i++) {
+                $user = User::create([
+                    'name' => $faker->name,
+                    'email' => $faker->unique()->safeEmail,
+                    'email_verified_at' => now(),
+                    'contact' => $faker->phoneNumber,
+                    'password' => Hash::make('password'),
+                    'type' => 'R',
+                ]);
+
                 $staff = new Staff();
-                $staff->user_id = $users->random()->id;
-                $staff->name = $faker->name;
-                $staff->contact = $faker->phoneNumber;
+                $staff->user_id = $user->id;
                 $staff->work_schedule = $faker->sentence;
                 $staff->specialty = $faker->sentence;
                 $staff->position_id = $position->id;

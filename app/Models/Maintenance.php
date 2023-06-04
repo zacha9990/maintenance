@@ -33,7 +33,7 @@ class Maintenance extends Model
     }
 
     public function technician(){
-        return $this->belongsTo(Staff::class);
+        return $this->belongsTo(Staff::class, 'responsible_technician');
     }
 
     public function maintenanceSpareparts(){

@@ -10,7 +10,9 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ToolController;
 use App\Http\Controllers\FactoryController;
+use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\ToolCategoryController;
+use App\Http\Controllers\SparepartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +50,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::delete('/{tool_category}', [ToolCategoryController::class, 'destroy'])->name('tool_categories.destroy');
     });
 
+    Route::get('maintenances/{tool}/show', [MaintenanceController::class, 'show'])->name('maintenances.show');
+    Route::get('maintenances/{tool}/create', [MaintenanceController::class, 'create'])->name('maintenances.create');
+    Route::post('maintenances/{tool}/store', [MaintenanceController::class, 'store'])->name('maintenances.store');
+    Route::get('maintenances/{tool}/edit', [MaintenanceController::class, 'edit'])->name('maintenances.edit');
+    Route::put('maintenances/{tool}/update', [MaintenanceController::class, 'update'])->name('maintenances.update');
 
 
     Route::get('tools/list', [ToolController::class, 'list'])->name('tools.list');
@@ -59,6 +66,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
     });
     // Route::resource('changePassword', ChangePasswordController::class);
+
+    Route::get('spareparts/list', [SparepartController::class, 'list'])->name('spareparts.list');
+    Route::resource('spareparts', SparepartController::class);
+
+    Route::get('users/getUsers', [UserController::class, 'getUsers'])->name('users.getUsers');
+    Route::resource('users', UserController::class);
+
 });
 
 Route::get('/', [LoginController::class, 'showLoginForm']);

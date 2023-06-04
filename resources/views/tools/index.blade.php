@@ -26,8 +26,7 @@
             </div>
             <div class="table-responsive">
 
-            </div>
-            <table id="tools-table">
+            <table id="tools-table" class="table table-bordered">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -41,6 +40,8 @@
                     </tr>
                 </thead>
             </table>
+
+            </div>
 
         </div>
     </div>
@@ -79,7 +80,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <table class="table" id="maintenance-table">
+                    <table class="table table-bordered" id="maintenance-table">
                         <thead>
                             <tr>
                                 <th>Period</th>

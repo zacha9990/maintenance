@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tool_spareparts', function (Blueprint $table) {
-            $table->foreignId('tool_id')->constrained();
-            $table->foreignId('sparepart_id')->constrained();
+            $table->foreignId('tool_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('sparepart_id')->constrained()->cascadeOnDelete();
             $table->primary(['tool_id', 'sparepart_id']);
             $table->timestamps();
         });
