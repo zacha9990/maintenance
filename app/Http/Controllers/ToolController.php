@@ -18,12 +18,21 @@ class ToolController extends Controller
 
     public function index()
     {
-        return view('tools.index');
+        $factories = Factory::all();
+        return view('tools.index', compact('factories'));
     }
 
-    public function list()
+    public function list(Request $request)
     {
-        $tools = Tool::with('spareparts', 'maintenancePeriod')->get();
+        $factoryId = $request->input('factory_id');
+        $tools = Tool::with('spareparts', 'maintenancePeriod');
+
+
+        if ($factoryId) {
+            $tools->where('factory_id', $factoryId);
+        }
+
+        $tools = $tools->get();
 
         return DataTables::of($tools)
             ->addColumn('information_buttons', function ($tool) {

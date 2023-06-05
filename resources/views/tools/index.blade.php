@@ -20,26 +20,36 @@
     @endif
     <div class="card">
         <div class="card-body">
+            <div class="mb-3">
+                <label for="factory-filter" class="form-label">Filter Pabrik:</label>
+                <select id="factory-filter" class="form-select">
+                    <option value="">Semua Pabrik</option>
+                    @foreach ($factories as $factory)
+                        <option value="{{ $factory->id }}">{{ $factory->name }}</option>
+                    @endforeach
+                </select>
+            </div>
             <h1 class="mt-4">Daftar Peralatan</h1>
             <div class="mb-3">
-                <a class="btn btn-success" href="{{ route('tools.create') }}"><i class="fas fa-plus"></i> Tambah Peralatan</a>
+                <a class="btn btn-success" href="{{ route('tools.create') }}"><i class="fas fa-plus"></i> Tambah
+                    Peralatan</a>
             </div>
             <div class="table-responsive">
 
-            <table id="tools-table" class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Serial Number</th>
-                        <th>Function</th>
-                        <th>Brand</th>
-                        <th>Serial Type</th>
-                        <th>Purchase Date</th>
-                        <th>Technical Specification</th>
-                        <th style="white-space:nowrap">Info</th>
-                    </tr>
-                </thead>
-            </table>
+                <table id="tools-table" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Serial Number</th>
+                            <th>Function</th>
+                            <th>Brand</th>
+                            <th>Serial Type</th>
+                            <th>Purchase Date</th>
+                            <th>Technical Specification</th>
+                            <th style="white-space:nowrap">Info</th>
+                        </tr>
+                    </thead>
+                </table>
 
             </div>
 
@@ -143,6 +153,14 @@
                         className: 'nowrap-zone'
                     },
                 ]
+            });
+
+            $('#factory-filter').on('change', function() {
+                var factoryId = $(this).val();
+
+                // Refresh the DataTable with the new factory filter
+                $('#tools-table').DataTable().ajax.url("{{ route('tools.list') }}?factory_id=" + factoryId)
+                    .load();
             });
 
             // Handle click event for Spareparts button

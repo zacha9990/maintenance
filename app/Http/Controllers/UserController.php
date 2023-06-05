@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Position;
 use App\Models\User;
 use Yajra\DataTables\DataTables;
-
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use App\Models\Staff;
 
 class UserController extends Controller
 {
@@ -51,7 +53,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $positions = Position::all();
+
+        return view('users.create', compact('positions'));
     }
 
     /**
@@ -62,6 +66,35 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'contact' => 'required',
+            'password' => 'required|confirmed',
+            'position' => 'required|exists:positions,id',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // Create user
+        $user = new User();
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->contact = $request->input('contact');
+        $user->password = Hash::make($request->input('password'));
+        $user->save();
+
+        // Create staff
+        $staff = new Staff();
+        $staff->user_id = $user->id;
+        $staff->position_id = $request->input('position');
+        $staff->work_schedule = "";
+        // Set other fields as needed
+        $staff->save();
+
+        return redirect()->route('users.index')->with('success', 'Pengguna berhasil dibuat');
     }
 
     /**
