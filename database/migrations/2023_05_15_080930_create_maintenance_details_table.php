@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('maintenance_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('maintenance_id')->constrained();
-            $table->foreignId('tool_id')->constrained();
-            $table->foreignId('category_id')->constrained('tool_categories');
+            $table->foreignId('maintenance_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('tool_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('category_id')->constrained('tool_categories')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }

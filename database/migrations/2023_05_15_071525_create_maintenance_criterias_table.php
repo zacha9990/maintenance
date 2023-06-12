@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('maintenance_criterias', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained('tool_categories');
+            $table->foreignId('category_id')->constrained('tool_categories')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('name', 255);
             $table->text('description')->nullable();
             $table->timestamps();

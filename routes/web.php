@@ -3,16 +3,21 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 // use App\Http\Controllers\RoleController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
 // use App\Http\Controllers\ChangePasswordController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ToolController;
-use App\Http\Controllers\FactoryController;
-use App\Http\Controllers\MaintenanceController;
-use App\Http\Controllers\ToolCategoryController;
-use App\Http\Controllers\SparepartController;
+
+use App\Http\Controllers\{
+    UserController,
+    Auth\LoginController,
+    Auth\RegisterController,
+    DashboardController,
+    ToolController,
+    FactoryController,
+    MaintenanceController,
+    ToolCategoryController,
+    SparepartController,
+    PositionController,
+};
+
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +65,15 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('tools/list', [ToolController::class, 'list'])->name('tools.list');
     Route::get('tools/{tool}/spareparts', [ToolController::class, 'getToolSpareparts'])->name('tools.sparepart');
     Route::get('tools/{tool}/maintenance', [ToolController::class, 'getToolMaintenancePeriod'])->name('tools.maintenance');
+    // Menampilkan semua maintenances
+    Route::get('/maintenances', [MaintenanceController::class, 'index'])->name('maintenances.index');
+    // Menampilkan jadwal maintenance hanya untuk user yang sedang login
+    Route::get('/my-maintenances', [MaintenanceController::class, 'myMaintenances'])->name('maintenances.my');
+    Route::get('/data', [MaintenanceController::class, 'getData'])->name('maintenances.data');
+    Route::post('/maintenance/start', [MaintenanceController::class, 'startMaintenance'])->name('maintenance.start');
+    Route::put('/maintenances/completeMaintenance/{id}', [MaintenanceController::class, 'completeMaintenance'])->name('maintenances.complete');
+
+
     Route::resource('tools', ToolController::class);
 
     Route::prefix('dashboard')->group(function () {
@@ -73,6 +87,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('users/getUsers', [UserController::class, 'getUsers'])->name('users.getUsers');
     Route::resource('users', UserController::class);
 
+    Route::get('positions/getData', [PositionController::class, 'getData'])->name('positions.getData');
+    Route::resource('positions', PositionController::class);
 });
 
 Route::get('/', [LoginController::class, 'showLoginForm']);

@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('requested_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('tool_request_id')->constrained();
+            $table->foreignId('tool_request_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->tinyInteger('type')->comment('1: sparepart, 2: tool');
-            $table->foreignId('tool_id')->constrained();
-            $table->foreignId('sparepart_id')->constrained();
+            $table->foreignId('tool_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('sparepart_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->integer('quantity')->default(1);
             $table->text('description')->nullable();
 

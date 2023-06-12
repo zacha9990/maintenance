@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('tool_conditions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignId('tool_id')->constrained();
+            $table->foreignId('tool_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('current_condition', 255)->nullable();
             $table->date('last_inspection_date')->nullable();
             $table->string('last_inspection_result', 255)->nullable();

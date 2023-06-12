@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('tool_failures', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('tool_id');
+            $table->unsignedBigInteger('tool_id')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('type');
             $table->date('date');
             $table->string('action_taken');
-            $table->foreign('tool_id')->references('id')->on('tools')->onDelete('cascade');
+            $table->foreign('tool_id')->references('id')->on('tools')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

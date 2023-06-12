@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\Staff;
+use Spatie\Permission\Models\Role;
+
 
 class User extends Authenticatable
 {
@@ -16,6 +18,8 @@ class User extends Authenticatable
 
     const SUPER_ADMIN = 0;
     const DEVELOPER = 1;
+
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.

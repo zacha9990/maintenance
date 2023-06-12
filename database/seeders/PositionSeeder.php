@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Position;
+use Spatie\Permission\Models\Role;
+
 
 class PositionSeeder extends Seeder
 {
@@ -65,10 +67,27 @@ class PositionSeeder extends Seeder
             'Keamanan / Security',
             'Operator UPL - Penapis limbah',
             'Staf SDM & Umum',
+            'Teknisi'
         ];
 
         foreach ($positions as $position) {
-            Position::create(['name' => $position]);
+            if ($position === 'Teknisi') {
+                $role = Role::where('name', 'Teknisi')->first();
+                if ($role) {
+                    Position::create([
+                        'name' => $position,
+                        'role_id' => $role->id,
+                    ]);
+                } else {
+                    $teknisiRole = Role::create(['name' => 'Teknisi']);
+                    Position::create([
+                        'name' => $position,
+                        'role_id' => $teknisiRole->id,
+                    ]);
+                }
+            } else {
+                Position::create(['name' => $position]);
+            }
         }
     }
 }

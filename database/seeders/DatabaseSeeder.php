@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             PermissionTableSeeder::class,
+            PositionSeeder::class, //
             CreateAdminUserSeeder::class,
             ToolCategories::class,
             FactorySeeder::class,
@@ -30,7 +31,6 @@ class DatabaseSeeder extends Seeder
             SparepartSeeder::class,
             ToolSparepartSeeder::class, //
             InventorySeeder::class, //
-            PositionSeeder::class, //
             StaffSeeder::class, //
         ]);
     }

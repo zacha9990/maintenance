@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('maintenance_spareparts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignId('maintenance_id')->constrained();
-            $table->foreignId('sparepart_id')->constrained();
+            $table->foreignId('maintenance_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('sparepart_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->integer('quantity');
             $table->timestamps();
         });

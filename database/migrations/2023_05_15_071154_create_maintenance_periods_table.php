@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('maintenance_periods', function (Blueprint $table) {
-            $table->foreignId('tool_id')->constrained();
+            $table->foreignId('tool_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->integer('maintenance_period');
             $table->string('maintenance_type', 255)->comment('weekly, monthly, or yearly');
 

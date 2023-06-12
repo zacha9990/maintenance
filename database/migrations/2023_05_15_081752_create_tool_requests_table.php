@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('tool_requests', function (Blueprint $table) {
             $table->id();
             $table->dateTime('date');
-            $table->foreignId('staff_id')->constrained('staffs');
+            $table->foreignId('staff_id')->constrained('staffs')->cascadeOnDelete()->cascadeOnUpdate();
             $table->text('description');
 
             $table->timestamps();

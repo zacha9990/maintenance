@@ -247,6 +247,9 @@
         @if(request()->route()->getName() === 'dashboard.index')
             <script src="{{ asset('assets/js/pages/dashboard.init.js') }}"></script>
         @endif
+        @if(request()->route()->getName() === 'positions.index')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap-editable/js/bootstrap-editable.min.js" integrity="sha512-u2P0FelsRQD/z5EkW5vRp8RRm9oe23rKSqvHBFAXnnES8tPRVIl6oBexyBE1WaOA4rPhXf035iKWU/DCbzRftw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        @endif
         <script src="{{ asset('assets/js/app-admin.js') }}"></script>
         @yield('scripts')
     </body>

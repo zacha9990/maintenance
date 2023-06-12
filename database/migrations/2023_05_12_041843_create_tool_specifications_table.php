@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('tool_specifications', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignId('tool_id')->constrained()->onDelete('cascade');
-            $table->foreignId('spec_id')->constrained('category_specifications')->onDelete('cascade');
+            $table->foreignId('tool_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('spec_id')->constrained('category_specifications')->onDelete('cascade')->onUpdate('cascade');
             $table->string('specification_key');
             $table->string('unit');
             $table->text('specification_value')->nullable();

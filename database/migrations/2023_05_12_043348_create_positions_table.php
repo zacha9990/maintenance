@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('positions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 255);
+            $table->foreignId('role_id')->nullable();
             $table->timestamps();
         });
     }

@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('serial_type');
             $table->date('purchase_date');
             $table->text('technical_specification');
-            $table->foreignId('tool_type_id')->constrained('tool_categories');
-            $table->foreignId('factory_id')->constrained('factories');
+            $table->foreignId('tool_type_id')->constrained('tool_categories')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('factory_id')->constrained('factories')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }

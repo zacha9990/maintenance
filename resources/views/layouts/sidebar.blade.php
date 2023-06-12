@@ -22,7 +22,7 @@
 
                 <li>
                     <a href="{{ route('dashboard.index') }}" class="waves-effect">
-                        <i class="ri-dashboard-line"></i><span class="badge rounded-pill bg-success float-end">3</span>
+                        <i class="fas fa-tachometer-alt"></i><span class="badge rounded-pill bg-success float-end">3</span>
                         <span>Dashboard</span>
                     </a>
                 </li>
@@ -34,19 +34,46 @@
                     </a>
                 </li> --}}
 
+                @if (Auth::user()->hasRole(['Operator', 'SuperAdmin']))
+
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="ri-database-2-fill"></i>
+                        <i class="fas fa-database"></i>
                         <span>Master Data</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('factories.index') }}">Pabrik</a></li>
-                        <li><a href="{{ route('tool_categories.index') }}">Kategori Peralatan</a></li>
-                        <li><a href="{{ route('tools.index') }}">Peralatan</a></li>
-                        <li><a href="{{ route('spareparts.index') }}">Sparepart</a></li>
-                        <li><a href="{{ route('users.index') }}">Staff</a></li>
+                        <li><a href="{{ route('factories.index') }}"><i class="fas fa-industry"></i><span>Pabrik</span></a></li>
+                        <li><a href="{{ route('tool_categories.index') }}"><i class="fas fa-tools"></i><span>Kategori Peralatan</span></a></li>
+                        <li><a href="{{ route('tools.index') }}"><i class="fas fa-tools"></i><span>Peralatan</span></a></li>
+                        <li><a href="{{ route('spareparts.index') }}"><i class="fas fa-cogs"></i><span>Sparepart</span></a></li>
+                        <li><a href="{{ route('users.index') }}"><i class="fas fa-users"></i><span>Staff</span></a></li>
                     </ul>
                 </li>
+
+                @endif
+
+                @if (Auth::user()->hasRole(['Teknisi']))
+                    <li>
+                        <a href="{{ route('maintenances.my') }}" class="waves-effect">
+                            <i class="fas fa-calendar"></i>
+                            <span>Jadwal Saya</span>
+                        </a>
+                    </li>
+                @endif
+
+                @if (Auth::user()->hasRole(['SuperAdmin']))
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="fas fa-user-cog"></i>
+                        <span>Administrator Area</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('positions.index') }}"><i class="fas fa-user-tag"></i><span>Position</span></a></li>
+                    </ul>
+                </li>
+
+                @endif
 
                 {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">

@@ -31,9 +31,9 @@ return new class extends Migration
             $table->string('action_taken_external')->nullable();
             $table->timestamps();
 
-            $table->foreign('tool_id')->references('id')->on('tools')->cascadeOnDelete();
-            $table->foreign('repair_id')->references('id')->on('repair_requests')->cascadeOnDelete();
-            $table->foreign('responsible_technician')->references('id')->on('staffs')->cascadeOnDelete();
+            $table->foreign('tool_id')->references('id')->on('tools')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreign('repair_id')->references('id')->on('repair_requests')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreign('responsible_technician')->references('id')->on('staffs')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 

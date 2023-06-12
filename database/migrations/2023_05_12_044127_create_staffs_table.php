@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('staffs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('work_schedule', 255);
             $table->string('specialty', 255)->nullable();
-            $table->foreignId('position_id')->constrained();
+            $table->foreignId('position_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
 
         });
