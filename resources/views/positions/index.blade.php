@@ -12,17 +12,17 @@
     @endif
     <div class="card">
         <div class="card-body">
-            <h1 class="mt-4">Daftar Positions</h1>
+            <h1 class="mt-4">Daftar Posisi</h1>
             <div class="mb-3">
-                <a class="btn btn-success" href="{{ route('positions.create') }}">Tambah Position</a>
+                <a class="btn btn-success" href="{{ route('positions.create') }}">Tambah Posisi</a>
             </div>
             <div class="table-responsive">
                 <table id="positions-table" class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Role</th>
-                            <th>Action</th>
+                            <th>Nama</th>
+                            <th>Peran</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                 </table>

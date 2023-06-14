@@ -14,21 +14,24 @@
                             Create Factory
                         </button>
                     </div>
-                    <table class="table table-bordered" id="factoriesTable">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Location</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="factoriesTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Location</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- Create Modal -->
         <!-- Create Modal -->
         <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel"
             aria-hidden="true">
@@ -94,103 +97,116 @@
 @endsection
 
 @section('scripts')
-<script>
-    $(document).ready(function () {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            }
-        });
-
-        $('#edit-modal-cancel').click(function () {
-            $('#editModal').modal('hide');
-        })
-
-        $('#create-modal-cancel').click(function () {
-            $('#createModal').modal('hide');
-        })
-
-        $('#btn-create-modal').click(function () {
-            $('#createModal').modal('show');
-        })
-
-        // DataTable
-        $('#factoriesTable').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: "{{ route('factories.index') }}",
-            columns: [
-                { data: 'id', name: 'id' },
-                { data: 'name', name: 'name' },
-                { data: 'location', name: 'location' },
-                { data: 'action', name: 'action', orderable: false, searchable: false },
-            ]
-        });
-
-        // Create
-        $('#createForm').submit(function (e) {
-            e.preventDefault();
-
-            $.ajax({
-                url: "{{ route('factories.store') }}",
-                method: 'POST',
-                data: $(this).serialize(),
-                success: function (response) {
-                    $('#createModal').modal('hide');
-                    $('#createForm')[0].reset();
-                    $('#factoriesTable').DataTable().ajax.reload();
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 }
             });
-        });
 
-        // Edit
-        $('#factoriesTable').on('click', '.btn-edit', function () {
-            var id = $(this).data('id');
+            $('#edit-modal-cancel').click(function() {
+                $('#editModal').modal('hide');
+            })
 
-            $.ajax({
-                url: "{{ url('factories') }}/" + id,
-                method: 'GET',
-                success: function (response) {
-                    $('#editModal').modal('show');
-                    $('#editName').val(response.factory.name);
-                    $('#editLocation').val(response.factory.location);
-                    $('#editForm').attr('action', "{{ url('factories') }}/" + id);
-                }
+            $('#create-modal-cancel').click(function() {
+                $('#createModal').modal('hide');
+            })
+
+            $('#btn-create-modal').click(function() {
+                $('#createModal').modal('show');
+            })
+
+            // DataTable
+            $('#factoriesTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('factories.index') }}",
+                columns: [{
+                        data: 'id',
+                        name: 'id'
+                    },
+                    {
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
+                        data: 'location',
+                        name: 'location'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ]
             });
-        });
 
-        $('#editForm').submit(function (e) {
-            e.preventDefault();
-
-            var id = $(this).attr('action').split('/').pop();
-
-            $.ajax({
-                url: "{{ url('factories') }}/" + id,
-                method: 'PUT',
-                data: $(this).serialize(),
-                success: function (response) {
-                    setTimeout(function() {
-                        $('#editModal').modal('hide');
-                    }, 500); // Adjust the delay as needed
-                    $('#factoriesTable').DataTable().ajax.reload();
-                }
-            });
-        });
-
-        // Delete
-        $('#factoriesTable').on('click', '.btn-delete', function () {
-            if (confirm('Are you sure you want to delete this factory?')) {
-                var url = $(this).data('url');
+            // Create
+            $('#createForm').submit(function(e) {
+                e.preventDefault();
 
                 $.ajax({
-                    url: url,
-                    method: 'DELETE',
-                    success: function (response) {
+                    url: "{{ route('factories.store') }}",
+                    method: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        $('#createModal').modal('hide');
+                        $('#createForm')[0].reset();
                         $('#factoriesTable').DataTable().ajax.reload();
                     }
                 });
-            }
+            });
+
+            // Edit
+            $('#factoriesTable').on('click', '.btn-edit', function() {
+                var id = $(this).data('id');
+
+                $.ajax({
+                    url: "{{ url('factories') }}/" + id,
+                    method: 'GET',
+                    success: function(response) {
+                        $('#editModal').modal('show');
+                        $('#editName').val(response.factory.name);
+                        $('#editLocation').val(response.factory.location);
+                        $('#editForm').attr('action', "{{ url('factories') }}/" + id);
+                    }
+                });
+            });
+
+            $('#editForm').submit(function(e) {
+                e.preventDefault();
+
+                var id = $(this).attr('action').split('/').pop();
+
+                $.ajax({
+                    url: "{{ url('factories') }}/" + id,
+                    method: 'PUT',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        setTimeout(function() {
+                            $('#editModal').modal('hide');
+                        }, 500); // Adjust the delay as needed
+                        $('#factoriesTable').DataTable().ajax.reload();
+                    }
+                });
+            });
+
+            // Delete
+            $('#factoriesTable').on('click', '.btn-delete', function() {
+                if (confirm('Are you sure you want to delete this factory?')) {
+                    var url = $(this).data('url');
+
+                    $.ajax({
+                        url: url,
+                        method: 'DELETE',
+                        success: function(response) {
+                            $('#factoriesTable').DataTable().ajax.reload();
+                        }
+                    });
+                }
+            });
         });
-    });
-</script>
+    </script>
 @endsection

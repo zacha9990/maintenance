@@ -24,14 +24,14 @@ class DatabaseSeeder extends Seeder
             CreateAdminUserSeeder::class,
             ToolCategories::class,
             FactorySeeder::class,
-            ToolSeeder::class,
-            CategorySpecificationSeeder::class, //
-            ToolSpecificationSeeder::class, ///
-            StaffSeeder::class,
-            SparepartSeeder::class,
-            ToolSparepartSeeder::class, //
-            InventorySeeder::class, //
-            StaffSeeder::class, //
+            // ToolSeeder::class,
+            // CategorySpecificationSeeder::class, //
+            // ToolSpecificationSeeder::class, ///
+            // StaffSeeder::class,
+            // SparepartSeeder::class,
+            // ToolSparepartSeeder::class, //
+            // InventorySeeder::class, //
+            // StaffSeeder::class, //
         ]);
     }
 }

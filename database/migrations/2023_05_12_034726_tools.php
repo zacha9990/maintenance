@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('tools', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('serial_number')->unique();
+            $table->string('serial_number')->unique()->nullable();
             $table->text('function');
             $table->string('brand');
             $table->string('serial_type');
