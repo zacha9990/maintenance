@@ -39,13 +39,19 @@ class ToolController extends Controller
             return
                 '<button class="btn btn-primary btn-sm btn-spareparts" data-bs-toggle="modal"
                 data-bs-target="#spareparts-modal" data-tool-id="' . $tool->id . '"><i class="fas fa-tools"></i></button>' . " " .
-                '<button class="btn btn-primary btn-sm btn-maintenance" data-bs-toggle="modal"
+            '<button class="btn btn-primary btn-sm btn-maintenance" data-bs-toggle="modal"
                 data-bs-target="#maintenance-modal" data-tool-id="' . $tool->id . '"><i class="fas fa-calendar"></i></button>' . " " .
-            '<a class="btn btn-primary btn-sm btn-edit" href="' . route('tools.edit', $tool->id) . '"><i class="fas fa-edit  "></i></a>' . " " .
+            '<a class="btn btn-primary btn-sm btn-edit" href="' . route('tools.edit', $tool->id) . '"><i class="fas fa-edit"></i></a>' . " " .
+            '<a class="btn btn-success btn-sm btn-view" href="' . route('tools.show', $tool->id) . '"><i class="fas fa-eye"></i></a>' .
             '<a class="btn btn-danger btn-sm btn-maintenance-schedule" href="' . route('maintenances.show', $tool->id) . '"><i class="fas fa-calendar  "></i></a>';
             })
             ->rawColumns(['information_buttons'])
         ->make(true);
+    }
+
+    public function show(Tool $tool)
+    {
+        return view('tools.show', compact('tool'));
     }
 
     public function getToolSpareparts(Request $request, Tool $tool)

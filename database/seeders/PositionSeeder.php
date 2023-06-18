@@ -67,7 +67,8 @@ class PositionSeeder extends Seeder
             'Keamanan / Security',
             'Operator UPL - Penapis limbah',
             'Staf SDM & Umum',
-            'Teknisi'
+            'Teknisi',
+            'SuperAdmin'
         ];
 
         foreach ($positions as $position) {
@@ -80,6 +81,24 @@ class PositionSeeder extends Seeder
                     ]);
                 } else {
                     $teknisiRole = Role::create(['name' => 'Teknisi']);
+                    Position::create([
+                        'name' => $position,
+                        'role_id' => $teknisiRole->id,
+                    ]);
+                }
+            } else {
+                Position::create(['name' => $position]);
+            }
+
+            if ($position === 'SuperAdmin') {
+                $role = Role::where('name', 'SuperAdmin')->first();
+                if ($role) {
+                    Position::create([
+                        'name' => $position,
+                        'role_id' => $role->id,
+                    ]);
+                } else {
+                    $teknisiRole = Role::create(['name' => 'SuperAdmin']);
                     Position::create([
                         'name' => $position,
                         'role_id' => $teknisiRole->id,

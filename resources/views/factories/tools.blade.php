@@ -20,20 +20,7 @@
     @endif
     <div class="card">
         <div class="card-body">
-            <div class="mb-3">
-                <label for="factory-filter" class="form-label">Filter Pabrik:</label>
-                <select id="factory-filter" class="form-select">
-                    <option value="">Semua Pabrik</option>
-                    @foreach ($factories as $factory)
-                        <option value="{{ $factory->id }}">{{ $factory->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <h1 class="mt-4">Daftar Peralatan</h1>
-            <div class="mb-3">
-                <a class="btn btn-success" href="{{ route('tools.create') }}"><i class="fas fa-plus"></i> Tambah
-                    Peralatan</a>
-            </div>
+            <h1 class="mt-4">Daftar Peralatan Pabrik</h1>
             <div class="table-responsive">
 
                 <table id="tools-table" class="table table-bordered">
@@ -116,7 +103,7 @@
             $('#tools-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('tools.list') }}",
+                ajax: "{{ route('factories.toolList', $factory->id) }}",
                 columns: [{
                         data: 'name',
                         name: 'name'

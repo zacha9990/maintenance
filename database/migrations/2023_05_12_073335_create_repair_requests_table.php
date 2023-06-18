@@ -15,15 +15,14 @@ return new class extends Migration
     {
         Schema::create('repair_requests', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('tool_id');
+            $table->foreignId('staff_id')->constrained('staffs')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('tool_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->text('description');
+            $table->string('status')->nullable()->index()->comment('reported, working, finished, cancelled');
             $table->boolean('approved')->default(false);
-            $table->timestamp('approved_at')->nullable();
+            $table->dateTime('approved_at')->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('tool_id')->references('id')->on('tools')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

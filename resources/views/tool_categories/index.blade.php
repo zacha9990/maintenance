@@ -7,17 +7,17 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
-                <h1>Tool Categories</h1>
+                <h1>Kategori alat</h1>
                 <div class="mb-3">
                     <button class="btn btn-primary" id="btn-create-modal" data-bs-toggle="modal"
-                        data-bs-target="#createModal">Add New Tool Category</button>
+                        data-bs-target="#createModal">Tambahkan Kategori Alat Baru</button>
                 </div>
                 <table id="toolCategoriesTable" class="table table-bordered">
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Name</th>
-                            <th>Action</th>
+                            <th>Nama</th>
+                            <th>Tindakan</th>
                         </tr>
                     </thead>
                 </table>
@@ -30,19 +30,19 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="createModalLabel">Add New Tool Category</h5>
+                    <h5 class="modal-title" id="createModalLabel">Tambahkan Kategori Alat Baru</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form id="createForm">
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="createName" class="form-label">Name</label>
+                            <label for="createName" class="form-label">Nama</label>
                             <input type="text" class="form-control" id="createName" name="name" required>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Create</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Membatalkan</button>
+                        <button type="submit" class="btn btn-primary">Membuat</button>
                     </div>
                 </form>
             </div>
@@ -54,19 +54,19 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Edit Tool Category</h5>
+                    <h5 class="modal-title" id="editModalLabel">Edit Kategori Alat</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form id="editForm">
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="editName" class="form-label">Name</label>
+                            <label for="editName" class="form-label">Nama</label>
                             <input type="text" class="form-control" id="editName" name="name" required>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Update</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Membatalkan</button>
+                        <button type="submit" class="btn btn-primary">Memperbarui</button>
                     </div>
                 </form>
             </div>
@@ -158,7 +158,7 @@
                 var id = $(this).data('id');
                 var url = '{{ route('tool_categories.destroy', ':id') }}'.replace(':id', id);
 
-                if (confirm('Are you sure you want to delete this tool category?')) {
+                if (confirm('Anda yakin ingin menghapus kategori alat ini?')) {
                     $.ajax({
                         url: url,
                         method: 'DELETE',

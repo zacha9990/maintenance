@@ -8,13 +8,13 @@
                 <table id="maintenances-table" class="table">
                     <thead>
                         <tr>
-                            <th>Tool Name</th>
-                            <th>Scheduled Date</th>
+                            <th>Nama alat</th>
+                            <th>Tanggal yang dijadwalkan</th>
                             <th>Status</th>
-                            <th>Assign Date</th>
-                            <th>Start Date</th>
-                            <th>Completed Date</th>
-                            <th>Action</th>
+                            <th>Tanggal ditugaskan</th>
+                            <th>Tanggal mulai</th>
+                            <th>Tanggal Selesai</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                 </table>

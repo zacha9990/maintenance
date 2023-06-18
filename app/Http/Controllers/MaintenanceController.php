@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Tool;
 use App\Models\Staff;
 use App\Models\Maintenance;
+use App\Models\RepairRequest;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
@@ -143,6 +144,23 @@ class MaintenanceController extends Controller
         return response()->json(['success' => false, 'message' => 'Gagal menyelesaikan maintenance.']);
     }
 
+    public function cancelMaintenance($id)
+    {
+        try {
+            $maintenance = Maintenance::findOrFail($id);
+
+            // Hanya izinkan pembatalan jika status belum dibatalkan
+            if ($maintenance->status != 'cancelled') {
+                $maintenance->status = 'cancelled';
+                $maintenance->save();
+            }
+
+            return response()->json(['message' => 'Maintenance berhasil dibatalkan'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Terjadi kesalahan saat membatalkan maintenance'], 500);
+        }
+    }
+
 
     public function show($toolId)
     {
@@ -152,6 +170,54 @@ class MaintenanceController extends Controller
         return view('maintenances.show', compact('tool', 'maintenances'));
     }
 
+    public function showDetails($id)
+    {
+        $maintenance = Maintenance::findOrFail($id)::findOrFail($id);
+
+        $status = [
+            'not_assigned' => [
+                'label' => 'Belum Ditugaskan',
+                'badgeClass' => 'bg-secondary',
+            ],
+            'assigned' => [
+                'label' => 'Ditugaskan',
+                'badgeClass' => 'bg-info',
+            ],
+            'on_progress' => [
+                'label' => 'Dikerjakan',
+                'badgeClass' => 'bg-primary',
+            ],
+            'completed' => [
+                'label' => 'Selesai',
+                'badgeClass' => 'bg-success',
+            ],
+            'cancelled' => [
+                'label' => 'Dibatalkan',
+                'badgeClass' => 'bg-danger',
+            ],
+        ];
+
+        $automatedStatus = [
+            'automated' => [
+                'label' => 'Belum Ditugaskan',
+                'badgeClass' => 'bg-secondary',
+            ],
+            'damage_report' => [
+                'label' => 'Laporan Kerusakan',
+                'badgeClass' => 'bg-danger',
+            ],
+            'scheduled' => [
+                'label' => 'Dikerjakan',
+                'badgeClass' => 'bg-primary',
+            ],
+        ];
+
+        $maintenance->status = $status[$maintenance->status];
+        $maintenance->automated_status = $automatedStatus[$maintenance->automated_status];
+
+        return view('maintenances.show_details', compact('maintenance'));
+    }
+
     public function create(Tool $tool)
     {
         $technicians = Staff::with('user', 'position')
@@ -159,7 +225,9 @@ class MaintenanceController extends Controller
             $query->where('name', 'Teknisi');
         })->get();
 
-        return view('maintenances.create', compact('tool', 'technicians'));
+        $repairs = RepairRequest::where('approved', '1')->get();
+
+        return view('maintenances.create', compact('tool', 'technicians', 'repairs'));
     }
 
     public function store(Request $request, Tool $tool)
@@ -178,15 +246,22 @@ class MaintenanceController extends Controller
         $maintenance->tool_id = $tool->id;
         $maintenance->scheduled_date = $request->input('scheduled_date');
         $maintenance->assign_date = $request->input('scheduled_date');
+        $maintenance->status = "assigned";
         $maintenance->type = $request->input('type');
+        $maintenance->automated_status = $request->input('automated_status');
+        $maintenance->description = $request->input('description');
         $maintenance->responsible_technician = $request->input('responsible_technician');
-        $maintenance->status = $request->input('assigned');
-        // Set other fields as needed
+
+        if ($request->input('repair_id') > 0) {
+            $maintenance->repair_id = $request->input('repair_id');
+            $maintenance->automated_status = "damage_report";
+        }
 
         $maintenance->save();
 
         return redirect()->route('maintenances.show', $tool->id)->with('success', 'Data maintenance created successfully');
     }
+
 
     public function edit($id)
     {
@@ -212,7 +287,9 @@ class MaintenanceController extends Controller
         $maintenance->type = $request->input('type');
         $maintenance->responsible_technician = $request->input('responsible_technician');
         $maintenance->assign_date = now()->toDateString();
-        $maintenance->status = $request->input('assigned');
+        $maintenance->automated_status = $request->input('automated_status');
+        $maintenance->description = $request->input('description');
+        $maintenance->status = 'assigned';
         // Update other fields accordingly
 
         $maintenance->save();

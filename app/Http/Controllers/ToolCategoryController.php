@@ -48,7 +48,7 @@ class ToolCategoryController extends Controller
         DB::statement(DB::raw('set @rownum=0'));
         $tool_categories = ToolCategory::select([
                     DB::raw('@rownum  := @rownum  + 1 AS rownum'),
-                    'name'
+            'name', 'id'
                 ])->orderBy('id', 'ASC');
 
 
@@ -59,7 +59,10 @@ class ToolCategoryController extends Controller
             ->addColumn('action', function ($tool_category) {
                 $editButton = '<button class="btn btn-sm btn-primary edit" data-id="' . $tool_category->id . '">Edit</button>';
                 $deleteButton = '<button class="btn btn-sm btn-danger delete" data-id="' . $tool_category->id . '">Delete</button>';
-                return $editButton . ' ' . $deleteButton;
+            $criteriaButton = '<a class="btn btn-sm btn-secondary" href="' . route("maintenance-criterias.create", $tool_category->id) . '">Kriteria Pemeliharaan</a>';
+            return $editButton . ' ' .
+                // $criteriaButton .
+                ' ' . $deleteButton;
             })
             ->rawColumns(['action', 'rownum'])
             ->make(true);

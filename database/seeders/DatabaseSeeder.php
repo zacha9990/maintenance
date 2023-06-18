@@ -19,19 +19,19 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            PermissionTableSeeder::class,
-            PositionSeeder::class, //
-            CreateAdminUserSeeder::class,
-            ToolCategories::class,
-            FactorySeeder::class,
-            // ToolSeeder::class,
-            // CategorySpecificationSeeder::class, //
-            // ToolSpecificationSeeder::class, ///
-            // StaffSeeder::class,
-            // SparepartSeeder::class,
-            // ToolSparepartSeeder::class, //
-            // InventorySeeder::class, //
-            // StaffSeeder::class, //
+            // PermissionTableSeeder::class,
+            // PositionSeeder::class, //
+            // CreateAdminUserSeeder::class,
+            // ToolCategories::class,
+            // FactorySeeder::class,
+            ToolSeeder::class,
+            CategorySpecificationSeeder::class, //
+            ToolSpecificationSeeder::class, ///
+            StaffSeeder::class,
+            SparepartSeeder::class,
+            ToolSparepartSeeder::class, //
+            InventorySeeder::class, //
+            StaffSeeder::class, //
         ]);
     }
 }

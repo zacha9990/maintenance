@@ -8,10 +8,10 @@
         <div class="row">
             <div class="card">
                 <div class="card-body">
-                    <h2>Factories</h2>
+                    <h2>Pabrik</h2>
                     <div class="mb-3">
                         <button type="button" id="btn-create-modal" class="btn btn-success btn-sm">
-                            Create Factory
+                            Buat pabrik
                         </button>
                     </div>
                     <div class="table-responsive">
@@ -19,9 +19,9 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Location</th>
-                                    <th>Action</th>
+                                    <th>Nama</th>
+                                    <th>Lokasi</th>
+                                    <th>Tindakan</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -38,7 +38,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="createModalLabel">Create Factory</h5>
+                        <h5 class="modal-title" id="createModalLabel">Buat pabrik</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -46,17 +46,17 @@
                     <form id="createForm">
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="name">Name</label>
+                                <label for="name">Nama</label>
                                 <input type="text" class="form-control" id="name" name="name" required>
                             </div>
                             <div class="form-group">
-                                <label for="location">Location</label>
+                                <label for="location">Lokasi</label>
                                 <input type="text" class="form-control" id="location" name="location">
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Create</button>
+                            <button type="submit" class="btn btn-primary">Membuat</button>
                         </div>
                     </form>
                 </div>
@@ -69,7 +69,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Edit Factory</h5>
+                        <h5 class="modal-title" id="editModalLabel">Edit pabrik</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -77,17 +77,17 @@
                     <form id="editForm">
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="editName">Name</label>
+                                <label for="editName">Nama</label>
                                 <input type="text" class="form-control" id="editName" name="name" required>
                             </div>
                             <div class="form-group">
-                                <label for="editLocation">Location</label>
+                                <label for="editLocation">Lokasi</label>
                                 <input type="text" class="form-control" id="editLocation" name="location">
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" id="edit-modal-cancel">Close</button>
-                            <button type="submit" class="btn btn-primary">Update</button>
+                            <button type="button" class="btn btn-secondary" id="edit-modal-cancel">Menutup</button>
+                            <button type="submit" class="btn btn-primary">Memperbarui</button>
                         </div>
                     </form>
                 </div>
@@ -140,6 +140,7 @@
                         orderable: false,
                         searchable: false
                     },
+
                 ]
             });
 

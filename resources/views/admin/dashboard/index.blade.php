@@ -1,335 +1,248 @@
 @extends('layouts.admin')
 
 @section('css-after-bootstrap')
-
 @endsection
 
 @section('content')
-<div class="container-fluid">
+    <div class="container-fluid">
 
 
-    <div class="row">
-        <div class="col-xl-3 col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <div class="flex-grow-1">
-                            <p class="text-truncate font-size-14 mb-2">Total Peralatan</p>
-                            <h4 class="mb-2">200</h4>
-                        </div>
-                        <div class="avatar-sm">
-                            <span class="avatar-title bg-light text-primary rounded-3">
-                                <i class="ri-shopping-cart-2-line font-size-24"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div><!-- end cardbody -->
-            </div><!-- end card -->
-        </div><!-- end col -->
-        <div class="col-xl-3 col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <div class="flex-grow-1">
-                            <p class="text-truncate font-size-14 mb-2">Total Sparepart</p>
-                            <h4 class="mb-2">2000</h4>
-                        </div>
-                        <div class="avatar-sm">
-                            <span class="avatar-title bg-light text-success rounded-3">
-                                <i class="mdi mdi-currency-usd font-size-24"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div><!-- end cardbody -->
-            </div><!-- end card -->
-        </div><!-- end col -->
-        <div class="col-xl-3 col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <div class="flex-grow-1">
-                            <p class="text-truncate font-size-14 mb-2">Laporan Kerusakan</p>
-                            <h4 class="mb-2">12</h4>
-                        </div>
-                        <div class="avatar-sm">
-                            <span class="avatar-title bg-light text-primary rounded-3">
-                                <i class="ri-user-3-line font-size-24"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div><!-- end cardbody -->
-            </div><!-- end card -->
-        </div><!-- end col -->
-        <div class="col-xl-3 col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <div class="flex-grow-1">
-                            <p class="text-truncate font-size-14 mb-2">Harus segera dilakukan maintenance</p>
-                            <h4 class="mb-2">5</h4>
-                        </div>
-                        <div class="avatar-sm">
-                            <span class="avatar-title bg-light text-success rounded-3">
-                                <i class="mdi mdi-currency-btc font-size-24"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div><!-- end cardbody -->
-            </div><!-- end card -->
-        </div><!-- end col -->
-    </div><!-- end row -->
-
-    <div class="row">
-        <div class="col-xl-6">
-
-            <div class="card">
-                <div class="card-body pb-0">
-                    <div class="float-end d-none d-md-inline-block">
-                        <div class="dropdown card-header-dropdown">
-                            <a class="text-reset dropdown-btn" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="text-muted">Report<i class="mdi mdi-chevron-down ms-1"></i></span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="#">Export</a>
-                                <a class="dropdown-item" href="#">Import</a>
-                                <a class="dropdown-item" href="#">Download Report</a>
+        <div class="row">
+            <div class="col-xl-3 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                <p class="text-truncate font-size-14 mb-2">Total Peralatan</p>
+                                <h4 class="mb-2">{{ $toolsCount }}</h4>
+                            </div>
+                            <div class="avatar-sm">
+                                <span class="avatar-title bg-light text-primary rounded-3">
+                                    <i class="fas fa-tools font-size-24"></i>
+                                </span>
                             </div>
                         </div>
-                    </div>
-                    <h4 class="card-title mb-4">Laporan kerusakan per bulan</h4>
-
-
-                </div>
-                <div class="card-body py-0 px-2">
-                    <div id="area_chart" class="apex-charts" dir="ltr"></div>
-                </div>
-            </div><!-- end card -->
-        </div>
-        <!-- end col -->
-        <div class="col-xl-6">
-            <div class="card">
-                <div class="card-body pb-0">
-                    <div class="float-end d-none d-md-inline-block">
-                        <div class="dropdown">
-                            <a class="text-reset" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="text-muted">This Years<i class="mdi mdi-chevron-down ms-1"></i></span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="#">Today</a>
-                                <a class="dropdown-item" href="#">Last Week</a>
-                                <a class="dropdown-item" href="#">Last Month</a>
-                                <a class="dropdown-item" href="#">This Year</a>
+                    </div><!-- end cardbody -->
+                </div><!-- end card -->
+            </div><!-- end col -->
+            <div class="col-xl-3 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                <p class="text-truncate font-size-14 mb-2">Total Sparepart</p>
+                                <h4 class="mb-2">{{ $sparePartsCount }}</h4>
+                            </div>
+                            <div class="avatar-sm">
+                                <span class="avatar-title bg-light text-success rounded-3">
+                                    <i class="fas fa-cogs font-size-24"></i>
+                                </span>
                             </div>
                         </div>
-                    </div>
-                    <h4 class="card-title mb-4">Jumlah Inventaris</h4>
-
-                </div>
-                <div class="card-body py-0 px-2">
-                    <div id="column_line_chart" class="apex-charts" dir="ltr"></div>
-                </div>
-            </div><!-- end card -->
-        </div>
-        <!-- end col -->
-    </div>
-    <!-- end row -->
-
-    <div class="row">
-        <div class="col-xl-8">
-            <div class="card">
-                <div class="card-body">
-                    <div class="dropdown float-end">
-                        <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="mdi mdi-dots-vertical"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end">
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item">Sales Report</a>
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item">Export Report</a>
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item">Profit</a>
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item">Action</a>
+                    </div><!-- end cardbody -->
+                </div><!-- end card -->
+            </div><!-- end col -->
+            <div class="col-xl-3 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                <p class="text-truncate font-size-14 mb-2">Laporan Kerusakan Bulan Ini</p>
+                                <h4 class="mb-2">{{ $repairRequests }}</h4>
+                            </div>
+                            <div class="avatar-sm">
+                                <span class="avatar-title bg-light text-danger rounded-3">
+                                    <i class="fas fa-exclamation-triangle font-size-24"></i>
+                                </span>
+                            </div>
                         </div>
+                    </div><!-- end cardbody -->
+                </div><!-- end card -->
+            </div><!-- end col -->
+            <div class="col-xl-3 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                <p class="text-truncate font-size-14 mb-2">Harus segera dilakukan maintenance</p>
+                                <h4 class="mb-2">{{ $countScheduledDate }}</h4>
+                            </div>
+                            <div class="avatar-sm">
+                                <span class="avatar-title bg-light text-warning rounded-3">
+                                    <i class="fas fa-wrench font-size-24"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div><!-- end cardbody -->
+                </div><!-- end card -->
+            </div><!-- end col -->
+        </div><!-- end row -->
+
+        <div class="row">
+            <div class="col-xl-4">
+
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title mb-4">Sebaran peralatan tiap Pabrik</h4>
                     </div>
-
-                    <h4 class="card-title mb-4">Staff</h4>
-
-                    <div class="table-responsive">
-                        <table class="table table-centered mb-0 align-middle table-hover table-nowrap">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Status</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th style="width: 120px;">Salary</th>
-                                </tr>
-                            </thead><!-- end thead -->
-                            <tbody>
-                                <tr>
-                                    <td><h6 class="mb-0">Charles Casey</h6></td>
-                                    <td>Web Developer</td>
-                                    <td>
-                                        <div class="font-size-13"><i class="ri-checkbox-blank-circle-fill font-size-10 text-success align-middle me-2"></i>Active</div>
-                                    </td>
-                                    <td>
-                                        23
-                                    </td>
-                                    <td>
-                                        04 Apr, 2021
-                                    </td>
-                                    <td>$42,450</td>
-                                </tr>
-                                 <!-- end -->
-                                 <tr>
-                                    <td><h6 class="mb-0">Alex Adams</h6></td>
-                                    <td>Python Developer</td>
-                                    <td>
-                                        <div class="font-size-13"><i class="ri-checkbox-blank-circle-fill font-size-10 text-warning align-middle me-2"></i>Deactive</div>
-                                    </td>
-                                    <td>
-                                        28
-                                    </td>
-                                    <td>
-                                        01 Aug, 2021
-                                    </td>
-                                    <td>$25,060</td>
-                                </tr>
-                                 <!-- end -->
-                                 <tr>
-                                    <td><h6 class="mb-0">Prezy Kelsey</h6></td>
-                                    <td>Senior Javascript Developer</td>
-                                    <td>
-                                        <div class="font-size-13"><i class="ri-checkbox-blank-circle-fill font-size-10 text-success align-middle me-2"></i>Active</div>
-                                    </td>
-                                    <td>
-                                        35
-                                    </td>
-                                    <td>
-                                        15 Jun, 2021
-                                    </td>
-                                    <td>$59,350</td>
-                                </tr>
-                                 <!-- end -->
-                                 <tr>
-                                    <td><h6 class="mb-0">Ruhi Fancher</h6></td>
-                                    <td>React Developer</td>
-                                    <td>
-                                        <div class="font-size-13"><i class="ri-checkbox-blank-circle-fill font-size-10 text-success align-middle me-2"></i>Active</div>
-                                    </td>
-                                    <td>
-                                        25
-                                    </td>
-                                    <td>
-                                        01 March, 2021
-                                    </td>
-                                    <td>$23,700</td>
-                                </tr>
-                                 <!-- end -->
-                                 <tr>
-                                    <td><h6 class="mb-0">Juliet Pineda</h6></td>
-                                    <td>Senior Web Designer</td>
-                                    <td>
-                                        <div class="font-size-13"><i class="ri-checkbox-blank-circle-fill font-size-10 text-success align-middle me-2"></i>Active</div>
-                                    </td>
-                                    <td>
-                                        38
-                                    </td>
-                                    <td>
-                                        01 Jan, 2021
-                                    </td>
-                                    <td>$69,185</td>
-                                </tr>
-                                 <!-- end -->
-                                 <tr>
-                                    <td><h6 class="mb-0">Den Simpson</h6></td>
-                                    <td>Web Designer</td>
-                                    <td>
-                                        <div class="font-size-13"><i class="ri-checkbox-blank-circle-fill font-size-10 text-warning align-middle me-2"></i>Deactive</div>
-                                    </td>
-                                    <td>
-                                        21
-                                    </td>
-                                    <td>
-                                        01 Sep, 2021
-                                    </td>
-                                    <td>$37,845</td>
-                                </tr>
-                                 <!-- end -->
-                                 <tr>
-                                    <td><h6 class="mb-0">Mahek Torres</h6></td>
-                                    <td>Senior Laravel Developer</td>
-                                    <td>
-                                        <div class="font-size-13"><i class="ri-checkbox-blank-circle-fill font-size-10 text-success align-middle me-2"></i>Active</div>
-                                    </td>
-                                    <td>
-                                        32
-                                    </td>
-                                    <td>
-                                        20 May, 2021
-                                    </td>
-                                    <td>$55,100</td>
-                                </tr>
-                                 <!-- end -->
-                            </tbody><!-- end tbody -->
-                        </table> <!-- end table -->
+                    <div class="card-body pb-0">
+                    </div>
+                    <div class="card-body py-0 px-2">
+                        <canvas id="chart-tools-distribution"></canvas>
                     </div>
                 </div><!-- end card -->
-            </div><!-- end card -->
+            </div>
+            <!-- end col -->
+            <div class="col-xl-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title mb-4">Tipe Pemeliharaan</h4>
+                    </div>
+                    <div class="card-body pb-0">
+                    </div>
+                    <div class="card-body py-0 px-2">
+                        <canvas id="maintenance-status-over-the-years"></canvas>
+                    </div>
+                </div><!-- end card -->
+            </div>
+            <!-- end col -->
         </div>
-        <!-- end col -->
-        <div class="col-xl-4">
-            <div class="card">
-                <div class="card-body">
-                    <div class="float-end">
-                        <select class="form-select shadow-none form-select-sm">
-                            <option selected>Apr</option>
-                            <option value="1">Mar</option>
-                            <option value="2">Feb</option>
-                            <option value="3">Jan</option>
-                        </select>
-                    </div>
-                    <h4 class="card-title mb-4">Komposisi jenis peralatan</h4>
+        <!-- end row -->
 
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="text-center mt-4">
-                                <h5>3475</h5>
-                                <p class="mb-2 text-truncate">A</p>
-                            </div>
-                        </div>
-                        <!-- end col -->
-                        <div class="col-4">
-                            <div class="text-center mt-4">
-                                <h5>458</h5>
-                                <p class="mb-2 text-truncate">B</p>
-                            </div>
-                        </div>
-                        <!-- end col -->
-                        <div class="col-4">
-                            <div class="text-center mt-4">
-                                <h5>9062</h5>
-                                <p class="mb-2 text-truncate">C</p>
-                            </div>
-                        </div>
-                        <!-- end col -->
+        <div class="row">
+            <div class="col-xl-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title mb-4">Laporan Kerusakan 12 Bulan Terakhir </h4>
                     </div>
-                    <!-- end row -->
-
-                    <div class="mt-4">
-                        <div id="donut-chart" class="apex-charts"></div>
+                    <div class="card-body">
+                        <canvas id="repair-requests-chart"></canvas>
+                    </div><!-- end card -->
+                </div><!-- end card -->
+            </div>
+            <!-- end col -->
+            <div class="col-xl-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title mb-4">Sebaran Kategori Peralatan</h4>
                     </div>
-                </div>
-            </div><!-- end card -->
-        </div><!-- end col -->
+                    <div class="card-body">
+                        <div class="mt-4">
+                            <canvas id="tools-chart-by-category" class="apex-charts"></canvas>
+                        </div>
+                    </div>
+                </div><!-- end card -->
+            </div><!-- end col -->
+        </div>
+        <!-- end row -->
     </div>
-    <!-- end row -->
-</div>
 @endsection
 
 @section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: '{{ route('dashboard.chart-data-factory-tools') }}',
+                type: 'GET',
+                success: function(data) {
+                    var labels = data.map(function(item) {
+                        return item.label;
+                    });
+                    var values = data.map(function(item) {
+                        return item.value;
+                    });
 
+                    var ctx = document.getElementById('chart-tools-distribution').getContext('2d');
+                    var chart = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                data: values,
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.6)',
+                                    'rgba(54, 162, 235, 0.6)',
+                                    'rgba(255, 206, 86, 0.6)',
+                                    'rgba(75, 192, 192, 0.6)',
+                                    'rgba(153, 102, 255, 0.6)',
+                                    'rgba(255, 159, 64, 0.6)'
+                                    // Add more colors as needed
+                                ]
+                            }]
+                        }
+                    });
+                }
+            });
+
+            $.ajax({
+                url: "{{ route('dashboard.chart_data_maintenance_status_over_the_years') }}",
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    var ctx = document.getElementById('maintenance-status-over-the-years').getContext(
+                        '2d');
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: response.labels.map(function(label) {
+                                var dateParts = label.split('-');
+                                var year = dateParts[1];
+                                return dateParts[0] + '-' + year;
+                            }),
+                            datasets: response.datasets,
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                x: {
+                                    stacked: true,
+                                },
+                                y: {
+                                    stacked: true,
+                                }
+                            },
+                        },
+                    });
+                }
+            });
+
+            $.ajax({
+                url: '{{ route('dashboard.repair-requests-chart') }}',
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    var ctx = document.getElementById('repair-requests-chart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: data,
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    precision: 0
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+
+            $.ajax({
+                url: '{{ route('dashboard.tools-chart-by-category') }}',
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    var ctx = document.getElementById('tools-chart-by-category').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'pie',
+                        data: data,
+                        options: {
+                            responsive: true
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 @endsection

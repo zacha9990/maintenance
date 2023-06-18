@@ -40,6 +40,7 @@
                     <div class="mb-3">
                         <label for="tool_status" class="form-label">Status Peralatan</label>
                         <input type="text" class="form-control" id="tool_status" name="tool_status" required>
+                        <small class="text-muted">Kondisi peralatan.</small>
                     </div>
 
                     <div class="mb-3">
@@ -96,6 +97,7 @@
                                 <option value="{{ $sparepart->id }}">{{ $sparepart->sparepart_name }}</option>
                             @endforeach
                         </select>
+                        <small class="text-muted">Jika sparepart tidak tercantum, silakan <a href="{{ route('spareparts.create') }}">buat baru</a>.</small>
                     </div>
 
                     <div class="mb-3">

@@ -50,6 +50,16 @@
                     </ul>
                 </li>
 
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="fas fa-edit"></i>
+                        <span>Form</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('repair_requests.index') }}"><i class="fas fa-exclamation-triangle"></i></i><span>Laporan Kerusakan</span></a></li>
+                    </ul>
+                </li>
+
                 @endif
 
                 @if (Auth::user()->hasRole(['Teknisi']))
@@ -74,22 +84,7 @@
                 </li>
 
                 @endif
-
-                {{-- <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="fab fa-wpforms"></i>
-                        <span>Laporan</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="email-inbox.html">Laporan A</a></li>
-                        <li><a href="email-read.html">Laporan B</a></li>
-                        <li><a href="email-read.html">Laporan C</a></li>
-                    </ul>
-                </li> --}}
-
-
-
-            </ul>
+               </ul>
         </div>
         <!-- Sidebar -->
     </div>

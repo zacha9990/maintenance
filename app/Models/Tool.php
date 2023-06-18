@@ -34,7 +34,7 @@ class Tool extends Model
     ];
 
     public function category(){
-        return $this->belongsTo(ToolCategory::class, 'category_id');
+        return $this->belongsTo(ToolCategory::class, 'tool_type_id');
     }
 
     public function spareparts(){

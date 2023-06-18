@@ -32,6 +32,29 @@
                 </div>
 
                 <div class="row mb-3">
+                    <label for="automated_status" class="col-sm-2 col-form-label">Jenis</label>
+                    <div class="col-sm-10">
+                        <select class="form-select" id="automated_status" name="automated_status">
+                                <option value="scheduled">Normal</option>
+                                <option value="damage_report">Laporan Kerusakan</option>
+                        </select>
+                        @error('automated_status')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="description" class="col-sm-2 col-form-label">Keterangan</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="text" id="description" name="description">
+                        @error('description')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="row mb-3">
                     <label for="responsible_technician" class="col-sm-2 col-form-label">Teknisi yang Ditugaskan</label>
                     <div class="col-sm-10">
                         <select class="form-select" id="responsible_technician" name="responsible_technician">
@@ -41,6 +64,22 @@
                             @endforeach
                         </select>
                         @error('responsible_technician')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="repair_id" class="col-sm-2 col-form-label">Laporan Kerusakan</label>
+                    <div class="col-sm-10">
+                        <select class="form-select" id="repair_id" name="repair_id">
+                            <option value="">Pilih Laporan Kerusakan</option>
+                            @foreach ($repairs as $repair)
+                                <option value="{{ $repair->id }}">{{ $repair->description }}</option>
+                            @endforeach
+                        </select>
+                        <small class="text-muted">Opsional, hanya jika maintenance berdasarkan laporan kerusakan.</small>
+                        @error('repair_id')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>

@@ -18,7 +18,9 @@ return new class extends Migration
             $table->unsignedBigInteger('tool_id');
             $table->unsignedBigInteger('repair_id')->nullable();
             $table->date('scheduled_date')->nullable();
-            $table->string('type')->nullable();
+            $table->string('type')->nullable()->comment("internal, or external");
+            $table->string('automated_status')->nullable()->comment("automated, scheduled, or damage_report")->default('automated');
+            $table->text('description')->nullable();
             $table->string('status')->nullable()->comment('cancelled', 'scheduled', 'finished');
             $table->date('assign_date')->nullable();
             $table->date('start_date')->nullable();
@@ -27,8 +29,8 @@ return new class extends Migration
             $table->unsignedBigInteger('responsible_technician')->nullable();
             $table->text('result')->nullable();
             $table->text('details')->nullable();
-            $table->string('action_taken_internal')->nullable();
-            $table->string('action_taken_external')->nullable();
+            $table->text('action_taken_internal')->nullable();
+            $table->text('action_taken_external')->nullable();
             $table->timestamps();
 
             $table->foreign('tool_id')->references('id')->on('tools')->cascadeOnDelete()->cascadeOnUpdate();

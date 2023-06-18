@@ -40,6 +40,29 @@
                 </div>
             </div>
 
+            <div class="row mb-3">
+                <label for="automated_status" class="col-sm-2 col-form-label">Jenis</label>
+                <div class="col-sm-10">
+                    <select class="form-select" id="automated_status" name="automated_status">
+                            <option value="scheduled" {{ $maintenance->automated_status == "scheduled" ? 'selected' : '' }}>Normal</option>
+                            <option value="damage_report" {{ $maintenance->automated_status == "damage_report" ? 'selected' : '' }}>Laporan Kerusakan</option>
+                    </select>
+                    @error('automated_status')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="description" class="col-sm-2 col-form-label">Keterangan</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" id="description" name="description" value="{{ $maintenance->description }}">
+                    @error('description')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+
             <!-- Add other input fields for editing the maintenance data -->
 
             <div class="row mb-3">

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->dateTime('date');
             $table->foreignId('staff_id')->constrained('staffs')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('unit');
+            $table->integer('quantity');
             $table->text('description');
 
             $table->timestamps();

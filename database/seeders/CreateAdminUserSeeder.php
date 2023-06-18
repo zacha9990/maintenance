@@ -5,7 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\{
     User,
-    Staff
+    Staff,
+    Position,
 };
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -25,13 +26,21 @@ class CreateAdminUserSeeder extends Seeder
             'password' => bcrypt('123456')
         ]);
 
-        $role = Role::create(['name' => 'SuperAdmin']);
+        $role = Role::where('name', 'SuperAdmin')->first();
+        $positionRole = Position::where('name', 'SuperAdmin')->first();
 
         $permissions = Permission::pluck('id', 'id')->all();
 
         $role->syncPermissions($permissions);
 
         $user->assignRole([$role->id]);
+
+        $staff = new Staff();
+        $staff->user_id = $user->id;
+        $staff->position_id = $positionRole->id;
+        $staff->work_schedule = "";
+        // Set other fields as needed
+        $staff->save();
 
         // --------------------------------
 
@@ -66,12 +75,13 @@ class CreateAdminUserSeeder extends Seeder
         ]);
 
         $teknisiRole = Role::where('name', 'Teknisi')->first();
+        $positionRole = Position::where('name', 'Teknisi')->first();
 
         $userTeknisi->assignRole([$teknisiRole->id]);
 
         $staff = new Staff();
         $staff->user_id = $userTeknisi->id;
-        $staff->position_id = $teknisiRole->id;
+        $staff->position_id = $positionRole->id;
         $staff->work_schedule = "";
         // Set other fields as needed
         $staff->save();
