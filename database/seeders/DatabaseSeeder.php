@@ -20,18 +20,18 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             // PermissionTableSeeder::class,
-            // PositionSeeder::class, //
-            // CreateAdminUserSeeder::class,
-            // ToolCategories::class,
-            // FactorySeeder::class,
-            ToolSeeder::class,
-            CategorySpecificationSeeder::class, //
-            ToolSpecificationSeeder::class, ///
-            StaffSeeder::class,
-            SparepartSeeder::class,
-            ToolSparepartSeeder::class, //
-            InventorySeeder::class, //
-            StaffSeeder::class, //
+            PositionSeeder::class, //
+            CreateAdminUserSeeder::class,
+            ToolCategories::class,
+            FactorySeeder::class,
+            // ToolSeeder::class,
+            // CategorySpecificationSeeder::class, //
+            // ToolSpecificationSeeder::class, ///
+            // StaffSeeder::class,
+            // SparepartSeeder::class,
+            // ToolSparepartSeeder::class, //
+            // InventorySeeder::class, //
+            // StaffSeeder::class, //
         ]);
     }
 }
