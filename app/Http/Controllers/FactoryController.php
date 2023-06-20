@@ -19,7 +19,10 @@ class FactoryController extends Controller
                 ->addColumn('action', function ($factory) {
                     $editButton = '<button type="button" class="btn btn-primary btn-sm btn-edit" data-id="' . $factory->id . '">Edit</button>';
                     $deleteUrl = route('factories.destroy', $factory->id);
-                $toolsButton = '<a href="' . route('factories.tools', $factory->id) . '" class="btn btn-info btn-sm">Daftar Alat</a>';
+
+                $toolsCount = $factory->tools()->count();
+                $toolsButton = '<a href="' . route('factories.tools', $factory->id) . '" class="btn btn-info btn-sm">Daftar Alat <span class="badge bg-dark">' . $toolsCount . '</span></a>';
+
                 return $editButton . '&nbsp;' . $toolsButton . '&nbsp;' . '<button type="button" class="btn btn-danger btn-sm btn-delete" data-url="' . $deleteUrl . '">Delete</button>';
                 })
                 ->rawColumns(['action'])
@@ -28,6 +31,7 @@ class FactoryController extends Controller
 
         return view('factories.index');
     }
+
 
     public function store(Request $request)
     {

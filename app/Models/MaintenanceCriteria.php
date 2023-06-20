@@ -10,6 +10,12 @@ class MaintenanceCriteria extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'category_id',
+        'name',
+        'description',
+    ];
+
     public function category(){
         return $this->belongsTo(ToolCategory::class, 'category_id');
     }

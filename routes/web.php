@@ -42,6 +42,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::delete('/{tool_category}', [ToolCategoryController::class, 'destroy'])->name('tool_categories.destroy');
     });
 
+    Route::get('tool_categories/{category}/tools', [ToolCategoryController::class, 'toolCategory'])->name('tool_categories.tools.index');
+
     Route::prefix('repair_request')->group(function () {
         Route::get('/', [RepairRequestController::class, 'index'])->name('repair_requests.index');
         Route::get('data', [RepairRequestController::class, 'getData'])->name('repair_requests.data');
@@ -69,10 +71,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/maintenances/{id}/showDetails', [MaintenanceController::class, 'showDetails'])->name('maintenances.show-details');
 
     Route::prefix('maintenance-criterias')->group(function () {
-        Route::get('/', [MaintenanceCriteriaController::class, 'index'])->name('maintenance-criterias.index');
+        Route::get('/{id}', [MaintenanceCriteriaController::class, 'index'])->name('maintenance-criterias.index');
         Route::get('/{id}/create', [MaintenanceCriteriaController::class, 'create'])->name('maintenance-criterias.create');
         Route::post('/', [MaintenanceCriteriaController::class, 'store'])->name('maintenance-criterias.store');
-        Route::get('/{maintenance_criteria}', [MaintenanceCriteriaController::class, 'show'])->name('maintenance-criterias.show');
+        // Route::get('/{maintenance_criteria}', [MaintenanceCriteriaController::class, 'show'])->name('maintenance-criterias.show');
         Route::get('/{maintenance_criteria}/edit', [MaintenanceCriteriaController::class, 'edit'])->name('maintenance-criterias.edit');
         Route::put('/{maintenance_criteria}', [MaintenanceCriteriaController::class, 'update'])->name('maintenance-criterias.update');
         Route::delete('/{maintenance_criteria}', [MaintenanceCriteriaController::class, 'destroy'])->name('maintenance-criterias.destroy');

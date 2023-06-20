@@ -11,19 +11,29 @@
                     <div class="card-body">
                         <form action="{{ route('maintenance-criterias.store') }}" method="POST">
                             @csrf
-                            <input type="hidden" name="tool_category" value="{{ $toolCategory->id }}">
+                            <input type="hidden" name="tool_category[]" value="{{ $toolCategory->id }}">
                             <div id="criteria-fields">
                                 <div class="row mb-3">
                                     <label for="name" class="col-sm-2 col-form-label">Nama</label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" type="text" name="name[]" placeholder="Nama"
+                                        <input class="form-control @error('name.*') is-invalid @enderror" type="text" name="name[]" placeholder="Nama"
                                             required>
+                                        @error('name.*')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label for="description" class="col-sm-2 col-form-label">Deskripsi</label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control" name="description[]" placeholder="Deskripsi"></textarea>
+                                        <textarea class="form-control @error('description.*') is-invalid @enderror" name="description[]" placeholder="Deskripsi"></textarea>
+                                        @error('description.*')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -36,7 +46,7 @@
                             <div class="row mt-3">
                                 <div class="col-sm-10 offset-sm-2">
                                     <button type="submit" class="btn btn-success">Simpan</button>
-                                    <a href="{{ route('maintenance-criterias.index') }}" class="btn btn-secondary">Batal</a>
+                                    <a href="{{ route('maintenance-criterias.index', $toolCategory->id) }}" class="btn btn-secondary">Batal</a>
                                 </div>
                             </div>
                         </form>
@@ -54,15 +64,28 @@
             $('#add-criteria-btn').click(function() {
                 var newField = `
                 <div class="row mb-3">
+                    <input type="hidden" name="tool_category[]" value="{{ $toolCategory->id }}">
+                </div>
+                <div class="row mb-3">
                     <label for="name" class="col-sm-2 col-form-label">Nama</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="text" name="name[]" placeholder="Nama" required>
+                        <input class="form-control @error('name.*') is-invalid @enderror" type="text" name="name[]" placeholder="Nama" required>
+                        @error('name.*')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="description" class="col-sm-2 col-form-label">Deskripsi</label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" name="description[]" placeholder="Deskripsi"></textarea>
+                        <textarea class="form-control @error('description.*') is-invalid @enderror" name="description[]" placeholder="Deskripsi"></textarea>
+                        @error('description.*')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                     <div class="col-sm-2 offset-sm-2 mt-2">
                         <button type="button" class="btn btn-danger remove-criteria-btn">Hapus</button>
@@ -73,6 +96,7 @@
             });
 
             $(document).on('click', '.remove-criteria-btn', function() {
+                $(this).closest('.row.mb-3').prev('.row.mb-3').prev('.row.mb-3').remove(); // Menghapus form Deskripsi
                 $(this).closest('.row.mb-3').prev('.row.mb-3').remove(); // Menghapus form Deskripsi
                 $(this).closest('.row.mb-3').remove(); // Menghapus form Nama
             });
