@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MaintenanceCriteria;
 use App\Models\ToolCategory;
 use Illuminate\Http\Request;
+use App\Models\Maintenance;
 
 class MaintenanceCriteriaController extends Controller
 {
@@ -17,6 +18,14 @@ class MaintenanceCriteriaController extends Controller
         return view('maintenance_criterias.index', compact('toolCategory', 'maintenanceCriterias'));
     }
 
+    public function getCriteriasByMaintenance($id)
+    {
+        $maintenanceCriteria = Maintenance::findOrFail($id)->tool->category->maintenanceCriteria;
+
+        return response()->json([
+            'maintenanceCriteria' => $maintenanceCriteria
+        ]);
+    }
     public function create($id)
     {
         $toolCategory = ToolCategory::findOrFail($id);

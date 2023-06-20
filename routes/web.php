@@ -72,6 +72,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::prefix('maintenance-criterias')->group(function () {
         Route::get('/{id}', [MaintenanceCriteriaController::class, 'index'])->name('maintenance-criterias.index');
+        Route::get('/{id}/getCriteriasByMaintenance', [MaintenanceCriteriaController::class, 'getCriteriasByMaintenance'])->name('maintenance-criterias.getCriteriasByMaintenance');
         Route::get('/{id}/create', [MaintenanceCriteriaController::class, 'create'])->name('maintenance-criterias.create');
         Route::post('/', [MaintenanceCriteriaController::class, 'store'])->name('maintenance-criterias.store');
         // Route::get('/{maintenance_criteria}', [MaintenanceCriteriaController::class, 'show'])->name('maintenance-criterias.show');

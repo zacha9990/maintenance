@@ -69,6 +69,12 @@
                             <span>Jadwal Saya</span>
                         </a>
                     </li>
+                    <li>
+
+                        <a href="{{ route('repair_requests.create') }}" class="waves-effect">
+                            <i class="fas fa-exclamation-triangle"></i></i><span>Laporan Kerusakan</span></a>
+                        </a>
+                    </li>
                 @endif
 
                 @if (Auth::user()->hasRole(['SuperAdmin']))

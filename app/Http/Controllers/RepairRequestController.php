@@ -99,17 +99,24 @@ class RepairRequestController extends Controller
 
     public function create()
     {
-        $staffs = Staff::with('user', 'position')
-            ->whereHas('position.role', function ($query) {
-                $query->where('name', 'Teknisi');
-                $query->orWhere('name', 'Operator');
-            })->get();
 
         $tools = Tool::all();
 
         $superAdmin = false;
         if (Auth::user()->hasRole('SuperAdmin')) {
+            $staffs = Staff::with('user', 'position')
+                ->whereHas('position.role', function ($query) {
+                    $query->where('name', 'Teknisi');
+                    $query->orWhere('name', 'Operator');
+                })->get();
             $superAdmin = Auth::user()->staff->id;
+        } else {
+            $staffs = Staff::with('user', 'position')
+            ->whereId(Auth::user()->staff->id)
+                ->whereHas('position.role', function ($query) {
+                    $query->where('name', 'Teknisi');
+                    $query->orWhere('name', 'Operator');
+                })->get();
         }
 
         return view('repair_requests.create', compact('staffs', 'tools', 'superAdmin'));
@@ -129,7 +136,12 @@ class RepairRequestController extends Controller
         // Simpan data repair request ke database
         RepairRequest::create($validatedData);
 
-        return redirect()->route('repair_requests.index')->with('success', 'Permintaan perbaikan dibuat dengan sukses');
+        if (Auth::user()->hasRole('SuperAdmin')) {
+            return redirect()->route('repair_requests.index')->with('success', 'Permintaan perbaikan dibuat dengan sukses');
+        } else {
+            return redirect()->route('repair_requests.create')->with('success', 'Permintaan perbaikan dibuat dengan sukses');
+        }
+
     }
 
     public function show($id)

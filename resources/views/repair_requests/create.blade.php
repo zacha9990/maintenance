@@ -11,6 +11,15 @@
 
 @section('content')
     <div class="container">
+        @if ($message = Session::get('success'))
+            <div class="card">
+                <div class="card-body">
+                    <div class="alert alert-success">
+                        <p>{{ Session::get('success') }}</p>
+                    </div>
+                </div>
+            </div>
+        @endif
         <div class="card">
             <div class="card-header">
                 Buat permintaan perbaikan
@@ -21,14 +30,13 @@
                     <div class="mb-3">
                         <label for="staff_id" class="form-label">Staff</label>
                         <select class="form-control select2" id="staff_id" name="staff_id" required>
-                            <option value="">Pilih Staf</option>
                             @if($superAdmin)
+                                <option value="">Pilih Staf</option>
                                 <option value="{{ $superAdmin }}">{{ "Super Admin" }}</option>
-                            @foreach ($staffs as $staff)
-                                <option value="{{ $staff->id }}">{{ $staff->user->name }}</option>
-                            @endforeach
-                            @else
                             @endif
+                                @foreach ($staffs as $staff)
+                                    <option value="{{ $staff->id }}">{{ $staff->user->name }}</option>
+                                @endforeach
                         </select>
                     </div>
                     <div class="mb-3">

@@ -58,6 +58,10 @@
                             <label for="actionTaken" class="form-label">Tindakan yang diambil</label>
                             <textarea class="form-control" id="actionTaken" rows="3"></textarea>
                         </div>
+                        <div class="mb-3">
+                            <label for="maintenanceCriteria" class="form-label">Kriteria Pemeliharaan</label>
+                            <div id="maintenanceCriteriaRadios"></div>
+                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                             <button type="submit" class="btn btn-primary">Simpan</button>
@@ -160,6 +164,14 @@
                 var details = $('#details').val();
                 var actionTaken = $('#actionTaken').val();
 
+                // Mengambil nilai dari setiap maintenance criteria
+                var maintenanceCriteriaValues = {};
+                $('input[name^="maintenanceCriteria"]:checked').each(function() {
+                    var criteriaId = $(this).attr('name').match(/\[(.*?)\]/)[1];
+                    var value = $(this).val();
+                    maintenanceCriteriaValues[criteriaId] = value;
+                });
+
                 $.ajax({
                     url: '/maintenances/completeMaintenance/' + maintenanceId,
                     type: 'PUT',
@@ -167,7 +179,8 @@
                     data: {
                         result: result,
                         details: details,
-                        action_taken: actionTaken
+                        action_taken: actionTaken,
+                        maintenance_criteria_values: maintenanceCriteriaValues
                     },
                     success: function(response) {
                         if (response.success) {
@@ -179,12 +192,62 @@
                 });
             });
 
+
             $('#completeModal').on('show.bs.modal', function(event) {
                 var button = $(event.relatedTarget); // Tombol yang memicu modal
                 var maintenanceId = button.data(
                     'maintenance-id'); // Mengambil nilai maintenanceId dari atribut data-maintenance-id
                 $('#maintenanceId').val(
                     maintenanceId); // Mengatur nilai maintenanceId pada input tersembunyi
+
+                // Mengosongkan radio group sebelumnya (jika ada)
+                $('#maintenanceCriteriaRadios').empty();
+
+                // Memanggil data maintenance criteria menggunakan jQuery Ajax
+                $.ajax({
+                    url: '/maintenance-criterias/' + maintenanceId +
+                        '/getCriteriasByMaintenance',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        // Menambahkan radio buttons untuk setiap maintenance criteria
+                        $.each(response.maintenanceCriteria, function(index, item) {
+                            var radioGroupHtml = '<div class="form-check">';
+                            radioGroupHtml +=
+                                '<input type="hidden" name="criteria_id[]" value="' +
+                                item.id + '">';
+                            radioGroupHtml +=
+                                '<input class="form-check-input" type="radio" name="maintenanceCriteria[' +
+                                item.id + ']" id="maintenanceCriteriaGood' +
+                                item.id + '" value="good">';
+                            radioGroupHtml +=
+                                '<label class="form-check-label" for="maintenanceCriteriaGood' +
+                                item.id + '">Baik</label>';
+                            radioGroupHtml += '</div>';
+                            radioGroupHtml += '<div class="form-check">';
+                            radioGroupHtml +=
+                                '<input class="form-check-input" type="radio" name="maintenanceCriteria[' +
+                                item.id +
+                                ']" id="maintenanceCriteriaNotGood' + item
+                                .id + '" value="not_good">';
+                            radioGroupHtml +=
+                                '<label class="form-check-label" for="maintenanceCriteriaNotGood' +
+                                item.id + '">Tidak Baik</label>';
+                            radioGroupHtml += '</div>';
+
+                            var groupHtml = '<div class="mb-3">';
+                            groupHtml += '<label for="maintenanceCriteria' + item.id +
+                                '" class="form-label">' + item.name + '</label>';
+                            groupHtml += radioGroupHtml;
+                            groupHtml += '</div>';
+
+                            $('#maintenanceCriteriaRadios').append(groupHtml);
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
             });
         });
     </script>

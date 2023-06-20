@@ -36,20 +36,36 @@
                         </tr>
                         <tr>
                             <th>Jadwal ditugaskan</th>
-                            <td>{{ $maintenance->assign_date ? $maintenance->assign_date->format('j F Y H:i:s') : '-' }}</td>
+                            <td>{{ $maintenance->assign_date ? Carbon\Carbon::parse($maintenance->assign_date)->format('j F Y H:i:s') : '-' }}</td>
                         </tr>
                         <tr>
                             <th>Mulai Maintenance</th>
-                            <td>{{ $maintenance->start_date ? $maintenance->start_date->format('j F Y H:i:s') : '-' }}</td>
+                            <td>{{ $maintenance->start_date ? Carbon\Carbon::parse($maintenance->start_date)->format('j F Y H:i:s') : '-' }}</td>
                         </tr>
                         <tr>
                             <th>Tanggal selesai</th>
-                            <td>{{ $maintenance->completed_date ? $maintenance->completed_date->format('j F Y H:i:s') : '-' }}</td>
+                            <td>{{ $maintenance->completed_date ? Carbon\Carbon::parse($maintenance->completed_date)->format('j F Y H:i:s') : '-' }}</td>
                         </tr>
                         <tr>
                             <th>Hasil</th>
                             <td>{{ $maintenance->result ?: '-' }}</td>
                         </tr>
+                        <tr>
+                            <th>Detail</th>
+                            <td>{{ $maintenance->details ? $maintenance->details['details'] : '-' }}</td>
+                        </tr>
+                        @if ($maintenance->details)
+                            <tr>
+                                <th>Pengecekan</th>
+                                <td>
+                                    <ul>
+                                    @foreach ($maintenance->details['criterias'] as $criteria)
+                                        <li>{{ $criteria['name'] }}: {{ $criteria['result'] == 'good' ? 'Baik' : 'Tidak Baik' }}</li>
+                                    @endforeach
+                                    </ul>
+                                </td>
+                            </tr>
+                        @endif
                         <tr>
                             <th>Tindakan yang diambil (Internal)</th>
                             <td>{{ $maintenance->action_taken_internal ?: '-' }}</td>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Tool;
 use App\Models\Staff;
 use App\Models\Maintenance;
+use App\Models\MaintenanceCriteria;
 use App\Models\RepairRequest;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
@@ -40,6 +41,10 @@ class MaintenanceController extends Controller
                 $query->where('status', $statusFilter);
             }
         }
+
+        $q = $query->get();
+
+        // dd($q->first()->tool->category->maintenanceCriteria);
 
         return DataTables::of($query)
             ->addColumn('tool_name', function ($maintenance) {
@@ -136,6 +141,11 @@ class MaintenanceController extends Controller
                 $maintenance->action_taken_external = $request->input('action_taken');
             }
 
+            $details['details'] = $maintenance->details;
+            $details['criterias'] = $request->input('maintenance_criteria_values');
+
+            $maintenance->details = json_encode($details);
+
             $maintenance->save();
 
             return response()->json(['success' => true]);
@@ -213,6 +223,24 @@ class MaintenanceController extends Controller
         ];
 
         $maintenance->status = $status[$maintenance->status];
+        if ($maintenance->details) {
+            $maintenanceDetails = array();
+            $maintenanceResultCriteria = array();
+            $details =  json_decode($maintenance->details, true);
+            $criterias = $details['criterias'];
+            foreach ($criterias as $key => $criteria) {
+                $maintenanceCriteria = MaintenanceCriteria::find($key);
+                if ($maintenanceCriteria) {
+                    $temp['id'] = $maintenanceCriteria->id;
+                    $temp['name'] = $maintenanceCriteria->name;
+                    $temp['result'] = $criteria;
+                    array_push($maintenanceResultCriteria, $temp);
+                }
+            }
+            $maintenanceDetails['details'] = $details['details'];
+            $maintenanceDetails['criterias'] = $maintenanceResultCriteria;
+            $maintenance->details = $maintenanceDetails;
+        }
         $maintenance->automated_status = $automatedStatus[$maintenance->automated_status];
 
         return view('maintenances.show_details', compact('maintenance'));
