@@ -4,8 +4,8 @@
     <div class="container">
         <div class="card">
             <div class="card-body">
-                <h1>All Maintenances</h1>
-                <table id="maintenances-table" class="table">
+                <h1>Semua pemeliharaan</h1>
+                <table id="maintenances-table" class="table table-striped table-condensed">
                     <thead>
                         <tr>
                             <th>Nama alat</th>

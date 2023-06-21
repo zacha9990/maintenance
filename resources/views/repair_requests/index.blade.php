@@ -15,7 +15,7 @@
         <div class="card">
             <div class="card-body">
                 <h1>Laporan Kerusakan</h1>
-                <a href="{{ route('repair_requests.create') }}" class="btn btn-primary mb-3">Create Repair Request</a>
+                <a href="{{ route('repair_requests.create') }}" class="btn btn-primary mb-3">Buat Laporan Kerusakan</a>
 
                 <div class="mb-3 d-flex justify-content-center align-items-center">
                     <label for="approved-status-filter" class="mb-0">Status:</label>

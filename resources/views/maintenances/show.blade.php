@@ -35,7 +35,7 @@
                         <th>Tanggal selesai</th>
                         <th>Waktu</th>
                         <th>Hasil</th>
-                        <th>Aksi</th>
+                        <th style="white-space: nowrap;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -107,12 +107,12 @@
                             <td>{{ $maintenance->completed_date }}</td>
                             <td>{{ $maintenance->time }}</td>
                             <td>{{ $maintenance->result }}</td>
-                            <td>
+                            <td style="white-space: nowrap;">
                                 <!-- Tombol Cancel -->
                                 @if ($maintenance->status != 'cancelled' && $maintenance->status != "completed")
-                                    <button class="btn btn-danger btn-cancel" data-maintenance-id="{{ $maintenance->id }}">Batal</button>
+                                    <button class="btn btn-danger btn-cancel"  data-toggle="tooltip" title="Batalkan Maintenance" data-maintenance-id="{{ $maintenance->id }}"><i class="fas fa-times-circle"></i></button>
                                 @endif
-                                <a href="{{ route('maintenances.show-details', $maintenance->id) }}" class="btn btn-primary">Detail</a>
+                                <a href="{{ route('maintenances.show-details', $maintenance->id) }}" data-toggle="tooltip" title="Informasi Maintenance" class="btn btn-primary"><i class="fas fa-info-circle"></i></a>
                             </td>
                         </tr>
                     @endforeach

@@ -13,6 +13,7 @@ use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 
 
@@ -83,13 +84,13 @@ class MaintenanceController extends Controller
                 return '<span class="badge ' . $badgeClass . '">' . $status . '</span>';
             })
             ->addColumn('assign_date', function ($maintenance) {
-                return $maintenance->assign_date;
+            return Carbon::parse($maintenance->assign_date)->translatedFormat('j F Y');
             })
             ->addColumn('start_date', function ($maintenance) {
-                return $maintenance->start_date;
+            return Carbon::parse($maintenance->start_date)->translatedFormat('j F Y');
             })
             ->addColumn('completed_date', function ($maintenance) {
-                return $maintenance->completed_date;
+            return Carbon::parse($maintenance->completed_date)->translatedFormat('j F Y');
             })
             ->addColumn('action', function ($maintenance) {
                 $startButton = '';
@@ -227,19 +228,21 @@ class MaintenanceController extends Controller
             $maintenanceDetails = array();
             $maintenanceResultCriteria = array();
             $details =  json_decode($maintenance->details, true);
-            $criterias = $details['criterias'];
-            foreach ($criterias as $key => $criteria) {
-                $maintenanceCriteria = MaintenanceCriteria::find($key);
-                if ($maintenanceCriteria) {
-                    $temp['id'] = $maintenanceCriteria->id;
-                    $temp['name'] = $maintenanceCriteria->name;
-                    $temp['result'] = $criteria;
-                    array_push($maintenanceResultCriteria, $temp);
+            if (isset($details['criterias'])){
+                $criterias = $details['criterias'];
+                foreach ($criterias as $key => $criteria) {
+                    $maintenanceCriteria = MaintenanceCriteria::find($key);
+                    if ($maintenanceCriteria) {
+                        $temp['id'] = $maintenanceCriteria->id;
+                        $temp['name'] = $maintenanceCriteria->name;
+                        $temp['result'] = $criteria;
+                        array_push($maintenanceResultCriteria, $temp);
+                    }
                 }
+                $maintenanceDetails['details'] = $details['details'];
+                $maintenanceDetails['criterias'] = $maintenanceResultCriteria;
+                $maintenance->details = $maintenanceDetails;
             }
-            $maintenanceDetails['details'] = $details['details'];
-            $maintenanceDetails['criterias'] = $maintenanceResultCriteria;
-            $maintenance->details = $maintenanceDetails;
         }
         $maintenance->automated_status = $automatedStatus[$maintenance->automated_status];
 

@@ -52,16 +52,18 @@
                         </tr>
                         <tr>
                             <th>Detail</th>
-                            <td>{{ $maintenance->details ? $maintenance->details['details'] : '-' }}</td>
+                            <td>{{ $maintenance->details && isset($maintenance->details['details']) ? $maintenance->details['details'] : '-' }}</td>
                         </tr>
                         @if ($maintenance->details)
                             <tr>
                                 <th>Pengecekan</th>
                                 <td>
                                     <ul>
-                                    @foreach ($maintenance->details['criterias'] as $criteria)
-                                        <li>{{ $criteria['name'] }}: {{ $criteria['result'] == 'good' ? 'Baik' : 'Tidak Baik' }}</li>
-                                    @endforeach
+                                        @if (isset($maintenance->details['details']))
+                                            @foreach ($maintenance->details['criterias'] as $criteria)
+                                                <li>{{ $criteria['name'] }}: {{ $criteria['result'] == 'good' ? 'Baik' : 'Tidak Baik' }}</li>
+                                            @endforeach
+                                        @endif
                                     </ul>
                                 </td>
                             </tr>

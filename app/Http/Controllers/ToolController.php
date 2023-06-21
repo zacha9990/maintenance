@@ -12,6 +12,7 @@ use App\Models\{
     MaintenancePeriod,
     Tool
 };
+use Carbon\Carbon;
 
 class ToolController extends Controller
 {
@@ -35,6 +36,9 @@ class ToolController extends Controller
         $tools = $tools->get();
 
         return DataTables::of($tools)
+            ->editColumn('purchase_date', function ($tool) {
+                return Carbon::parse($tool->purchase_date)->translatedFormat('j F Y');
+            })
             ->addColumn('information_buttons', function ($tool) {
             return
                 '<button class="btn btn-primary btn-sm btn-spareparts" data-bs-toggle="modal"
