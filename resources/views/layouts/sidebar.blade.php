@@ -78,6 +78,12 @@
                 @endif
 
                 @if (Auth::user()->hasRole(['SuperAdmin']))
+                <li>
+                    <a href="{{ route('reports.index') }}" class="waves-effect">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Laporan</span>
+                    </a>
+                </li>
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">

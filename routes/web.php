@@ -14,7 +14,9 @@ use App\Http\Controllers\{
     SparepartController,
     PositionController,
     RepairRequestController,
-    MaintenanceCriteriaController
+    MaintenanceCriteriaController,
+    TestController,
+    ReportController
 };
 
 
@@ -22,6 +24,8 @@ Auth::routes(['register' => false,
     'reset' => false,
     'verify' => false,
 ]);
+
+Route::get('/tests', [TestController::class, 'index']);
 
 Route::group(['middleware' => ['auth']], function () {
     Route::prefix('factories')->group(function () {
@@ -32,6 +36,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::delete('/{id}', [FactoryController::class, 'destroy'])->name('factories.destroy');
         Route::get('/{factory}/tools', [FactoryController::class, 'tools'])->name('factories.tools');
         Route::get('/{factory}/getTools', [FactoryController::class, 'toolList'])->name('factories.toolList');
+    });
+
+    Route::prefix('reports')->group(function () {
+        Route::get('/', [ReportController::class, 'index'])->name('reports.index');
+        Route::get('/{param}', [ReportController::class, 'reportForm'])->name('reports.reportForm');
+        Route::post('/{param}', [ReportController::class, 'generateForm'])->name('reports.generateForm');
     });
 
     Route::prefix('tool_categories')->group(function () {
