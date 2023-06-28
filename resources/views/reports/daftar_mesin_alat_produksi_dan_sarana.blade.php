@@ -27,7 +27,7 @@
                         <div class="row mb-3">
                             <label for="description" class="col-sm-2 col-form-label">{{ $input['text'] }}</label>
                             <div class="col-sm-10">
-                                <input class="form-control" type="text" id="{{ $input['id'] }}" name="{{ $input['id'] }}">
+                                <input class="form-control" type="text" id="{{ $input['id'] }}" name="{{ $input['id'] }}" required>
                             </div>
                         </div>
                     @endforeach

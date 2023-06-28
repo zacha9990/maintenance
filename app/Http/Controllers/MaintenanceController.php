@@ -286,6 +286,8 @@ class MaintenanceController extends Controller
         if ($request->input('repair_id') > 0) {
             $maintenance->repair_id = $request->input('repair_id');
             $maintenance->automated_status = "damage_report";
+            $repairRequest = RepairRequest::findOrFail($maintenance->repair_id);
+            $maintenance->type = $repairRequest->maintenance_type;
         }
 
         $maintenance->save();

@@ -16,6 +16,7 @@ class RepairRequest extends Model
         'tool_id',
         'description',
         'status',
+        'maintenance_type',
         'approved'
     ];
 

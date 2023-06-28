@@ -17,6 +17,7 @@
                         <tr>
                             <th>No.</th>
                             <th>Nama</th>
+                            <th>Kategori Induk</th>
                             <th>Tindakan</th>
                         </tr>
                     </thead>
@@ -38,6 +39,14 @@
                         <div class="mb-3">
                             <label for="createName" class="form-label">Nama</label>
                             <input type="text" class="form-control" id="createName" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="parent_id" class="form-label">Kategori Induk</label>
+                            <select type="text" class="form-control" id="parent_id" name="parent_id">
+                                @foreach ($allCategories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -62,6 +71,14 @@
                         <div class="mb-3">
                             <label for="editName" class="form-label">Nama</label>
                             <input type="text" class="form-control" id="editName" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit_parent_id" class="form-label">Kategori Induk</label>
+                            <select type="text" class="form-control" id="edit_parent_id" name="parent_id">
+                                @foreach ($allCategories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -98,6 +115,10 @@
                         name: 'name'
                     },
                     {
+                        data: 'parent_category',
+                        name: 'parent_category'
+                    },
+                    {
                         data: 'action',
                         name: 'action',
                         orderable: false,
@@ -128,11 +149,13 @@
             // Edit
             $('#toolCategoriesTable').on('click', '.edit', function() {
                 var id = $(this).data('id');
-                var url = '{{ route('tool_categories.update', ':id') }}'.replace(':id', id);
+                var url = '{{ route('tool_categories.getCategory', ':id') }}'.replace(':id', id);
 
                 $.get(url, function(toolCategory) {
                     $('#editModal').modal('show');
-                    $('#editName').val(toolCategory.name);
+                    $('#editName').val(toolCategory.data.name);
+                    // $('#edit_parent_id').val(toolCategory.data.parent_id).change();
+                    $('#edit_parent_id').val(toolCategory.data.parent_id).attr("selected", "selected").change();
                     $('#editForm').attr('action', url);
                 });
             });

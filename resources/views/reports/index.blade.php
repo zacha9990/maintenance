@@ -24,6 +24,7 @@
                                 <td><a href="{{ route('reports.reportForm', $report['slug']) }}" class="btn btn-primary btn-sm"><i class="fas fa-print"></i>
                                      Mulai Cetak</a></td>
                             </tr>
+                        @php $i++; @endphp
                         @endforeach
                     </tbody>
                 </table>

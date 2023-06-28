@@ -13,11 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tool_categories', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->foreignId('parent_id')->nullable()->constrained('tool_categories')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->timestamps();
+        Schema::table('repair_requests', function (Blueprint $table) {
+            $table->string('maintenance_type')->nullable()->after('approved')->comment('internal or external');
         });
     }
 
@@ -28,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tool_categories');
+        Schema::table('repair_requests', function (Blueprint $table) {
+            $table->dropColumn('maintenance_type');
+        });
     }
 };

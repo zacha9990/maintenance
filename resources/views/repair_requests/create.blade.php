@@ -40,7 +40,7 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="tool_id" class="form-label">Tool</label>
+                        <label for="tool_id" class="form-label">Alat</label>
                         <select class="form-control select2" id="tool_id" name="tool_id" required>
                             <option value="">Pilih alat</option>
                             @foreach ($tools as $tool)
@@ -49,11 +49,18 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="description" class="form-label">Description</label>
+                        <label for="maintenance_type" class="form-label">Tipe Pemeliharaan</label>
+                        <select class="form-control select2" id="maintenance_type" name="maintenance_type" required>
+                            <option value="Internal">Internal</option>
+                            <option value="External">External</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Keterangan</label>
                         <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Create</button>
-                    <a href="{{ route('repair_requests.index') }}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Membuat</button>
+                    <a href="{{ route('repair_requests.index') }}" class="btn btn-secondary">Membatalkan</a>
                 </form>
             </div>
         </div>

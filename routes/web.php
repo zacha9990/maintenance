@@ -46,8 +46,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::prefix('tool_categories')->group(function () {
         Route::get('/', [ToolCategoryController::class, 'index'])->name('tool_categories.index');
+        // Route::get('/{tool_category}', [ToolCategoryController::class, 'edit'])->name('tool_categories.edit');
         Route::get('/datatables', [ToolCategoryController::class, 'datatable'])->name('tool_categories.datatables');
         Route::post('/', [ToolCategoryController::class, 'store'])->name('tool_categories.store');
+        Route::get('/{tool_category}', [ToolCategoryController::class, 'getCategory'])->name('tool_categories.getCategory');
         Route::put('/{tool_category}', [ToolCategoryController::class, 'update'])->name('tool_categories.update');
         Route::delete('/{tool_category}', [ToolCategoryController::class, 'destroy'])->name('tool_categories.destroy');
     });

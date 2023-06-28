@@ -129,6 +129,7 @@ class RepairRequestController extends Controller
             'staff_id' => 'required',
             'tool_id' => 'required',
             'description' => 'required',
+            'maintenance_type' => 'required',
         ]);
 
         $validatedData['status'] = 'reported';

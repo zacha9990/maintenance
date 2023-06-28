@@ -16,7 +16,7 @@
             <div class="document-number">
                 <p>No Dokumen: {{ $no_laporan }}</p>
             </div>
-            <div class="table-title">
+            <div class="table-title text-center">
                 <h3>DAFTAR MESIN/ALAT PRODUKSI DAN SARANA LAINNYA {{ $factory->name }} KBM IHHBK JATENG</h3>
             </div>
 

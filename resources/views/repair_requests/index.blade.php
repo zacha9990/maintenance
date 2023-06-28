@@ -33,7 +33,8 @@
                             <th>ID</th>
                             <th>Pelapor</th>
                             <th>Alat</th>
-                            <th>Description</th>
+                            <th>Keterangan</th>
+                            <th>Tipe Maintenance</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -71,6 +72,10 @@
                     {
                         data: 'description',
                         name: 'description'
+                    },
+                    {
+                        data: 'maintenance_type',
+                        name: 'maintenance_type'
                     },
                     {
                         data: 'approved_status',

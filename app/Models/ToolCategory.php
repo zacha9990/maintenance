@@ -12,6 +12,18 @@ class ToolCategory extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'parent_id'];
+
+    public function parentCategory()
+    {
+        return $this->belongsTo(ToolCategory::class, 'parent_id');
+    }
+
+    public function subCategories()
+    {
+        return $this->hasMany(ToolCategory::class, 'parent_id');
+    }
+
     public function tools(){
         return $this->hasMany(Tool::class, 'tool_type_id');
     }

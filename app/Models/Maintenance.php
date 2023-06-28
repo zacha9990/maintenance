@@ -16,7 +16,7 @@ class Maintenance extends Model
     use HasFactory;
 
     public function tool(){
-        return $this->belongsTo(Tool::class);
+        return $this->belongsTo(Tool::class,);
     }
 
 
@@ -29,7 +29,7 @@ class Maintenance extends Model
     }
 
     public function repairRequest(){
-        return $this->belongsTo(RepairRequest::class);
+        return $this->belongsTo(RepairRequest::class, 'repair_id');
     }
 
     public function technician(){

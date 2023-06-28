@@ -26,7 +26,7 @@
                     <tr>
                         <th>Tanggal</th>
                         <th>Jenis</th>
-                        <th>Pendjawalan</th>
+                        <th>Penjadwalan</th>
                         <th>Status</th>
                         <th>Jadwal dibuat</th>
                         <th>Teknisi yang ditugaskan</th>

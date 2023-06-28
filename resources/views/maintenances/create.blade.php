@@ -19,12 +19,13 @@
                 </div>
 
                 <div class="row mb-3">
-                    <label for="type" class="col-sm-2 col-form-label">Jenis</label>
+                    <label for="type" class="col-sm-2 col-form-label">Tipe Maintenance</label>
                     <div class="col-sm-10">
                         <select class="form-select" id="type" name="type">
                                 <option value="Internal">Internal</option>
                                 <option value="Internal">External</option>
                         </select>
+                        <small class="text-muted">Jika laporan kerusakan dipilih (input paling bawah), maka input ini diabaikan</small>
                         @error('type')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -38,6 +39,7 @@
                                 <option value="scheduled">Normal</option>
                                 <option value="damage_report">Laporan Kerusakan</option>
                         </select>
+                        <small class="text-muted">Jika laporan kerusakan dipilih (input paling bawah), maka input ini diabaikan</small>
                         @error('automated_status')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -78,7 +80,7 @@
                                 <option value="{{ $repair->id }}">{{ $repair->description }}</option>
                             @endforeach
                         </select>
-                        <small class="text-muted">Opsional, hanya jika maintenance berdasarkan laporan kerusakan.</small>
+                        <small class="text-muted">Opsional, hanya jika maintenance berdasarkan laporan kerusakan. Tipe maintenance akan mengikuti tipe pada laporan kerusakan yang dipilih.</small>
                         @error('repair_id')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
