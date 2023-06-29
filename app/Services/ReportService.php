@@ -24,6 +24,10 @@ class ReportService
             $data = self::daftarPermintaanPerbaikanMesinAlatProduksiInternal($key);
         }
 
+        if ($key == 'berita_acara_pemeriksaan_kerusakan_mesin_alat_produksi') {
+            $data = self::beritaAcaraPemeriksaanKerusakanMesinAlatProduksi($key);
+        }
+
         return $data;
     }
 
@@ -31,6 +35,13 @@ class ReportService
     {
         $builder = config("reports.$key");
         $builder['factories'] = Factory::all();
+
+        return $builder;
+    }
+
+    public static function beritaAcaraPemeriksaanKerusakanMesinAlatProduksi($key)
+    {
+        $builder = config("reports.berita_acara_pemeriksaan_kerusakan_mesin_alat_produksi");
 
         return $builder;
     }
@@ -53,21 +64,6 @@ class ReportService
 
     public static function getRepairRequest($factoryId, $startDate, $endDate, $external = true)
     {
-        // $maintenances = Maintenance::has('repairRequest')
-        // ->with('repairRequest')
-        // ->with(['tool:id,name'])
-        // ->whereBetween('assign_date', [$startDate, $endDate])
-        //     ->whereHas('tool.factory', function ($query) use ($factoryId) {
-        //         $query->where('id', $factoryId);
-        //     })
-        //     ->when($external, function ($query) {
-        //         $query->where('type', 'External');
-        //     })
-        //     ->when(!$external, function ($query) {
-        //         $query->where('type', 'Internal');
-        //     })
-        //     ->get();
-
         $maintenances = RepairRequest::with('tool')
         ->whereBetween('created_at', [$startDate, $endDate])
             ->whereHas('tool.factory', function ($query) use ($factoryId) {
@@ -92,5 +88,9 @@ class ReportService
         });
 
         return $data;
+    }
+
+    public static function getListBeritaAcaraPemeriksaanKerusakanMesinAlatProduksi()
+    {
     }
 }

@@ -9,6 +9,8 @@ use App\Models\Tool;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\daftar_mesin_alat_produksi_dan_sarana;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\Maintenance;
+use Carbon\Carbon;
 
 class ReportController extends Controller
 {
@@ -19,10 +21,61 @@ class ReportController extends Controller
         return view('reports.index', compact('reports'));
     }
 
-    public function reportForm($param)
+    public function reportForm(Request $request, $param)
     {
         $builder = ReportService::getData($param);
+
+        if ($param == 'berita_acara_pemeriksaan_kerusakan_mesin_alat_produksi') {
+            $paramTemp = 'berita_acara_pemeriksaan_kerusakan_mesin_alat_produksi';
+            $param = $request->get('param', 'default');
+            $sort = $request->get('sort', 'default');
+            $factoryFilter = $request->get('factory_filter', '');
+
+            $query = Maintenance::where('automated_status', 'damage_report')
+            ->where('status', 'completed')
+            ->with(['tool:id,name'])
+            ->with('tool.factory');
+
+            // Filter by factory
+            if (!empty($factoryFilter)) {
+                $query->whereHas('tool.factory', function ($query) use ($factoryFilter) {
+                    $query->where('id', $factoryFilter);
+                });
+            }
+
+            // Sorting
+            if ($sort === 'name') {
+                $query->orderBy('tool.name');
+            } elseif ($sort === 'completed_date') {
+                $query->orderBy('completed_date');
+            }
+
+            $lists = $query->paginate(10);
+            $factories = Factory::all();
+
+            return view("reports.list_$paramTemp", compact('lists', 'factories', 'factoryFilter'));
+        }
+
         return view("reports.$param", compact('builder'));
+    }
+
+    public function beritaAcaraKerusakan(Request $request, Maintenance $maintenance)
+    {
+        $builder = ReportService::getData('berita_acara_pemeriksaan_kerusakan_mesin_alat_produksi');
+
+        return view('reports.berita_acara_kerusakan', compact('maintenance', 'builder'));
+    }
+
+    public function cetakBeritaAcaraKerusakan(Request $request, Maintenance $maintenance)
+    {
+        $no_laporan = $request->input('no_laporan');
+        $letter_date = Carbon::parse($request->input('letter_date'))->translatedFormat('j F Y');
+        $letter_day = Carbon::parse($letter_date)->translatedFormat('l');
+        $maintenanceName = $request->input('maintenance');
+        $kepalaShiftName = $request->input('kepala_shift');
+        $toolName = $maintenance->tool->name;
+        $pdf = PDF::loadView("exports.berita_acara_pemeriksaan_kerusakan_mesin_alat_produksi", compact('no_laporan', 'maintenance', 'letter_date', 'letter_day', 'maintenanceName', 'kepalaShiftName'));
+        return $pdf->stream("berita_acara_pemeriksaan_kerusakan_mesin_alat_produksi.$toolName.pdf");
     }
 
     public function generateForm(Request $request, $param)

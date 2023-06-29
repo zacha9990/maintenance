@@ -39,6 +39,8 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('reports')->group(function () {
+        Route::get('/beritaAcaraKerusakan/{maintenance}', [ReportController::class, 'beritaAcaraKerusakan'])->name('reports.beritaAcaraKerusakan');
+        Route::post('/beritaAcaraKerusakan/{maintenance}', [ReportController::class, 'cetakBeritaAcaraKerusakan'])->name('reports.cetakBeritaAcaraKerusakan');
         Route::get('/', [ReportController::class, 'index'])->name('reports.index');
         Route::get('/{param}', [ReportController::class, 'reportForm'])->name('reports.reportForm');
         Route::post('/{param}', [ReportController::class, 'generateForm'])->name('reports.generateForm');

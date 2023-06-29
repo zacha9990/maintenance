@@ -30,7 +30,27 @@ $reports = [
                 "text" => "Nomor Laporan"
             ]
         ]
+    ],
+    "berita_acara_pemeriksaan_kerusakan_mesin_alat_produksi" => [
+        "slug" => "berita_acara_pemeriksaan_kerusakan_mesin_alat_produksi",
+        "name" => "Berita acara pemeriksaan kerusakan mesin alat produksi",
+        "input" => [
+            [
+                "id" => "no_laporan",
+                "text" => "Nomor Laporan"
+            ],
+            [
+                "id" => "maintenance",
+                "text" => "Maintenance"
+            ],
+            [
+                "id" => "kepala_shift",
+                "text" => "Nama Kepala Shift"
+            ]
+        ]
     ]
+
+
 ];
 
 return $reports;
