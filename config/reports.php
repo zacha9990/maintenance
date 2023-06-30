@@ -53,16 +53,18 @@ $reports = [
         ],
         "description" => "Daftar Maintenance diambil dari proses maintenance yang sudah selesai, yang tipenya adalah laporan kerusakan"
     ],
-    // "daftar_rekap_pelaksanaan_pekerjaan_perawatan_dan_perbaikan_mesin_alat_produksi" => [
-    //     "slug" => "daftar_rekap_pelaksanaan_pekerjaan_perawatan_dan_perbaikan_mesin_alat_produksi",
-    //     "name" => "Daftar rekap pelaksanaan pekerjaan perawatan dan perbaikan mesin alat produksi",
-    //     "input" => [
-    //         [
-    //             "id" => "no_laporan",
-    //             "text" => "Nomor Laporan"
-    //         ]
-    //     ]
-    // ],
+    "daftar_rekap_pelaksanaan_pekerjaan_perawatan_dan_perbaikan_mesin_alat_produksi" => [
+        "slug" => "daftar_rekap_pelaksanaan_pekerjaan_perawatan_dan_perbaikan_mesin_alat_produksi",
+        "name" => "Daftar rekap pelaksanaan pekerjaan perawatan dan perbaikan mesin alat produksi",
+        "input" => [
+            [
+                "id" => "no_laporan",
+                "text" => "Nomor Laporan"
+            ]
+        ],
+        "description" => ""
+
+    ],
 
 
 

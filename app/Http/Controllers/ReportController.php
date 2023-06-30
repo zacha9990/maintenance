@@ -11,6 +11,7 @@ use App\Exports\daftar_mesin_alat_produksi_dan_sarana;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Maintenance;
 use Carbon\Carbon;
+use App\Models\MaintenanceCriteria;
 
 class ReportController extends Controller
 {
@@ -70,7 +71,7 @@ class ReportController extends Controller
     {
         $no_laporan = $request->input('no_laporan');
         $letter_date = Carbon::parse($request->input('letter_date'))->translatedFormat('j F Y');
-        $letter_day = Carbon::parse($letter_date)->translatedFormat('l');
+        $letter_day = Carbon::parse($request->input('letter_date'))->translatedFormat('l');
         $maintenanceName = $request->input('maintenance');
         $kepalaShiftName = $request->input('kepala_shift');
         $toolName = $maintenance->tool->name;
@@ -119,6 +120,43 @@ class ReportController extends Controller
                 'factory' => $factory,
                 'maintenances' => $maintenances,
             ];
+        }
+
+        if ($param == 'daftar_rekap_pelaksanaan_pekerjaan_perawatan_dan_perbaikan_mesin_alat_produksi') {
+            $factory = Factory::findOrFail($request->input('factory_id'));
+            $startDate = $request->input('date_start');
+            $endDate = $request->input('date_end');
+            $no_laporan = $request->input('no_laporan');
+            $maintenances = ReportService::getFinishedMaintenance($factory->id, $startDate, $endDate, false);
+            foreach ($maintenances as $maintenance) {
+                $maintenanceDetails = array();
+                $maintenanceResultCriteria = array();
+                $details =  json_decode($maintenance->details, true);
+                if (isset($details['criterias'])) {
+                    $criterias = $details['criterias'];
+                    foreach ($criterias as $key => $criteria) {
+                        $maintenanceCriteria = MaintenanceCriteria::find($key);
+                        if ($maintenanceCriteria) {
+                            $temp['id'] = $maintenanceCriteria->id;
+                            $temp['name'] = $maintenanceCriteria->name;
+                            $temp['result'] = $criteria;
+                            array_push($maintenanceResultCriteria, $temp);
+                        }
+                    }
+                    $maintenanceDetails['details'] = $details['details'];
+                    $maintenanceDetails['criterias'] = $maintenanceResultCriteria;
+                    $maintenance->details = $maintenanceDetails;
+                }
+            }
+
+            $data = [
+                'no_laporan' => $no_laporan, // Replace with your variable values
+                'factory' => $factory,
+                'maintenances' => $maintenances,
+            ];
+
+            $pdf = PDF::loadView("exports.$param", $data)->setPaper('a4', 'landscape');
+            return $pdf->stream("$param.$factory->name.pdf");
         }
 
         $pdf = PDF::loadView("exports.$param", $data);

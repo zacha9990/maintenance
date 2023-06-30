@@ -7,25 +7,28 @@ use App\Models\Maintenance;
 use App\Models\RepairRequest;
 use Carbon\Carbon;
 
-
 class ReportService
 {
     public static function getData($key)
     {
-        if ($key == 'daftar_mesin_alat_produksi_dan_sarana') {
-            $data = self::daftarMesinAlatProduksiDanSarana($key);
-        }
+        $data = null;
 
-        if ($key == 'daftar_permintaan_perbaikan_mesin_alat_produksi_external') {
-            $data = self::daftarPermintaanPerbaikanMesinAlatProduksiExternal($key);
-        }
-
-        if ($key == 'daftar_permintaan_perbaikan_mesin_alat_produksi_internal') {
-            $data = self::daftarPermintaanPerbaikanMesinAlatProduksiInternal($key);
-        }
-
-        if ($key == 'berita_acara_pemeriksaan_kerusakan_mesin_alat_produksi') {
-            $data = self::beritaAcaraPemeriksaanKerusakanMesinAlatProduksi($key);
+        switch ($key) {
+            case 'daftar_mesin_alat_produksi_dan_sarana':
+                $data = self::daftarMesinAlatProduksiDanSarana($key);
+                break;
+            case 'daftar_permintaan_perbaikan_mesin_alat_produksi_external':
+                $data = self::daftarPermintaanPerbaikanMesinAlatProduksiExternal($key);
+                break;
+            case 'daftar_permintaan_perbaikan_mesin_alat_produksi_internal':
+                $data = self::daftarPermintaanPerbaikanMesinAlatProduksiInternal($key);
+                break;
+            case 'berita_acara_pemeriksaan_kerusakan_mesin_alat_produksi':
+                $data = self::beritaAcaraPemeriksaanKerusakanMesinAlatProduksi($key);
+                break;
+            case 'daftar_rekap_pelaksanaan_pekerjaan_perawatan_dan_perbaikan_mesin_alat_produksi':
+                $data = self::daftarRekapPelaksanaanPekerjaanPerawatanDanPerbaikanMesinAlatProduksi($key);
+                break;
         }
 
         return $data;
@@ -41,12 +44,20 @@ class ReportService
 
     public static function beritaAcaraPemeriksaanKerusakanMesinAlatProduksi($key)
     {
-        $builder = config("reports.berita_acara_pemeriksaan_kerusakan_mesin_alat_produksi");
+        $builder = config("reports.$key");
 
         return $builder;
     }
 
     public static function daftarPermintaanPerbaikanMesinAlatProduksiExternal($key)
+    {
+        $builder = config("reports.$key");
+        $builder['factories'] = Factory::all();
+
+        return $builder;
+    }
+
+    public static function daftarRekapPelaksanaanPekerjaanPerawatanDanPerbaikanMesinAlatProduksi($key)
     {
         $builder = config("reports.$key");
         $builder['factories'] = Factory::all();
@@ -65,7 +76,7 @@ class ReportService
     public static function getRepairRequest($factoryId, $startDate, $endDate, $external = true)
     {
         $maintenances = RepairRequest::with('tool')
-        ->whereBetween('created_at', [$startDate, $endDate])
+            ->whereBetween('created_at', [$startDate, $endDate])
             ->whereHas('tool.factory', function ($query) use ($factoryId) {
                 $query->where('id', $factoryId);
             })
@@ -92,5 +103,18 @@ class ReportService
 
     public static function getListBeritaAcaraPemeriksaanKerusakanMesinAlatProduksi()
     {
+        // Add your implementation here
+    }
+
+    public static function getFinishedMaintenance($factoryId, $startDate, $endDate)
+    {
+        return Maintenance::with('repairRequest')->with('tool')
+        ->where('status', 'completed')
+        ->whereBetween('completed_date', [$startDate, $endDate])
+            ->whereHas('tool.factory', function ($query) use ($factoryId) {
+                $query->where('id', $factoryId);
+            })
+            ->orderBy('id')
+            ->get();
     }
 }
