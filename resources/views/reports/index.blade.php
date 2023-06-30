@@ -12,6 +12,7 @@
                         <tr>
                             <th>No.</th>
                             <th>Laporan</th>
+                            <th>Keterangan</th
                             <th>Cetak</th>
                         </tr>
                     </thead>
@@ -21,6 +22,7 @@
                             <tr>
                                 <td>{{ $i }}</td>
                                 <td>{{ $report['name']}}</td>
+                                <td><p>{{ $report['description'] }}</p></td>
                                 <td><a href="{{ route('reports.reportForm', $report['slug']) }}" class="btn btn-primary btn-sm"><i class="fas fa-print"></i>
                                      Mulai Cetak</a></td>
                             </tr>

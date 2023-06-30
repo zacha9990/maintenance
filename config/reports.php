@@ -9,7 +9,8 @@ $reports = [
                 "id" => "no_laporan",
                 "text" => "Nomor Laporan"
             ]
-        ]
+        ],
+        "description" => "Daftar Mesin dan Alat Produksi Pabrik"
     ],
     "daftar_permintaan_perbaikan_mesin_alat_produksi_external" => [
         "slug" => "daftar_permintaan_perbaikan_mesin_alat_produksi_external",
@@ -19,7 +20,8 @@ $reports = [
                 "id" => "no_laporan",
                 "text" => "Nomor Laporan"
             ]
-        ]
+        ],
+        "description" => ""
     ],
     "daftar_permintaan_perbaikan_mesin_alat_produksi_internal" => [
         "slug" => "daftar_permintaan_perbaikan_mesin_alat_produksi_internal",
@@ -29,7 +31,8 @@ $reports = [
                 "id" => "no_laporan",
                 "text" => "Nomor Laporan"
             ]
-        ]
+        ],
+        "description" => ""
     ],
     "berita_acara_pemeriksaan_kerusakan_mesin_alat_produksi" => [
         "slug" => "berita_acara_pemeriksaan_kerusakan_mesin_alat_produksi",
@@ -47,8 +50,22 @@ $reports = [
                 "id" => "kepala_shift",
                 "text" => "Nama Kepala Shift"
             ]
-        ]
-    ]
+        ],
+        "description" => "Daftar Maintenance diambil dari proses maintenance yang sudah selesai, yang tipenya adalah laporan kerusakan"
+    ],
+    // "daftar_rekap_pelaksanaan_pekerjaan_perawatan_dan_perbaikan_mesin_alat_produksi" => [
+    //     "slug" => "daftar_rekap_pelaksanaan_pekerjaan_perawatan_dan_perbaikan_mesin_alat_produksi",
+    //     "name" => "Daftar rekap pelaksanaan pekerjaan perawatan dan perbaikan mesin alat produksi",
+    //     "input" => [
+    //         [
+    //             "id" => "no_laporan",
+    //             "text" => "Nomor Laporan"
+    //         ]
+    //     ]
+    // ],
+
+
+
 
 
 ];
