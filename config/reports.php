@@ -65,6 +65,33 @@ $reports = [
         "description" => ""
 
     ],
+    "laporan_realisasi_maintenance" => [
+        "slug" => "laporan_realisasi_maintenance",
+        "name" => "Laporan realisasi maintenance",
+        "input" => [
+            [
+                "id" => "no_laporan",
+                "text" => "Nomor Laporan"
+            ],
+            [
+                "id" => "nama_maintenance",
+                "text" => "Nama maintenance"
+            ],
+            [
+                "id" => "nama_spv",
+                "text" => "Nama SPV"
+            ],
+            [
+                "id" => "kepala_pabrik",
+                "text" => "Kepala pabrik"
+            ],
+            [
+                "id" => "realisasi_dari_formulir",
+                "text" => "Realisasi dari Formulir"
+            ]
+        ],
+        "description" => "Daftar Maintenance diambil dari proses maintenance yang sudah selesai. Bisa juga mencetaknya dari menu daftar maintenance."
+    ],
 
 
 

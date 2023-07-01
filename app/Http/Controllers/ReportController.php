@@ -57,6 +57,37 @@ class ReportController extends Controller
             return view("reports.list_$paramTemp", compact('lists', 'factories', 'factoryFilter'));
         }
 
+        if ($param == 'laporan_realisasi_maintenance') {
+            $paramTemp = 'laporan_realisasi_maintenance';
+            $param = $request->get('param', 'default');
+            $sort = $request->get('sort', 'default');
+            $factoryFilter = $request->get('factory_filter', '');
+
+            $query = Maintenance::where('status', 'completed')
+            ->with(['tool:id,name'])
+            ->with('tool.factory')
+            ->orderBy('maintenances.completed_date', 'desc');
+
+            // Filter by factory
+            if (!empty($factoryFilter)) {
+                $query->whereHas('tool.factory', function ($query) use ($factoryFilter) {
+                    $query->where('id', $factoryFilter);
+                });
+            }
+
+            // Sorting
+            if ($sort === 'name') {
+                $query->orderBy('tool.name');
+            } elseif ($sort === 'completed_date') {
+                $query->orderBy('completed_date');
+            }
+
+            $lists = $query->paginate(10);
+            $factories = Factory::all();
+
+            return view("reports.list_$paramTemp", compact('lists', 'factories', 'factoryFilter'));
+        }
+
         return view("reports.$param", compact('builder'));
     }
 
@@ -159,10 +190,46 @@ class ReportController extends Controller
             return $pdf->stream("$param.$factory->name.pdf");
         }
 
+        if ($param == 'laporan_realisasi_maintenance') {
+        }
+
         $pdf = PDF::loadView("exports.$param", $data);
 
         return $pdf->stream("$param.$factory->name.pdf");
 
         // return Excel::download(new daftar_mesin_alat_produksi_dan_sarana($factory, $no_laporan, $tools), 'daftar_mesin_alat_produksi_dan_sarana', \Maatwebsite\Excel\Excel::DOMPDF);
+    }
+
+    public function laporanRealisasiMaintenance(Maintenance $maintenance)
+    {
+        $builder = ReportService::getData('laporan_realisasi_maintenance');
+
+        return view('reports.laporan_realisasi_maintenance', compact('maintenance', 'builder'));
+    }
+
+    public function cetakLaporanRealisasiMaintenance(Request $request, Maintenance $maintenance)
+    {
+
+        $no_laporan = $request->input('no_laporan');
+        $nama_maintenance = $request->input('nama_maintenance');
+        $nama_spv = $request->input('nama_spv');
+        $kepala_pabrik = $request->input('kepala_pabrik');
+        $realisasi_dari_formulir = $request->input('realisasi_dari_formulir');
+
+        $data = [
+            'no_laporan' => $no_laporan, // Replace with your variable values
+            'nama_maintenance' => $nama_maintenance,
+            'maintenance' => $maintenance,
+            'nama_spv' => $nama_spv,
+            'kepala_pabrik' => $kepala_pabrik,
+            'realisasi_dari_formulir' => $realisasi_dari_formulir
+        ];
+
+        $fileName = $maintenance->tool->name;
+
+        $pdf = PDF::loadView("exports.laporan_realisasi_maintenance", $data);
+        return $pdf->stream("laporan_realisasi_maintenance_$fileName.pdf");
+
+        // return view("exports.laporan_realisasi_maintenance", $data);
     }
 }

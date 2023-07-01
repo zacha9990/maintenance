@@ -95,6 +95,7 @@ class MaintenanceController extends Controller
             ->addColumn('action', function ($maintenance) {
                 $startButton = '';
                 $completeButton = '';
+            $reportButton = '';
 
                 if ($maintenance->status === 'assigned') {
                     $startButton = '<button type="button" class="btn btn-primary btn-sm start-button" data-id="' . $maintenance->id . '" title="Mulai Kerjakan"><i class="fas fa-play"></i></button>';
@@ -102,7 +103,11 @@ class MaintenanceController extends Controller
                     $completeButton = '<button type="button" class="btn btn-success btn-sm complete-button" data-maintenance-id="' . $maintenance->id . '" title="Selesaikan Tugas" data-bs-toggle="modal" data-bs-target="#completeModal"><i class="fas fa-check"></i></button>';
                 }
 
-                return $startButton . ' ' . $completeButton;
+            if ($maintenance->status == 'completed') {
+                $reportButton = '<a class="btn btn-default btn-outline-warning btn-sm report-button" href="' . route('reports.laporanRealisasiMaintenance', $maintenance->id) . '" title="Laporan Realisasi""><i class="fas fa-file"></i></a>';
+            }
+
+            return $startButton . ' ' . $completeButton . ' ' . $reportButton;
             })
             ->rawColumns(['status', 'action'])
             ->make(true);

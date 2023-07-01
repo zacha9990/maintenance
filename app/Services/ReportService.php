@@ -29,6 +29,9 @@ class ReportService
             case 'daftar_rekap_pelaksanaan_pekerjaan_perawatan_dan_perbaikan_mesin_alat_produksi':
                 $data = self::daftarRekapPelaksanaanPekerjaanPerawatanDanPerbaikanMesinAlatProduksi($key);
                 break;
+            case 'laporan_realisasi_maintenance':
+                $data = self::laporanRealisasiMaintenance($key);
+                break;
         }
 
         return $data;
@@ -72,6 +75,16 @@ class ReportService
 
         return $builder;
     }
+
+    public static function laporanRealisasiMaintenance($key)
+    {
+        $builder = config("reports.$key");
+        $builder['factories'] = Factory::all();
+
+        return $builder;
+    }
+
+
 
     public static function getRepairRequest($factoryId, $startDate, $endDate, $external = true)
     {
