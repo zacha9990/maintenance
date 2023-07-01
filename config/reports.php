@@ -115,6 +115,25 @@ $reports = [
         ],
         "description" => ""
     ],
+    "daftar_pemeriksaan_mesin_alat_produksi" => [
+        "slug" => "daftar_pemeriksaan_mesin_alat_produksi",
+        "name" => "Daftar Pemeriksaan Mesin dan Alat Produksi",
+        "input" => [
+            [
+                "id" => "no_laporan",
+                "text" => "Nomor Laporan"
+            ],
+            [
+                "id" => "nama_maintenance",
+                "text" => "Nama Maintenance"
+            ],
+            [
+                "id" => "kepala_pabrik",
+                "text" => "Kepala Pabrik"
+            ],
+        ],
+        "description" => ""
+    ],
 
 ];
 

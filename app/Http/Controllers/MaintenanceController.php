@@ -272,6 +272,9 @@ class MaintenanceController extends Controller
             'scheduled_date' => 'required|date|after_or_equal:today',
             'type' => 'required',
             'responsible_technician' => 'required|exists:staffs,id',
+             'repair_id' => 'required_if:automated_status,damage_report',
+        ], [
+            'repair_id.required_if' => 'The repair report field is required when automated status is set to damage_report.',
         ]);
 
         if ($validator->fails()) {

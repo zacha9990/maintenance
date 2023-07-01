@@ -106,7 +106,8 @@
                 processing: true,
                 serverSide: true,
                 ajax: '{{ route('tool_categories.datatables') }}',
-                columns: [{
+                columns: [
+                    {
                         data: 'rownum',
                         name: 'rownum',
                     },

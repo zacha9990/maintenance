@@ -34,8 +34,8 @@ class ReportController extends Controller
 
             $query = Maintenance::where('automated_status', 'damage_report')
             ->where('status', 'completed')
-            ->with(['tool:id,name'])
-            ->with('tool.factory');
+                ->with(['tool:id,name'])
+                ->with('tool.factory');
 
             // Filter by factory
             if (!empty($factoryFilter)) {
@@ -64,9 +64,9 @@ class ReportController extends Controller
             $factoryFilter = $request->get('factory_filter', '');
 
             $query = Maintenance::where('status', 'completed')
-            ->with(['tool:id,name'])
-            ->with('tool.factory')
-            ->orderBy('maintenances.completed_date', 'desc');
+                ->with(['tool:id,name'])
+                ->with('tool.factory')
+                ->orderBy('maintenances.completed_date', 'desc');
 
             // Filter by factory
             if (!empty($factoryFilter)) {
@@ -112,7 +112,6 @@ class ReportController extends Controller
 
     public function generateForm(Request $request, $param)
     {
-
         if ($param == 'daftar_mesin_alat_produksi_dan_sarana') {
             $factory = Factory::findOrFail($request->input('factory_id'));
             $no_laporan = $request->input('no_laporan');
@@ -151,6 +150,68 @@ class ReportController extends Controller
                 'factory' => $factory,
                 'maintenances' => $maintenances,
             ];
+        }
+
+        if ($param == 'daftar_pemeriksaan_mesin_alat_produksi') {
+            $factory = Factory::findOrFail($request->input('factory_id'));
+            $no_laporan = $request->input('no_laporan');
+            $nama_maintenance = $request->input('nama_maintenance');
+            $kepala_pabrik = $request->input('kepala_pabrik');
+            $month_year = $request->input('month_year');
+
+            $tools = Tool::with(['maintenances' => function ($query) use ($month_year) {
+                if (!empty($month_year)) {
+                    $query->whereYear('scheduled_date', date('Y', strtotime($month_year)))
+                        ->whereMonth('scheduled_date', date('m', strtotime($month_year)));
+                }
+            }])
+                ->with('category.maintenanceCriteria')
+                ->where('tool_type_id', 1)
+                ->where('factory_id', $factory->id)
+                ->get();
+            $bulan_tahun = Carbon::parse($month_year)->translatedFormat('F Y');
+            $month = Carbon::parse($month_year)->format('m');
+            $year = Carbon::parse($month_year)->format('Y');
+
+            foreach ($tools as $tool) {
+                $maintenances = $tool->maintenances;
+
+                foreach ($maintenances as $maintenance) {
+                    $maintenanceDetails = [];
+                    $maintenanceResultCriteria = [];
+                    $details = json_decode($maintenance->details, true);
+                    if (isset($details['criterias'])) {
+                        $criterias = $details['criterias'];
+                        foreach ($criterias as $key => $criteria) {
+                            $maintenanceCriteria = MaintenanceCriteria::find($key);
+                            if ($maintenanceCriteria) {
+                                $temp['id'] = $maintenanceCriteria->id;
+                                $temp['name'] = $maintenanceCriteria->name;
+                                $temp['result'] = $criteria;
+                                array_push($maintenanceResultCriteria, $temp);
+                            }
+                        }
+                        $maintenanceDetails['details'] = $details['details'];
+                        $maintenanceDetails['criterias'] = $maintenanceResultCriteria;
+                        $maintenance->details = $maintenanceDetails;
+                    }
+                }
+            }
+
+            $data = [
+                'no_laporan' => $no_laporan, // Replace with your variable values
+                'factory' => $factory,
+                'tools' => $tools,
+                'nama_maintenance' => $nama_maintenance,
+                'kepala_pabrik' => $kepala_pabrik,
+                'bulan_tahun' => $bulan_tahun,
+                'month' => $month,
+                'year' => $year
+            ];
+
+            $pdf = PDF::loadView("exports.$param", $data)->setPaper('f4', 'landscape');
+
+            return $pdf->stream("$param.$factory->name.pdf");
         }
 
         if ($param == 'daftar_rekap_pelaksanaan_pekerjaan_perawatan_dan_perbaikan_mesin_alat_produksi') {
@@ -196,8 +257,6 @@ class ReportController extends Controller
         $pdf = PDF::loadView("exports.$param", $data);
 
         return $pdf->stream("$param.$factory->name.pdf");
-
-        // return Excel::download(new daftar_mesin_alat_produksi_dan_sarana($factory, $no_laporan, $tools), 'daftar_mesin_alat_produksi_dan_sarana', \Maatwebsite\Excel\Excel::DOMPDF);
     }
 
     public function laporanRealisasiMaintenance(Maintenance $maintenance)

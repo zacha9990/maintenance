@@ -16,11 +16,10 @@ class ToolCategories extends Seeder
     public function run()
     {
         $categories = [
-            "Bangunan",
-            "Komputer",
-            "Alat Ukur",
-            "Pompa Proses Produksi",
-            "Alat Proses Produksi"
+            "Mesin-Alat Proses Produksi"
+            "Generator Set",
+            "Gedung dan Sarana Lain",
+            "Alat Pemadam Kebakaran",
         ];
         foreach ($categories as $category) {
             ToolCategory::create(['name' => $category]);

@@ -74,6 +74,10 @@ class ScheduleMaintenance extends Command
                         break;
                 }
 
+                 if ($date->isWeekend()) {
+                    $date->nextWeekday(); // Move to the nearest weekday
+                }
+
                 if ($date->gte($startDate) && $date->lt($endDate)) {
                     $this->createMaintenanceTask($tool, $date);
                 }

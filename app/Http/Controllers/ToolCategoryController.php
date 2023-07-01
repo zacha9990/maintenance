@@ -70,12 +70,12 @@ class ToolCategoryController extends Controller
         DB::statement(DB::raw('set @rownum=0'));
         $tool_categories = ToolCategory::select([DB::raw('@rownum  := @rownum  + 1 AS rownum'),
             'name', 'id', 'parent_id'
-        ])->orderBy('id', 'ASC');
+        ])->orderBy('id', 'ASC')->get();
 
         return DataTables::of($tool_categories)
-            ->editColumn('rownum', function ($tool_category) {
-                return substr($tool_category->rownum, 1);
-            })
+            // ->editColumn('rownum', function ($tool_category) {
+            //     return substr($tool_category->rownum, 1);
+            // })
             ->addColumn('parent_category', function ($tool_category) {
                 if ($tool_category->parentCategory) {
                     return $tool_category->parentCategory->name;

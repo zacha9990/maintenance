@@ -35,12 +35,23 @@ class ReportService
             case 'laporan_riwayat_maintenance':
                 $data = self::laporanRiwayatMaintenance($key);
                 break;
+            case 'daftar_pemeriksaan_mesin_alat_produksi':
+            $data = self::daftarPemeriksaanMesinAlatProduksi($key);
+            break;
         }
 
         return $data;
     }
 
     public static function daftarMesinAlatProduksiDanSarana($key)
+    {
+        $builder = config("reports.$key");
+        $builder['factories'] = Factory::all();
+
+        return $builder;
+    }
+
+     public static function daftarPemeriksaanMesinAlatProduksi($key)
     {
         $builder = config("reports.$key");
         $builder['factories'] = Factory::all();
