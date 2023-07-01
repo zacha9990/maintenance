@@ -39,6 +39,9 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('reports')->group(function () {
+        Route::get('/laporanRiwayatMaintenance/{maintenance}', [ReportController::class, 'laporanRiwayatMaintenance'])->name('reports.laporanRiwayatMaintenance');
+        Route::post('/laporanRiwayatMaintenance/', [ReportController::class, 'cetakLaporanRiwayatMaintenance'])->name('reports.cetakLaporanRiwayatMaintenance');
+
         Route::get('/laporanRealisasiMaintenance/{maintenance}', [ReportController::class, 'laporanRealisasiMaintenance'])->name('reports.laporanRealisasiMaintenance');
         Route::post('/laporanRealisasiMaintenance/{maintenance}', [ReportController::class, 'cetakLaporanRealisasiMaintenance'])->name('reports.cetakLaporanRealisasiMaintenance');
 

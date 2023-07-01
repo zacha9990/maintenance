@@ -21,12 +21,20 @@
             </div>
             <div class="card-body">
                 <div class="row mb-3 text-center">
-                    <h4>{{ $builder['name'] }} {{ $maintenance->tool->name }}</h4>
+                    <h4>{{ $builder['name'] }}</h4>
                 </div>
-                <form action="{{ route('reports.cetakLaporanRealisasiMaintenance', $maintenance->id) }}" method="POST">
+                <form action="{{ route('reports.cetakLaporanRiwayatMaintenance') }}" method="POST">
                     @csrf
-
-                    <input type="hidden" name="maintenance_id" value="{{ $maintenance->id }}">
+                    <div class="row mb-3">
+                        <label for="description" class="col-sm-2 col-form-label">Pabrik</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="factory_id" name="factory_id">
+                                @foreach ($builder['factories'] as $factory)
+                                <option value="{{ $factory->id}}">{{ $factory->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
 
                     @foreach ($builder['input'] as $input)
                         <div class="row mb-3">
@@ -36,6 +44,13 @@
                             </div>
                         </div>
                     @endforeach
+
+                    <div class="row mb-3">
+                        <label for="year" class="col-sm-2 col-form-label">Tahun</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="number" id="year" name="year" min="1900" max="2099" step="1" placeholder="Tahun" required>
+                        </div>
+                    </div>
                     <button type="submit" class="btn btn-primary">Buat</button>
                     <a href="{{ route('reports.index') }}" class="btn btn-secondary">Batal</a>
                 </form>

@@ -232,4 +232,58 @@ class ReportController extends Controller
 
         // return view("exports.laporan_realisasi_maintenance", $data);
     }
+
+    public function laporanRiwayatMaintenance(Maintenance $maintenance)
+    {
+        $builder = ReportService::getData('laporan_riwayat_maintenance');
+
+        return view('reports.laporan_riwayat_maintenance', compact('maintenance', 'builder'));
+    }
+
+    public function cetakLaporanRiwayatMaintenance(Request $request)
+    {
+        $no_laporan = $request->input('no_laporan');
+        $nama_spv_prod_maint = $request->input('nama_spv_prod_maint');
+        $nama_maintenance = $request->input('nama_maintenance');
+        $kepala_pabrik = $request->input('kepala_pabrik');
+        $tahun = $request->input('year');
+        $factory = Factory::findOrFail($request->input('factory_id'));
+        $maintenances = ReportService::getFactoryMaintenances($factory->id, $tahun);
+
+        foreach ($maintenances as $maintenance) {
+            $maintenanceDetails = array();
+            $maintenanceResultCriteria = array();
+            $details =  json_decode($maintenance->details, true);
+            if (isset($details['criterias'])) {
+                $criterias = $details['criterias'];
+                foreach ($criterias as $key => $criteria) {
+                    $maintenanceCriteria = MaintenanceCriteria::find($key);
+                    if ($maintenanceCriteria) {
+                        $temp['id'] = $maintenanceCriteria->id;
+                        $temp['name'] = $maintenanceCriteria->name;
+                        $temp['result'] = $criteria;
+                        array_push($maintenanceResultCriteria, $temp);
+                    }
+                }
+                $maintenanceDetails['details'] = $details['details'];
+                $maintenanceDetails['criterias'] = $maintenanceResultCriteria;
+                $maintenance->details = $maintenanceDetails;
+            }
+        }
+
+        $data = [
+            'no_laporan' => $no_laporan, // Replace with your variable values
+            'nama_maintenance' => $nama_maintenance,
+            'maintenances' => ReportService::getFactoryMaintenances($factory->id, $tahun),
+            'year' => $tahun,
+            'nama_spv_prod_maint' => $nama_spv_prod_maint,
+            'kepala_pabrik' => $kepala_pabrik,
+            'factory' => $factory,
+        ];
+
+        $fileName = $factory->name . "_" . $tahun;
+
+        $pdf = PDF::loadView("exports.laporan_riwayat_maintenance", $data)->setPaper('a4', 'landscape');
+        return $pdf->stream("laporan_riwayat_maintenance_$fileName.pdf");
+    }
 }

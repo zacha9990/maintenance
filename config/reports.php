@@ -92,10 +92,29 @@ $reports = [
         ],
         "description" => "Daftar Maintenance diambil dari proses maintenance yang sudah selesai. Bisa juga mencetaknya dari menu daftar maintenance."
     ],
-
-
-
-
+    "laporan_riwayat_maintenance" => [
+        "slug" => "laporan_riwayat_maintenance",
+        "name" => "Laporan riwayat maintenance",
+        "input" => [
+            [
+                "id" => "no_laporan",
+                "text" => "Nomor Laporan"
+            ],
+            [
+                "id" => "nama_spv_prod_maint",
+                "text" => "Nama SPV Production dan Maintenance"
+            ],
+            [
+                "id" => "nama_maintenance",
+                "text" => "Nama Maintenance"
+            ],
+            [
+                "id" => "kepala_pabrik",
+                "text" => "Kepala Pabrik"
+            ],
+        ],
+        "description" => ""
+    ],
 
 ];
 

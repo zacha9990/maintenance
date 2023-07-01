@@ -32,12 +32,23 @@ class ReportService
             case 'laporan_realisasi_maintenance':
                 $data = self::laporanRealisasiMaintenance($key);
                 break;
+            case 'laporan_riwayat_maintenance':
+                $data = self::laporanRiwayatMaintenance($key);
+                break;
         }
 
         return $data;
     }
 
     public static function daftarMesinAlatProduksiDanSarana($key)
+    {
+        $builder = config("reports.$key");
+        $builder['factories'] = Factory::all();
+
+        return $builder;
+    }
+
+    public static function laporanRiwayatMaintenance($key)
     {
         $builder = config("reports.$key");
         $builder['factories'] = Factory::all();
@@ -129,5 +140,14 @@ class ReportService
             })
             ->orderBy('id')
             ->get();
+    }
+
+    public static function getFactoryMaintenances($factoryId, $year)
+    {
+        return Maintenance::with('tool')
+        ->whereHas('tool.factory', function ($query) use ($factoryId) {
+            $query->where('id', $factoryId);
+        })->where('status', 'completed')
+        ->whereYear('created_at', $year)->get();
     }
 }
