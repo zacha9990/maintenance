@@ -46,12 +46,23 @@ class ReportService
             case 'daftar_pemeriksaan_gedung_dan_sarana_lainnya':
                 $data = self::daftarPemeriksaanGedungDanSaranaLainnya($key);
                 break;
+            case 'daftar_pemeriksaan_alat_pemadam_kebakaran':
+                $data = self::daftarPemeriksaanAlatPemadamKebakaran($key);
+                break;
         }
 
         return $data;
     }
 
     public static function daftarMesinAlatProduksiDanSarana($key)
+    {
+        $builder = config("reports.$key");
+        $builder['factories'] = Factory::all();
+
+        return $builder;
+    }
+
+    public static function daftarPemeriksaanAlatPemadamKebakaran($key)
     {
         $builder = config("reports.$key");
         $builder['factories'] = Factory::all();
@@ -216,6 +227,7 @@ class ReportService
             }
         }])
             ->with('category.maintenanceCriteria')
+            ->with('inventory')
             ->whereIn('tool_type_id', $subCategories)
             ->where('factory_id', $factoryId)
             ->get();

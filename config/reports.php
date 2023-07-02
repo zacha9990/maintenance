@@ -172,6 +172,25 @@ $reports = [
         ],
         "description" => ""
     ],
+    "daftar_pemeriksaan_alat_pemadam_kebakaran" => [
+        "slug" => "daftar_pemeriksaan_alat_pemadam_kebakaran",
+        "name" => "Daftar pemeriksaan alat pemadam kebakaran",
+        "input" => [
+            [
+                "id" => "no_laporan",
+                "text" => "Nomor Laporan"
+            ],
+            [
+                "id" => "nama_maintenance",
+                "text" => "Nama Maintenance"
+            ],
+            [
+                "id" => "kepala_pabrik",
+                "text" => "Kepala Pabrik"
+            ],
+        ],
+        "description" => ""
+    ],
 
 ];
 
