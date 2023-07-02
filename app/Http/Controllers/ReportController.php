@@ -296,6 +296,54 @@ class ReportController extends Controller
             return $pdf->stream("$param.$factory->name.pdf");
         }
 
+        if ($param == 'daftar_pemeriksaan_gedung_dan_sarana_lainnya') {
+            $factory = Factory::findOrFail($request->input('factory_id'));
+            $no_laporan = $request->input('no_laporan');
+            $nama_maintenance = $request->input('nama_maintenance');
+            $kepala_pabrik = $request->input('kepala_pabrik');
+            $year = $request->input('year');
+
+            $tools = ReportService::getToolListsYearly($factory->id, $year, 3);
+
+            foreach ($tools as $tool) {
+                $maintenances = $tool->maintenances;
+
+                foreach ($maintenances as $maintenance) {
+                    $maintenanceDetails = [];
+                    $maintenanceResultCriteria = [];
+                    $details = json_decode($maintenance->details, true);
+                    if (isset($details['criterias'])) {
+                        $criterias = $details['criterias'];
+                        foreach ($criterias as $key => $criteria) {
+                            $maintenanceCriteria = MaintenanceCriteria::find($key);
+                            if ($maintenanceCriteria) {
+                                $temp['id'] = $maintenanceCriteria->id;
+                                $temp['name'] = $maintenanceCriteria->name;
+                                $temp['result'] = $criteria;
+                                array_push($maintenanceResultCriteria, $temp);
+                            }
+                        }
+                        $maintenanceDetails['details'] = $details['details'];
+                        $maintenanceDetails['criterias'] = $maintenanceResultCriteria;
+                        $maintenance->details = $maintenanceDetails;
+                    }
+                }
+            }
+
+            $data = [
+                'no_laporan' => $no_laporan, // Replace with your variable values
+                'factory' => $factory,
+                'tools' => $tools,
+                'nama_maintenance' => $nama_maintenance,
+                'kepala_pabrik' => $kepala_pabrik,
+                'year' => $year
+            ];
+
+            $pdf = PDF::loadView("exports.$param", $data)->setPaper('f4', 'landscape');
+
+            return $pdf->stream("$param.$factory->name.pdf");
+        }
+
         if ($param == 'laporan_realisasi_maintenance') {
         }
 

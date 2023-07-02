@@ -153,6 +153,25 @@ $reports = [
         ],
         "description" => ""
     ],
+    "daftar_pemeriksaan_gedung_dan_sarana_lainnya" => [
+        "slug" => "daftar_pemeriksaan_gedung_dan_sarana_lainnya",
+        "name" => "Daftar pemeriksaan gedung dan sarana lainnya",
+        "input" => [
+            [
+                "id" => "no_laporan",
+                "text" => "Nomor Laporan"
+            ],
+            [
+                "id" => "nama_maintenance",
+                "text" => "Nama Maintenance"
+            ],
+            [
+                "id" => "kepala_pabrik",
+                "text" => "Kepala Pabrik"
+            ],
+        ],
+        "description" => ""
+    ],
 
 ];
 

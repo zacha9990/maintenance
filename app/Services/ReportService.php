@@ -7,6 +7,7 @@ use App\Models\Maintenance;
 use App\Models\RepairRequest;
 use App\Models\Tool;
 use Carbon\Carbon;
+use App\Models\ToolCategory;
 
 class ReportService
 {
@@ -42,12 +43,23 @@ class ReportService
             case 'daftar_pemeriksaan_generator_set':
                 $data = self::daftarPemeriksaanGeneratorSet($key);
                 break;
+            case 'daftar_pemeriksaan_gedung_dan_sarana_lainnya':
+                $data = self::daftarPemeriksaanGedungDanSaranaLainnya($key);
+                break;
         }
 
         return $data;
     }
 
     public static function daftarMesinAlatProduksiDanSarana($key)
+    {
+        $builder = config("reports.$key");
+        $builder['factories'] = Factory::all();
+
+        return $builder;
+    }
+
+    public static function daftarPemeriksaanGedungDanSaranaLainnya($key)
     {
         $builder = config("reports.$key");
         $builder['factories'] = Factory::all();
@@ -176,6 +188,10 @@ class ReportService
 
     public static function getToolListsMonthly($factoryId, $month_year, $category)
     {
+        $subCategories = ToolCategory::where('parent_id', $category)->pluck('id');
+
+        $subCategories->push($category);
+
         return Tool::with(['maintenances' => function ($query) use ($month_year) {
             if (!empty($month_year)) {
                 $query->whereYear('scheduled_date', date('Y', strtotime($month_year)))
@@ -183,7 +199,24 @@ class ReportService
             }
         }])
             ->with('category.maintenanceCriteria')
-            ->where('tool_type_id', $category)
+        ->whereIn('tool_type_id', $subCategories)
+            ->where('factory_id', $factoryId)
+            ->get();
+    }
+
+    public static function getToolListsYearly($factoryId, $year, $category)
+    {
+        $subCategories = ToolCategory::where('parent_id', $category)->pluck('id');
+
+        $subCategories->push($category);
+
+        return Tool::with(['maintenances' => function ($query) use ($year) {
+            if (!empty($year)) {
+                $query->whereYear('scheduled_date', $year);
+            }
+        }])
+            ->with('category.maintenanceCriteria')
+            ->whereIn('tool_type_id', $subCategories)
             ->where('factory_id', $factoryId)
             ->get();
     }
