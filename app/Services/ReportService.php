@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Factory;
 use App\Models\Maintenance;
 use App\Models\RepairRequest;
+use App\Models\Tool;
 use Carbon\Carbon;
 
 class ReportService
@@ -36,8 +37,11 @@ class ReportService
                 $data = self::laporanRiwayatMaintenance($key);
                 break;
             case 'daftar_pemeriksaan_mesin_alat_produksi':
-            $data = self::daftarPemeriksaanMesinAlatProduksi($key);
-            break;
+                $data = self::daftarPemeriksaanMesinAlatProduksi($key);
+                break;
+            case 'daftar_pemeriksaan_generator_set':
+                $data = self::daftarPemeriksaanGeneratorSet($key);
+                break;
         }
 
         return $data;
@@ -51,7 +55,15 @@ class ReportService
         return $builder;
     }
 
-     public static function daftarPemeriksaanMesinAlatProduksi($key)
+    public static function daftarPemeriksaanGeneratorSet($key)
+    {
+        $builder = config("reports.$key");
+        $builder['factories'] = Factory::all();
+
+        return $builder;
+    }
+
+    public static function daftarPemeriksaanMesinAlatProduksi($key)
     {
         $builder = config("reports.$key");
         $builder['factories'] = Factory::all();
@@ -144,8 +156,8 @@ class ReportService
     public static function getFinishedMaintenance($factoryId, $startDate, $endDate)
     {
         return Maintenance::with('repairRequest')->with('tool')
-        ->where('status', 'completed')
-        ->whereBetween('completed_date', [$startDate, $endDate])
+            ->where('status', 'completed')
+            ->whereBetween('completed_date', [$startDate, $endDate])
             ->whereHas('tool.factory', function ($query) use ($factoryId) {
                 $query->where('id', $factoryId);
             })
@@ -156,9 +168,23 @@ class ReportService
     public static function getFactoryMaintenances($factoryId, $year)
     {
         return Maintenance::with('tool')
-        ->whereHas('tool.factory', function ($query) use ($factoryId) {
-            $query->where('id', $factoryId);
-        })->where('status', 'completed')
-        ->whereYear('created_at', $year)->get();
+            ->whereHas('tool.factory', function ($query) use ($factoryId) {
+                $query->where('id', $factoryId);
+            })->where('status', 'completed')
+            ->whereYear('created_at', $year)->get();
+    }
+
+    public static function getToolListsMonthly($factoryId, $month_year, $category)
+    {
+        return Tool::with(['maintenances' => function ($query) use ($month_year) {
+            if (!empty($month_year)) {
+                $query->whereYear('scheduled_date', date('Y', strtotime($month_year)))
+                    ->whereMonth('scheduled_date', date('m', strtotime($month_year)));
+            }
+        }])
+            ->with('category.maintenanceCriteria')
+            ->where('tool_type_id', $category)
+            ->where('factory_id', $factoryId)
+            ->get();
     }
 }

@@ -134,6 +134,25 @@ $reports = [
         ],
         "description" => ""
     ],
+    "daftar_pemeriksaan_generator_set" => [
+        "slug" => "daftar_pemeriksaan_generator_set",
+        "name" => "Daftar Pemeriksaan Generator Set",
+        "input" => [
+            [
+                "id" => "no_laporan",
+                "text" => "Nomor Laporan"
+            ],
+            [
+                "id" => "nama_maintenance",
+                "text" => "Nama Maintenance"
+            ],
+            [
+                "id" => "kepala_pabrik",
+                "text" => "Kepala Pabrik"
+            ],
+        ],
+        "description" => ""
+    ],
 
 ];
 

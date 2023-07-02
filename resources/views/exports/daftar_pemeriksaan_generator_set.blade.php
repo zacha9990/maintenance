@@ -6,8 +6,6 @@
     <title>Membuat Laporan PDF Dengan DOMPDF Laravel</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
-
 </head>
 
 <body>
@@ -23,7 +21,7 @@
         <p>No Dokumen: {{ $no_laporan }}</p>
     </div>
     <div class="table-title text-center">
-        <h3>DAFTAR PEMERIKSAAN MESIN/ALAT PRODUKSI</h3>
+        <h3>DAFTAR PEMERIKSAAN GENERATOR SET</h3>
         <h6>Bulan: {{ $bulan_tahun }}</h6>
         <h6>{{ $factory->name }}</h3>
     </div>
@@ -37,9 +35,9 @@
                 <th rowspan="2">Komponen</th>
                 <th rowspan="2">Kriteria Kondisi Baik</th>
                 @php
-                    $totalDays = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+                    $totalDays = 5;
                 @endphp
-                <th colspan="{{ $totalDays }}">Kondisi Alat Tanggal</th>
+                <th colspan="{{ $totalDays }}">Minggu</th>
                 <th rowspan="2">Keterangan</th>
             </tr>
             <tr>
@@ -70,19 +68,19 @@
                                 foreach ($maintenances as $maintenance) {
                                     $criterias = $maintenance->details['criterias'];
                                     $carbonDate = Carbon::parse($maintenance->scheduled_date);
-                                    if ($carbonDate->day == $day && $carbonDate->month == $month && $carbonDate->year == $year) {
+                                    if ($carbonDate->weekOfMonth == $day) {
                                         foreach ($criterias as $criteria) {
                                             if ($criteria['id'] == $tool->category->maintenanceCriteria[0]->id) {
                                                 $result = $criteria['result'] == 'good' ? 'V' : 'X';
                                             }
                                         }
-                                        echo '<td class="narrow">' . $result . '</td>';
+                                        echo '<td class="narrow text-center">' . $result . '</td>';
                                     } else {
-                                        echo '<td class="narrow"></td>';
+                                        echo '<td class="narrow text-center"></td>';
                                     }
                                 }
                             } else {
-                                echo '<td class="narrow"></td>';
+                                echo '<td class="narrow text-center"></td>';
                             }
 
                         }
@@ -101,19 +99,19 @@
                                     foreach ($maintenances as $maintenance) {
                                         $criterias = $maintenance->details['criterias'];
                                         $carbonDate = Carbon::parse($maintenance->scheduled_date);
-                                        if ($carbonDate->day == $day && $carbonDate->month == $month && $carbonDate->year == $year) {
+                                        if ($carbonDate->weekOfMonth == $day) {
                                             foreach ($criterias as $criteria) {
                                                 if ($criteria['id'] == $tool->category->maintenanceCriteria[$j]->id) {
                                                     $result = $criteria['result'] == 'good' ? 'V' : 'X';
                                                 }
                                             }
-                                            echo '<td class="narrow">' . $result . '</td>';
+                                            echo '<td class="narrow text-center">' . $result . '</td>';
                                         } else {
-                                            echo '<td class="narrow"></td>';
+                                            echo '<td class="narrow text-center"></td>';
                                         }
                                     }
                                 }else {
-                                    echo '<td class="narrow"></td>';
+                                    echo '<td class="narrow text-center"></td>';
                                 }
                             }
                         @endphp

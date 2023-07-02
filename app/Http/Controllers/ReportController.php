@@ -159,16 +159,8 @@ class ReportController extends Controller
             $kepala_pabrik = $request->input('kepala_pabrik');
             $month_year = $request->input('month_year');
 
-            $tools = Tool::with(['maintenances' => function ($query) use ($month_year) {
-                if (!empty($month_year)) {
-                    $query->whereYear('scheduled_date', date('Y', strtotime($month_year)))
-                        ->whereMonth('scheduled_date', date('m', strtotime($month_year)));
-                }
-            }])
-                ->with('category.maintenanceCriteria')
-                ->where('tool_type_id', 1)
-                ->where('factory_id', $factory->id)
-                ->get();
+            $tools = ReportService::getToolListsMonthly($factory->id, $month_year, 1);
+
             $bulan_tahun = Carbon::parse($month_year)->translatedFormat('F Y');
             $month = Carbon::parse($month_year)->format('m');
             $year = Carbon::parse($month_year)->format('Y');
@@ -209,6 +201,59 @@ class ReportController extends Controller
                 'year' => $year
             ];
 
+            $pdf = PDF::loadView("exports.$param", $data)->setPaper('f4', 'landscape');
+
+            return $pdf->stream("$param.$factory->name.pdf");
+        }
+
+        if ($param == 'daftar_pemeriksaan_generator_set') {
+            $factory = Factory::findOrFail($request->input('factory_id'));
+            $no_laporan = $request->input('no_laporan');
+            $nama_maintenance = $request->input('nama_maintenance');
+            $kepala_pabrik = $request->input('kepala_pabrik');
+            $month_year = $request->input('month_year');
+
+            $tools = ReportService::getToolListsMonthly($factory->id, $month_year, 2);
+
+            $bulan_tahun = Carbon::parse($month_year)->translatedFormat('F Y');
+            $month = Carbon::parse($month_year)->format('m');
+            $year = Carbon::parse($month_year)->format('Y');
+
+            foreach ($tools as $tool) {
+                $maintenances = $tool->maintenances;
+
+                foreach ($maintenances as $maintenance) {
+                    $maintenanceDetails = [];
+                    $maintenanceResultCriteria = [];
+                    $details = json_decode($maintenance->details, true);
+                    if (isset($details['criterias'])) {
+                        $criterias = $details['criterias'];
+                        foreach ($criterias as $key => $criteria) {
+                            $maintenanceCriteria = MaintenanceCriteria::find($key);
+                            if ($maintenanceCriteria) {
+                                $temp['id'] = $maintenanceCriteria->id;
+                                $temp['name'] = $maintenanceCriteria->name;
+                                $temp['result'] = $criteria;
+                                array_push($maintenanceResultCriteria, $temp);
+                            }
+                        }
+                        $maintenanceDetails['details'] = $details['details'];
+                        $maintenanceDetails['criterias'] = $maintenanceResultCriteria;
+                        $maintenance->details = $maintenanceDetails;
+                    }
+                }
+            }
+
+            $data = [
+                'no_laporan' => $no_laporan, // Replace with your variable values
+                'factory' => $factory,
+                'tools' => $tools,
+                'nama_maintenance' => $nama_maintenance,
+                'kepala_pabrik' => $kepala_pabrik,
+                'bulan_tahun' => $bulan_tahun,
+                'month' => $month,
+                'year' => $year
+            ];
             $pdf = PDF::loadView("exports.$param", $data)->setPaper('f4', 'landscape');
 
             return $pdf->stream("$param.$factory->name.pdf");
