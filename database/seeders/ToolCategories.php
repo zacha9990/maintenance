@@ -20,6 +20,7 @@ class ToolCategories extends Seeder
             "Generator Set",
             "Gedung dan Sarana Lain",
             "Alat Pemadam Kebakaran",
+            "Komputer"
         ];
         foreach ($categories as $category) {
             ToolCategory::create(['name' => $category]);
