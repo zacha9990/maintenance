@@ -6,7 +6,6 @@
     <title>Membuat Laporan PDF Dengan DOMPDF Laravel</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -67,6 +66,7 @@
                     @php
                         for ($day = 1; $day <= $totalDays; $day++) {
                             if (count($maintenances)>0){
+                                $finalResult = "";
                                 foreach ($maintenances as $maintenance) {
                                     $criterias = $maintenance->details['criterias'];
                                     $carbonDate = Carbon::parse($maintenance->scheduled_date);
@@ -76,11 +76,10 @@
                                                 $result = $criteria['result'] == 'good' ? 'V' : 'X';
                                             }
                                         }
-                                        echo '<td class="narrow">' . $result . '</td>';
-                                    } else {
-                                        echo '<td class="narrow"></td>';
+                                        $finalResult = $finalResult . " " . $result ;
                                     }
                                 }
+                                echo '<td class="narrow">' . $finalResult . '</td>';
                             } else {
                                 echo '<td class="narrow"></td>';
                             }
@@ -98,6 +97,7 @@
                             for ($day = 1; $day <= $totalDays; $day++) {
                                 if (count($maintenances) > 0)
                                 {
+                                    $finalResult = "";
                                     foreach ($maintenances as $maintenance) {
                                         $criterias = $maintenance->details['criterias'];
                                         $carbonDate = Carbon::parse($maintenance->scheduled_date);
@@ -107,11 +107,10 @@
                                                     $result = $criteria['result'] == 'good' ? 'V' : 'X';
                                                 }
                                             }
-                                            echo '<td class="narrow">' . $result . '</td>';
-                                        } else {
-                                            echo '<td class="narrow"></td>';
+                                            $finalResult = $finalResult . " " . $result ;
                                         }
                                     }
+                                    echo '<td class="narrow">' . $finalResult . '</td>';
                                 }else {
                                     echo '<td class="narrow"></td>';
                                 }

@@ -49,9 +49,21 @@ class ReportService
             case 'daftar_pemeriksaan_alat_pemadam_kebakaran':
                 $data = self::daftarPemeriksaanAlatPemadamKebakaran($key);
                 break;
+            case 'daftar_pemeliharaan_komputer':
+                $data = self::daftarPemeliharaanKomputer($key);
+                break;
+
         }
 
         return $data;
+    }
+
+    public static function daftarPemeliharaanKomputer($key)
+    {
+        $builder = config("reports.$key");
+        $builder['factories'] = Factory::all();
+
+        return $builder;
     }
 
     public static function daftarMesinAlatProduksiDanSarana($key)

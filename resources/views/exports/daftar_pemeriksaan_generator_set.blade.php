@@ -65,6 +65,7 @@
                     @php
                         for ($day = 1; $day <= $totalDays; $day++) {
                             if (count($maintenances)>0){
+                                $finalResult = "";
                                 foreach ($maintenances as $maintenance) {
                                     $criterias = $maintenance->details['criterias'];
                                     $carbonDate = Carbon::parse($maintenance->scheduled_date);
@@ -74,11 +75,10 @@
                                                 $result = $criteria['result'] == 'good' ? 'V' : 'X';
                                             }
                                         }
-                                        echo '<td class="narrow text-center">' . $result . '</td>';
-                                    } else {
-                                        echo '<td class="narrow text-center"></td>';
+                                        $finalResult = $finalResult . " " . $result ;
                                     }
                                 }
+                                echo '<td class="narrow">' . $finalResult . '</td>';
                             } else {
                                 echo '<td class="narrow text-center"></td>';
                             }
@@ -96,6 +96,7 @@
                             for ($day = 1; $day <= $totalDays; $day++) {
                                 if (count($maintenances) > 0)
                                 {
+                                    $finalResult = "";
                                     foreach ($maintenances as $maintenance) {
                                         $criterias = $maintenance->details['criterias'];
                                         $carbonDate = Carbon::parse($maintenance->scheduled_date);
@@ -105,11 +106,10 @@
                                                     $result = $criteria['result'] == 'good' ? 'V' : 'X';
                                                 }
                                             }
-                                            echo '<td class="narrow text-center">' . $result . '</td>';
-                                        } else {
-                                            echo '<td class="narrow text-center"></td>';
+                                            $finalResult = $finalResult . " " . $result ;
                                         }
                                     }
+                                    echo '<td class="narrow">' . $finalResult . '</td>';
                                 }else {
                                     echo '<td class="narrow text-center"></td>';
                                 }

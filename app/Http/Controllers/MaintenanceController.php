@@ -30,7 +30,7 @@ class MaintenanceController extends Controller
     }
     public function getData(Request $request)
     {
-        $query = Maintenance::query()->with('tool');
+        $query = Maintenance::query()->with('tool')->orderBy('created_at', 'desc');
 
         if (Auth::user()->hasRole(['Teknisi'])) {
             $query->where('responsible_technician', Auth::user()->staff->id);
@@ -42,10 +42,6 @@ class MaintenanceController extends Controller
                 $query->where('status', $statusFilter);
             }
         }
-
-        $q = $query->get();
-
-        // dd($q->first()->tool->category->maintenanceCriteria);
 
         return DataTables::of($query)
             ->addColumn('tool_name', function ($maintenance) {

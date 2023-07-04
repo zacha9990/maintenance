@@ -207,6 +207,10 @@ $reports = [
                 "id" => "kepala_pabrik",
                 "text" => "Kepala Pabrik"
             ],
+            [
+                "id" => "nama_spv_prod_maint",
+                "text" => "Nama SPV Production dan Maintenance"
+            ],
         ],
         "description" => ""
     ],

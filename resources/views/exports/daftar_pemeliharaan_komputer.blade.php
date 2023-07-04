@@ -21,7 +21,7 @@
         <p>No Dokumen: {{ $no_laporan }}</p>
     </div>
     <div class="table-title text-center">
-        <h3>DAFTAR PEMERIKSAAN GEDUNG DAN SARANA LAINNYA</h3>
+        <h3> DAFTAR PEMELIHARAAN KOMPUTER</h3>
         <h6>Tahun: {{ $year }}</h6>
         <h6>{{ $factory->name }}</h3>
     </div>
@@ -32,15 +32,20 @@
         <thead class="text-center">
             <tr>
                 <th class="narrow" rowspan="2">No</th>
-                <th rowspan="2">Jenis Bangunan</th>
-                <th rowspan="2">Kriteria Kondisi Baik</th>
+                <th rowspan="2">Kegiatan</th>
+                <th rowspan="2">Rincian Kegiatan</th>
                 @php
-                    $totalDays = 4;
+                    $totalDays = 12;
                 @endphp
-                <th colspan="{{ $totalDays }}">Triwulan</th>
-                <th rowspan="2">Keterangan</th>
+                <th colspan="{{ $totalDays }}">Rencana (Bulan)</th>
+                <th colspan="{{ $totalDays }}">Realisasi (Bulan)</th>
             </tr>
             <tr>
+                @php
+                    for ($day = 1; $day <= $totalDays; $day++) {
+                        echo '<th class="narrow">' . $day . '</th>';
+                    }
+                @endphp
                 @php
                     for ($day = 1; $day <= $totalDays; $day++) {
                         echo '<th class="narrow">' . $day . '</th>';
@@ -62,31 +67,57 @@
 
                     <td>{{ $tool->category->maintenanceCriteria ? $tool->category->maintenanceCriteria[0]->name : '' }}
                     </td>
+
+                    {{-- Untuk Rencana --}}
                     @php
                         for ($day = 1; $day <= $totalDays; $day++) {
-                            if (count($maintenances)>0){
-                                $finalResult = "";
+                            if (count($maintenances) > 0) {
                                 foreach ($maintenances as $maintenance) {
                                     $criterias = $maintenance->details['criterias'];
                                     $carbonDate = Carbon::parse($maintenance->scheduled_date);
-                                    if ($carbonDate->quarter == $day) {
+                                    if ($carbonDate->month == $day) {
+                                        // foreach ($criterias as $criteria) {
+                                        //     if ($criteria['id'] == $tool->category->maintenanceCriteria[0]->id) {
+                                        //         $result = $criteria['result'] == 'good' ? 'V' : 'X';
+                                        //     }
+                                        // }
+                                        echo '<td class="narrow text-center">' . "R" . '</td>';
+                                        continue;
+                                    } else {
+                                        echo '<td class="narrow text-center"></td>';
+                                    }
+                                }
+                            } else {
+                                echo '<td class="narrow text-center"></td>';
+                            }
+                        }
+                    @endphp
+
+                    {{-- Untuk Realisasi --}}
+                    @php
+                        for ($day = 1; $day <= $totalDays; $day++) {
+                            if (count($maintenances) > 0) {
+                                foreach ($maintenances as $maintenance) {
+                                    $criterias = $maintenance->details['criterias'];
+                                    $carbonDate = Carbon::parse($maintenance->scheduled_date);
+                                    if ($carbonDate->month == $day) {
                                         foreach ($criterias as $criteria) {
                                             if ($criteria['id'] == $tool->category->maintenanceCriteria[0]->id) {
                                                 $result = $criteria['result'] == 'good' ? 'V' : 'X';
                                             }
                                         }
-                                        $finalResult = $finalResult . " " . $result ;
+                                        echo '<td class="narrow text-center">' . $result . '</td>';
+                                        continue;
+                                    } else {
+                                        echo '<td class="narrow text-center"></td>';
+                                        continue;
                                     }
                                 }
-                                echo '<td class="narrow">' . $finalResult . '</td>';
                             } else {
                                 echo '<td class="narrow text-center"></td>';
                             }
-
                         }
                     @endphp
-                    <td></td>
-
                 </tr>
                 @for ($j = 1; $j < $rowspan; $j++)
                     <tr>
@@ -94,28 +125,47 @@
                         </td>
                         @php
                             for ($day = 1; $day <= $totalDays; $day++) {
-                                if (count($maintenances) > 0)
-                                {
-                                    $finalResult = "";
+                                if (count($maintenances) > 0) {
                                     foreach ($maintenances as $maintenance) {
                                         $criterias = $maintenance->details['criterias'];
                                         $carbonDate = Carbon::parse($maintenance->scheduled_date);
-                                        if ($carbonDate->quarter == $day) {
-                                            foreach ($criterias as $criteria) {
-                                                if ($criteria['id'] == $tool->category->maintenanceCriteria[$j]->id) {
-                                                    $result = $criteria['result'] == 'good' ? 'V' : 'X';
-                                                }
-                                            }
-                                            $finalResult = $finalResult . " " . $result ;
+                                        if ($carbonDate->month == $day) {
+                                            echo '<td class="narrow text-center">' . "R" . '</td>';
+                                            continue;
+                                        } else {
+                                            echo '<td class="narrow text-center"></td>';
+                                            continue;
                                         }
                                     }
-                                    echo '<td class="narrow">' . $finalResult . '</td>';
-                                }else {
+                                } else {
                                     echo '<td class="narrow text-center"></td>';
                                 }
                             }
                         @endphp
-                        <td></td>
+                        @php
+                        for ($day = 1; $day <= $totalDays; $day++) {
+                            if (count($maintenances) > 0) {
+                                foreach ($maintenances as $maintenance) {
+                                    $criterias = $maintenance->details['criterias'];
+                                    $carbonDate = Carbon::parse($maintenance->scheduled_date);
+                                    if ($carbonDate->month == $day) {
+                                        foreach ($criterias as $criteria) {
+                                            if ($criteria['id'] == $tool->category->maintenanceCriteria[0]->id) {
+                                                $result = $criteria['result'] == 'good' ? 'V' : 'X';
+                                            }
+                                        }
+                                        echo '<td class="narrow text-center">' . $result . '</td>';
+                                        continue;
+                                    } else {
+                                        echo '<td class="narrow text-center"></td>';
+                                        continue;
+                                    }
+                                }
+                            } else {
+                                echo '<td class="narrow text-center"></td>';
+                            }
+                        }
+                    @endphp
                     </tr>
                 @endfor
                 @php $i++; @endphp
