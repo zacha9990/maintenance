@@ -40,9 +40,6 @@ class MaintenanceController extends Controller
             });
         }
 
-
-        $query =  $query->get();
-
         if (Auth::user()->hasRole(['Teknisi'])) {
             $query->where('responsible_technician', Auth::user()->staff->id);
         }
@@ -53,6 +50,8 @@ class MaintenanceController extends Controller
                 $query->where('status', $statusFilter);
             }
         }
+
+         $query =  $query->get();
 
         return DataTables::of($query)
             ->addColumn('tool_name', function ($maintenance) {
