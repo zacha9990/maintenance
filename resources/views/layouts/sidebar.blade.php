@@ -42,7 +42,7 @@
                         <span>Master Data</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        @if (Auth::user()->hasRole(['Operator']))
+                        @if (Auth::user()->hasRole(['SuperAdmin']))
                             <li><a href="{{ route('factories.index') }}"><i class="fas fa-industry"></i><span>Pabrik</span></a></li>
                         @endif
                         <li><a href="{{ route('tool_categories.index') }}"><i class="fas fa-tools"></i><span>Kategori Peralatan</span></a></li>
