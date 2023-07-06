@@ -6,7 +6,8 @@ namespace App\Http\Controllers;
 use App\Models\{
     RepairRequest,
     Staff,
-    Tool
+    Tool,
+    User
 };
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -40,8 +41,18 @@ class RepairRequestController extends Controller
                     return $query->where('approved', 0);
                 }
                 // dd(1);
-            })
-            ->get();
+            });
+
+        if (Auth::user()->hasRole(['Operator'])) {
+            $user = Auth::user();
+            $user2 = User::find($user->id);
+            $repairRequests = $repairRequests->whereHas('tool.factory', function ($query) use ($user2) {
+                $query->where('id', $user2->staff->factory_id);
+            });
+        }
+
+
+        $repairRequests = $repairRequests->get();
         return DataTables::of($repairRequests)
             ->editColumn('description', function ($row) {
                 // Modify the 'name' column value here
@@ -100,7 +111,16 @@ class RepairRequestController extends Controller
     public function create()
     {
 
-        $tools = Tool::all();
+        $tools = Tool::query();
+
+        if (Auth::user()->hasRole(['Operator'])) {
+            $user = Auth::user();
+            $user2 = User::find($user->id);
+
+            $tools = $tools->where('factory_id', $user2->staff->factory_id);
+        }
+
+        $tools = $tools->get();
 
         $superAdmin = false;
         if (Auth::user()->hasRole('SuperAdmin')) {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Position;
 use App\Models\User;
+use Auth;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
@@ -33,6 +34,12 @@ class UserController extends Controller
             ->join('positions', 'staffs.position_id', '=', 'positions.id')
             ->leftJoin('factories', 'staffs.factory_id', '=', 'factories.id');
 
+            if (Auth::user()->hasRole(['Operator'])) {
+                $user = Auth::user();
+                $user2 = User::find($user->id);
+                $users->where('factories.id', $user2->staff->factory_id);
+            }
+
             return DataTables::of($users)
                 ->addColumn('action', function ($user) {
                     return '<a href="' . route('users.edit', $user->id) . '" class="btn btn-primary btn-sm mx-1">Edit</a>' .
@@ -57,7 +64,13 @@ class UserController extends Controller
     public function create()
     {
         $positions = Position::all();
-        $factories = Factory::all();
+        $factories = Factory::query();
+        if (Auth::user()->hasRole(['Operator'])) {
+            $user = Auth::user();
+            $user2 = User::find($user->id);
+            $factories = $factories->where('id', $user2->staff->factory_id);
+        }
+        $factories = $factories->get();
 
         return view('users.create', compact('positions', 'factories'));
     }
@@ -100,7 +113,7 @@ class UserController extends Controller
 
         $position = Position::find($staff->position_id);
 
-        if ($position->role_id > 1) {
+        if ($position->role_id > 0) {
             $role =  Role::where('id', $position->role_id)->first();
 
             $user->assignRole([$role->id]);
@@ -132,7 +145,13 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $positions = Position::pluck('name', 'id');
-        $factories = Factory::all();
+        $factories = Factory::query();
+        if (Auth::user()->hasRole(['Operator'])) {
+            $user = Auth::user();
+            $user2 = User::find($user->id);
+            $factories = $factories->where('id', $user2->staff->factory_id);
+        }
+        $factories = $factories->get();
 
         return view('users.edit', compact('user', 'positions', 'factories'));
     }

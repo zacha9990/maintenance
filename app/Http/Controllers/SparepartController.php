@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Sparepart;
 use App\Models\Factory;
 use Yajra\DataTables\Facades\DataTables;
-
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 class SparepartController extends Controller
 {
     /**
@@ -16,7 +17,13 @@ class SparepartController extends Controller
      */
     public function index()
     {
-        $factories = Factory::pluck('name', 'id')->prepend('All', '');
+        $factories = Factory::query();
+        if (Auth::user()->hasRole(['Operator'])) {
+            $user = Auth::user();
+            $user2 = User::find($user->id);
+            $factories->where('id', $user2->staff->factory_id);
+        }
+        $factories = $factories->pluck('name', 'id')->prepend('All', '');
         return view('spareparts.index', compact('factories'));
     }
 
@@ -25,6 +32,14 @@ class SparepartController extends Controller
         if ($request->ajax()) {
             $spareParts = Sparepart::query();
             $factoryId = $request->input('factory_id');
+
+            if (Auth::user()->hasRole(['Operator'])) {
+                $user = Auth::user();
+                $user2 = User::find($user->id);
+                $spareParts->whereHas('factories', function ($query) use ($user2) {
+                    $query->where('factory_id', $user2->staff->factory_id);
+                });
+            }
 
             if ($factoryId) {
                 $spareParts->whereHas('factories', function ($query) use ($request) {

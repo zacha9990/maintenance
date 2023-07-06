@@ -10,16 +10,24 @@ use App\Models\{
     Sparepart,
     Inventory,
     MaintenancePeriod,
-    Tool
+    Tool,
+    User
 };
 use Carbon\Carbon;
+use Auth;
 
 class ToolController extends Controller
 {
 
     public function index()
     {
-        $factories = Factory::all();
+        $factories = Factory::query();
+        if (Auth::user()->hasRole(['Operator'])) {
+            $user = Auth::user();
+            $user2 = User::find($user->id);
+            $factories = $factories->where('id', $user2->staff->factory_id);
+        }
+        $factories = $factories->get();
         return view('tools.index', compact('factories'));
     }
 
@@ -31,6 +39,12 @@ class ToolController extends Controller
 
         if ($factoryId) {
             $tools->where('factory_id', $factoryId);
+        }
+
+        if (Auth::user()->hasRole(['Operator'])) {
+            $user = Auth::user();
+            $user2 = User::find($user->id);
+            $tools->where('factory_id', $user2->staff->factory_id);
         }
 
         $tools = $tools->get();
@@ -80,8 +94,22 @@ class ToolController extends Controller
     public function create()
     {
         $toolTypes = ToolCategory::all();
-        $factories = Factory::all();
-        $spareparts = Sparepart::all();
+        $factories = Factory::query();
+        $spareparts = Sparepart::with('factories');
+
+
+        if (Auth::user()->hasRole(['Operator'])) {
+            $user = Auth::user();
+            $user2 = User::find($user->id);
+
+            $factories = $factories->where('id', $user2->staff->factory_id);
+            $factory = Factory::find($user2->staff->factory_id);
+            $spareparts = $factory->spareparts;
+        } else {
+            $spareparts = $spareparts->get();
+        }
+
+        $factories = $factories->get();
 
         return view('tools.create', compact('toolTypes', 'factories', 'spareparts'));
     }
@@ -148,7 +176,13 @@ class ToolController extends Controller
     {
         $tool = Tool::findOrFail($id);
         $toolTypes = ToolCategory::all();
-        $factories = Factory::all();
+        $factories = Factory::query();
+        if (Auth::user()->hasRole(['Operator'])) {
+            $user = Auth::user();
+            $user2 = User::find($user->id);
+            $factories = $factories->where('id', $user2->staff->factory_id);
+        }
+        $factories = $factories->get();
         $spareparts = Sparepart::all();
 
         return view('tools.edit', compact('tool', 'toolTypes', 'factories', 'spareparts'));

@@ -19,16 +19,18 @@
                     </div>
                 @endif
 
-                <div class="row mb-3">
-                    <div class="col-sm-4">
-                        <label for="factory-filter">Filter by Factory:</label>
-                        <select class="form-control" id="factory-filter">
-                            @foreach ($factories as $id => $name)
-                                <option value="{{ $id }}">{{ $name }}</option>
-                            @endforeach
-                        </select>
+                @if (Auth::user()->hasRole(['SuperAdmin']))
+                    <div class="row mb-3">
+                        <div class="col-sm-4">
+                            <label for="factory-filter">Filter by Factory:</label>
+                            <select class="form-control" id="factory-filter">
+                                @foreach ($factories as $id => $name)
+                                    <option value="{{ $id }}">{{ $name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                </div>
+                @endif
                 <table id="spareparts-table" class="table table-bordered">
                     <thead>
                         <tr>

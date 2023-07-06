@@ -22,7 +22,9 @@
                         <label for="factory_id" class="col-sm-2 col-form-label">Pabrik</label>
                         <div class="col-sm-10">
                             <select class="form-select" id="factory_id" name="factory_id">
+                                @if (Auth::user()->hasRole(['SuperAdmin']))
                                     <option value="">Tidak dalam pabrik tertentu</option>
+                                @endif
                                 @foreach ($factories as $factory)
                                     <option value="{{ $factory->id }}" {{ $user->staff->factory_id == $factory->id ? "selected" : "" }}>{{ $factory->name }}</option>
                                 @endforeach

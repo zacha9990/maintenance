@@ -32,6 +32,17 @@ class MaintenanceController extends Controller
     {
         $query = Maintenance::query()->with('tool')->orderBy('created_at', 'desc');
 
+        if (Auth::user()->hasRole(['Operator'])) {
+            $user = Auth::user();
+            $user2 = User::find($user->id);
+            $query = $query->whereHas('tool.factory', function ($query) use ($user2) {
+                $query->where('id', $user2->staff->factory_id);
+            });
+        }
+
+
+        $query =  $query->get();
+
         if (Auth::user()->hasRole(['Teknisi'])) {
             $query->where('responsible_technician', Auth::user()->staff->id);
         }
