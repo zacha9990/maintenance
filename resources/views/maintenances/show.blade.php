@@ -33,7 +33,6 @@
                         <th>Jadwal ditugaskan</th>
                         <th>Mulai Maintenance</th>
                         <th>Tanggal selesai</th>
-                        <th>Waktu</th>
                         <th>Hasil</th>
                         <th style="white-space: nowrap;">Aksi</th>
                     </tr>
@@ -105,7 +104,6 @@
                             <td>{{ $maintenance->assign_date }}</td>
                             <td>{{ $maintenance->start_date }}</td>
                             <td>{{ $maintenance->completed_date }}</td>
-                            <td>{{ $maintenance->time }}</td>
                             <td>{{ $maintenance->result }}</td>
                             <td style="white-space: nowrap;">
                                 <!-- Tombol Cancel -->
