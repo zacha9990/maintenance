@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Sparepart;
+use App\Models\Factory;
+use Yajra\DataTables\Facades\DataTables;
 
 class SparepartController extends Controller
 {
@@ -14,25 +16,40 @@ class SparepartController extends Controller
      */
     public function index()
     {
-        return view('spareparts.index');
+        $factories = Factory::pluck('name', 'id')->prepend('All', '');
+        return view('spareparts.index', compact('factories'));
     }
 
-    public function list()
+    public function list(Request $request)
     {
-        $spareparts = Sparepart::select(['id', 'sparepart_name', 'sparepart_quantity', 'sparepart_availability'])->get();
+        if ($request->ajax()) {
+            $spareParts = Sparepart::query();
+            $factoryId = $request->input('factory_id');
 
-        return datatables()->of($spareparts)
-            ->addColumn('action', function ($sparepart) {
-                $editUrl = route('spareparts.edit', $sparepart->id);
-                $viewUrl = route('spareparts.show', $sparepart->id);
-                $deleteUrl = route('spareparts.destroy', $sparepart->id);
+            if ($factoryId) {
+                $spareParts->whereHas('factories', function ($query) use ($request) {
+                    $query->where('factory_id', $request->factory_id);
+                });
+            }
+
+            return DataTables::eloquent($spareParts)
+                ->addColumn('factory_name', function (SparePart $sparePart) {
+                    return $sparePart->factories->pluck('name')->implode('<br>');
+                })
+                ->addColumn('quantity', function (SparePart $sparePart) use ($factoryId) {
+                    $quantity = $factoryId ? $sparePart->factories->find($factoryId)->pivot->quantity : $sparePart->factories->sum('pivot.quantity');
+                    return $quantity;
+                })
+                ->addColumn('action', function ($sparepart) {
+                    $editUrl = route('spareparts.edit', $sparepart->id);
+                    $viewUrl = route('spareparts.show', $sparepart->id);
 
                 return "<a href=\"$editUrl\" class=\"btn btn-sm btn-primary\">Edit</a>
-                        <a href=\"$viewUrl\" class=\"btn btn-sm btn-success\">View</a>
-                        <button type=\"button\" class=\"btn btn-sm btn-danger delete-sparepart\" data-url=\"$deleteUrl\">Delete</button>";
+                            <a href=\"$viewUrl\" class=\"btn btn-sm btn-success\">View</a>";
             })
-            ->rawColumns(['action'])
-            ->make(true);
+                ->rawColumns(['factory_name', 'action'])
+                ->make(true);
+        }
     }
 
     /**
@@ -42,7 +59,8 @@ class SparepartController extends Controller
      */
     public function create()
     {
-        return view('spareparts.create');
+        $factories = Factory::pluck('name', 'id');
+        return view('spareparts.create', compact('factories'));
     }
 
     /**
@@ -53,9 +71,22 @@ class SparepartController extends Controller
      */
     public function store(Request $request)
     {
-        Sparepart::create($request->all());
+        $request->validate([
+            'factory_id' => 'required|exists:factories,id',
+            'sparepart_name' => 'required|string|max:255',
+            'quantity' => 'required|integer|min:1',
+        ]);
 
-        return response()->json(['success' => true]);
+        $factory = Factory::findOrFail($request->factory_id);
+
+        $sparePart = Sparepart::firstOrCreate(
+            ['sparepart_name' => $request->sparepart_name],
+            ['timestamps' => false]
+        );
+
+        $factory->spareparts()->attach($sparePart->id, ['quantity' => $request->quantity]);
+
+        return redirect()->route('spareparts.index')->with('success', 'SparePart berhasil dibuat.');
     }
 
     /**
@@ -66,7 +97,9 @@ class SparepartController extends Controller
      */
     public function show(Sparepart $sparepart)
     {
-        return view('spareparts.show', compact('sparepart'));
+        $factories = Factory::all();
+        // dd($sparepart);
+        return view('spareparts.show', compact('sparepart', 'factories'));
     }
 
     /**
@@ -77,7 +110,8 @@ class SparepartController extends Controller
      */
     public function edit(Sparepart $sparepart)
     {
-        return view('spareparts.edit', compact('sparepart'));
+        $factories = Factory::all();
+        return view('spareparts.edit', compact('sparepart', 'factories'));
     }
 
     /**
@@ -89,9 +123,19 @@ class SparepartController extends Controller
      */
     public function update(Request $request, Sparepart $sparepart)
     {
-        $sparepart->update($request->all());
+        $factories = Factory::all();
+        foreach ($factories as $factory) {
+            $quantity = $request->input('quantity.' . $factory->id);
 
-        return response()->json(['success' => true]);
+            if ($sparepart->factories->contains($factory->id)) {
+                $sparepart->factories()->updateExistingPivot($factory->id, ['quantity' => $quantity]);
+            } else {
+                $sparepart->factories()->attach($factory->id, ['quantity' => $quantity]);
+            }
+        }
+
+        return redirect()->route('spareparts.index', $sparepart->id)
+        ->with('success', 'Kuantitas sparepart berhasil diperbarui.');
     }
 
     /**

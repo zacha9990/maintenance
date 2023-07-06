@@ -128,10 +128,12 @@
                 <div class="col-sm-10">
                     <select class="form-control select2" id="maintenance_type" name="maintenance_type" required>
                         @if(isset($tool->maintenancePeriod))
+                            <option value="daily" {{ $tool->maintenancePeriod->maintenance_type == 'daily' ? 'selected' : '' }}>Harian</option>
                             <option value="weekly" {{ $tool->maintenancePeriod->maintenance_type == 'weekly' ? 'selected' : '' }}>Mingguan</option>
                             <option value="monthly" {{ $tool->maintenancePeriod->maintenance_type == 'monthly' ? 'selected' : '' }}>Bulanan</option>
                             <option value="yearly" {{ $tool->maintenancePeriod->maintenance_type == 'yearly' ? 'selected' : '' }}>Tahunan</option>
                         @else
+                            <option value="daily">Harian</option>
                             <option value="weekly">Mingguan</option>
                             <option value="monthly">Bulanan</option>
                             <option value="yearly">Tahunan</option>
@@ -156,6 +158,26 @@
 <script>
     $(document).ready(function() {
         $('.select2').select2();
+
+        $('#factory_id').on('change', function() {
+                var factoryId = $(this).val();
+
+                if (factoryId) {
+                    $.ajax({
+                        url: "{{ route('factories.getSpareparts') }}",
+                        type: "GET",
+                        data: {
+                            factory_id: factoryId
+                        },
+                        success: function(data) {
+                            $('#spareparts').html(data);
+                        }
+                    });
+                } else {
+                    $('#spareparts').html(
+                    '<option value="" disabled>Pilih Pabrik terlebih dahulu</option>');
+                }
+            });
     });
 </script>
 @endsection

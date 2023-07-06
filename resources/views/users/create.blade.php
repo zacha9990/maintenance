@@ -21,6 +21,18 @@
                     </div>
 
                     <div class="row mb-3">
+                        <label for="factory_id" class="col-sm-2 col-form-label">Pabrik</label>
+                        <div class="col-sm-10">
+                            <select class="form-select" id="factory_id" name="factory_id">
+                                    <option value="">Tidak dalam pabrik tertentu</option>
+                                @foreach ($factories as $factory)
+                                    <option value="{{ $factory->id }}">{{ $factory->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
                         <label for="email" class="col-sm-2 col-form-label">Surel</label>
                         <div class="col-sm-10">
                             <input class="form-control" type="email" id="email" name="email" value="{{ old('email') }}">

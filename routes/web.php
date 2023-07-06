@@ -31,6 +31,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::prefix('factories')->group(function () {
         Route::get('/', [FactoryController::class, 'index'])->name('factories.index');
         Route::post('/', [FactoryController::class, 'store'])->name('factories.store');
+        Route::get('/getSpareparts', [FactoryController::class, 'getSpareparts'])->name('factories.getSpareparts');
         Route::get('/{id}', [FactoryController::class, 'show']);
         Route::put('/{id}', [FactoryController::class, 'update']);
         Route::delete('/{id}', [FactoryController::class, 'destroy'])->name('factories.destroy');
@@ -119,6 +120,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::get('spareparts/list', [SparepartController::class, 'list'])->name('spareparts.list');
+    Route::get('/factories/{factory}/spareparts/{sparepart}', 'SparepartController@show')->name('factory.spareparts.show');
     Route::resource('spareparts', SparepartController::class);
 
     Route::get('users/getUsers', [UserController::class, 'getUsers'])->name('users.getUsers');

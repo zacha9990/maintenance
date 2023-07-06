@@ -40,6 +40,7 @@
                             <th>Email</th>
                             <th>Kontak</th>
                             <th>Posisi</th>
+                            <th>Pabrik</th>
                             <th>Tindakan</th>
                         </tr>
                     </thead>
@@ -76,6 +77,10 @@
                     {
                         data: 'position_name',
                         name: 'positions.name'
+                    },
+                    {
+                        data: 'fact_name',
+                        name: 'factories.name'
                     },
                     {
                         data: 'action',

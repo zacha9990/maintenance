@@ -9,6 +9,7 @@ use App\Models\ToolRequest;
 use App\Models\Maintenance;
 use App\Models\Position;
 use App\Models\MaintenanceHistory;
+use App\Models\Factory;
 
 class Staff extends Model
 {
@@ -30,6 +31,11 @@ class Staff extends Model
 
     public function maintenances(){
         return $this->hasMany(Maintenance::class);
+    }
+
+    public function factory()
+    {
+        return $this->belongsTo(Factory::class);
     }
 
 

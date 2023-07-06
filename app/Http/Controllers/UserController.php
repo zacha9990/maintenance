@@ -9,6 +9,7 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Staff;
+use App\Models\Factory;
 
 class UserController extends Controller
 {
@@ -26,9 +27,10 @@ class UserController extends Controller
     public function getUsers(Request $request)
     {
         if ($request->ajax()) {
-            $users = User::select(['users.id', 'users.name', 'users.email', 'users.contact', 'positions.name as position_name'])
+            $users = User::select(['users.id', 'users.name', 'users.email', 'users.contact', 'positions.name as position_name', 'factories.name as fact_name'])
                 ->join('staffs', 'users.id', '=', 'staffs.user_id')
-                ->join('positions', 'staffs.position_id', '=', 'positions.id');
+            ->join('positions', 'staffs.position_id', '=', 'positions.id')
+            ->leftJoin('factories', 'staffs.factory_id', '=', 'factories.id');
 
             return DataTables::of($users)
                 ->addColumn('action', function ($user) {
@@ -54,8 +56,9 @@ class UserController extends Controller
     public function create()
     {
         $positions = Position::all();
+        $factories = Factory::all();
 
-        return view('users.create', compact('positions'));
+        return view('users.create', compact('positions', 'factories'));
     }
 
     /**
@@ -91,6 +94,7 @@ class UserController extends Controller
         $staff->user_id = $user->id;
         $staff->position_id = $request->input('position');
         $staff->work_schedule = "";
+        $staff->factory_id = $request->input('factory_id');
         // Set other fields as needed
         $staff->save();
 
@@ -120,8 +124,9 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $positions = Position::pluck('name', 'id');
+        $factories = Factory::all();
 
-        return view('users.edit', compact('user', 'positions'));
+        return view('users.edit', compact('user', 'positions', 'factories'));
     }
 
     /**
@@ -140,6 +145,7 @@ class UserController extends Controller
         $user->email = $request->input('email');
         $user->contact = $request->input('contact');
         $staff->position_id = $request->input('position_id');
+        $staff->factory_id = $request->input('factory_id');
 
         $user->save();
         $staff->save();

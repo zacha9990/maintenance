@@ -1,44 +1,31 @@
-<!-- Include Bootstrap CSS -->
 @extends('layouts.admin')
 
-@section('css-after-bootstrap')
-@endsection
-
 @section('content')
-    <div class="container-fluid">
+    <div class="container">
         <div class="card">
             <div class="card-body">
-                <div class="container mt-4">
-                    <h2>Detail SparePart</h2>
+                <h2>Data Sparepart per Pabrik</h2>
 
-                    <table class="table">
+                <table class="table table-striped">
+                    <thead>
                         <tr>
-                            <th>ID:</th>
-                            <td>{{ $sparepart->id }}</td>
+                            <th>Pabrik</th>
+                            <th>Sparepart</th>
+                            <th>Kuantitas</th>
                         </tr>
-                        <tr>
-                            <th>Nama:</th>
-                            <td>{{ $sparepart->sparepart_name }}</td>
-                        </tr>
-                        <tr>
-                            <th>Kuantitas:</th>
-                            <td>{{ $sparepart->sparepart_quantity }}</td>
-                        </tr>
-                        <tr>
-                            <th>Ketersediaan:</th>
-                            <td>{{ $sparepart->sparepart_availability }}</td>
-                        </tr>
-                    </table>
-
-                    <a href="{{ route('spareparts.index') }}" class="btn btn-primary">Kembali</a>
-                </div>
-
+                    </thead>
+                    <tbody>
+                        @foreach ($factories as $factory)
+                                <tr>
+                                    <td>{{ $factory->name }}</td>
+                                    <td>{{ $sparepart->sparepart_name }}</td>
+                                    <td>{{ $factory->spareparts->find($sparepart->id)->pivot->quantity ?? 0 }}</td>
+                                </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <a class="btn btn-sm btn-outline-info" href="{{ route('spareparts.index') }}">Kembali</a>
             </div>
         </div>
     </div>
-@endsection
-
-@section('scripts')
-    <!-- Initialize DataTables and fetch the spareparts data -->
-
 @endsection

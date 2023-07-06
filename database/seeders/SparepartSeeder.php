@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Sparepart;
+use App\Models\Factory;
 use Faker\Factory as FakerFactory;
 
 class SparepartSeeder extends Seeder
@@ -18,13 +19,20 @@ class SparepartSeeder extends Seeder
     {
         $faker = FakerFactory::create('id_ID');
 
-        // Create spareparts
-        for ($i = 0; $i < 50; $i++) {
-            $sparepart = new Sparepart();
-            $sparepart->sparepart_name = $faker->word;
-            $sparepart->sparepart_quantity = $faker->numberBetween(1, 100);
-            $sparepart->sparepart_availability = $faker->randomElement(['In Stock', 'Out of Stock']);
-            $sparepart->save();
+        $factories = Factory::all();
+
+        foreach ($factories as $factory) {
+            $sparePartsCount = $faker->numberBetween(1, 5);
+
+            for ($i = 0; $i < $sparePartsCount; $i++) {
+                $sparePart = SparePart::create([
+                    'sparepart_name' => $faker->word,
+                ]);
+
+                $quantity = $faker->numberBetween(10, 100);
+
+                $factory->spareParts()->attach($sparePart, ['quantity' => $quantity]);
+            }
         }
     }
 }

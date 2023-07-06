@@ -32,6 +32,16 @@ class FactoryController extends Controller
         return view('factories.index');
     }
 
+    public function getSpareparts(Request $request)
+    {
+        $factoryId = $request->input('factory_id');
+        $factory = Factory::find($factoryId);
+
+        $spareparts = $factory ? $factory->spareparts : collect();
+
+        return view('partials.sparepart_options', compact('spareparts'));
+    }
+
 
     public function store(Request $request)
     {

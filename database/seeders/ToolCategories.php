@@ -16,7 +16,7 @@ class ToolCategories extends Seeder
     public function run()
     {
         $categories = [
-            "Mesin-Alat Proses Produksi"
+            "Mesin-Alat Proses Produksi",
             "Generator Set",
             "Gedung dan Sarana Lain",
             "Alat Pemadam Kebakaran",

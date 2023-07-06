@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('work_schedule', 255);
             $table->string('specialty', 255)->nullable();
             $table->foreignId('position_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('factory_id')->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
 
         });

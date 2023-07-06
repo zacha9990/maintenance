@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Tool;
 use App\Models\MaintenanceSparepart;
 use App\Models\RequestedItem;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Sparepart extends Model
 {
@@ -27,6 +28,13 @@ class Sparepart extends Model
     public function items()
     {
         $this->hasMany(RequestedItem::class);
+    }
+
+    public function factories(): BelongsToMany
+    {
+        return $this->belongsToMany(Factory::class, 'factory_sparepart')
+        ->withPivot('quantity')
+        ->withTimestamps();
     }
 
     public function getActionButtons()
