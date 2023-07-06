@@ -105,7 +105,7 @@ class ToolController extends Controller
             'tool_location' => 'required|string',
             'tool_status' => 'required|string',
             'maintenance_period' => 'required|integer',
-            'maintenance_type' => 'required|string|in:weekly,monthly,yearly',
+            'maintenance_type' => 'required|string|in:daily,weekly,monthly,yearly',
         ]);
 
         // Simpan data peralatan (tools)

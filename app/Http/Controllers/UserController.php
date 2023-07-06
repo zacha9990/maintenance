@@ -81,7 +81,6 @@ class UserController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-
         // Create user
         $user = new User();
         $user->name = $request->input('name');
@@ -106,8 +105,6 @@ class UserController extends Controller
 
             $user->assignRole([$role->id]);
         }
-
-
 
         return redirect()->route('users.index')->with('success', 'Pengguna berhasil dibuat');
     }
