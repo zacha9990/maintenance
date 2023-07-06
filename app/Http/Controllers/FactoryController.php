@@ -8,6 +8,7 @@ use App\Models\{
 };
 use Illuminate\Http\Request;
 use DataTables;
+use App\Models\Sparepart;
 
 class FactoryController extends Controller
 {
