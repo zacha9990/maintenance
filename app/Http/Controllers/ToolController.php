@@ -91,9 +91,10 @@ class ToolController extends Controller
         // Validasi input form
         $validatedData = $request->validate([
             'name' => 'required|string',
-            'serial_number' => 'required|string|unique:tools',
+            'serial_number' => 'nullable|string|unique:tools',
             'function' => 'required|string',
             'brand' => 'required|string',
+            'serial_type' => 'nullable|string',
             'purchase_date' => 'required|date',
             'technical_specification' => 'required|string',
             'tool_type_id' => 'required|exists:tool_categories,id',
@@ -158,10 +159,10 @@ class ToolController extends Controller
         // Validasi input form
         $validatedData = $request->validate([
             'name' => 'required|string',
-            'serial_number' => 'required|string|unique:tools,serial_number,' . $id,
+            'serial_number' => 'nullable|string|unique:tools,serial_number,' . $id,
             'function' => 'required|string',
             'brand' => 'required|string',
-            'serial_type' => 'required|string',
+            'serial_type' => 'nullable|string',
             'purchase_date' => 'required|date',
             'technical_specification' => 'required|string',
             'tool_type_id' => 'required|exists:tool_categories,id',
