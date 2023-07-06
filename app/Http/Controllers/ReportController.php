@@ -107,7 +107,7 @@ class ReportController extends Controller
         $kepalaShiftName = $request->input('kepala_shift');
         $toolName = $maintenance->tool->name;
         $pdf = PDF::loadView("exports.berita_acara_pemeriksaan_kerusakan_mesin_alat_produksi", compact('no_laporan', 'maintenance', 'letter_date', 'letter_day', 'maintenanceName', 'kepalaShiftName'));
-        return $pdf->stream("berita_acara_pemeriksaan_kerusakan_mesin_alat_produksi.$toolName.pdf");
+        return $pdf->download("berita_acara_pemeriksaan_kerusakan_mesin_alat_produksi.$toolName.pdf");
     }
 
     public function generateForm(Request $request, $param)
@@ -203,7 +203,7 @@ class ReportController extends Controller
 
             $pdf = PDF::loadView("exports.$param", $data)->setPaper('f4', 'landscape');
 
-            return $pdf->stream("$param.$factory->name.pdf");
+            return $pdf->download("$param.$factory->name.pdf");
         }
 
         if ($param == 'daftar_pemeriksaan_generator_set') {
@@ -256,7 +256,7 @@ class ReportController extends Controller
             ];
             $pdf = PDF::loadView("exports.$param", $data)->setPaper('f4', 'landscape');
 
-            return $pdf->stream("$param.$factory->name.pdf");
+            return $pdf->download("$param.$factory->name.pdf");
         }
 
         if ($param == 'daftar_rekap_pelaksanaan_pekerjaan_perawatan_dan_perbaikan_mesin_alat_produksi') {
@@ -293,7 +293,7 @@ class ReportController extends Controller
             ];
 
             $pdf = PDF::loadView("exports.$param", $data)->setPaper('a4', 'landscape');
-            return $pdf->stream("$param.$factory->name.pdf");
+            return $pdf->download("$param.$factory->name.pdf");
         }
 
         if ($param == 'daftar_pemeriksaan_gedung_dan_sarana_lainnya') {
@@ -341,7 +341,7 @@ class ReportController extends Controller
 
             $pdf = PDF::loadView("exports.$param", $data)->setPaper('f4', 'landscape');
 
-            return $pdf->stream("$param.$factory->name.pdf");
+            return $pdf->download("$param.$factory->name.pdf");
         }
 
         if ($param == 'daftar_pemeriksaan_alat_pemadam_kebakaran') {
@@ -389,7 +389,7 @@ class ReportController extends Controller
 
             $pdf = PDF::loadView("exports.$param", $data)->setPaper('f4', 'landscape');
 
-            return $pdf->stream("$param.$factory->name.pdf");
+            return $pdf->download("$param.$factory->name.pdf");
         }
 
         if ($param == 'daftar_pemeliharaan_komputer') {
@@ -439,7 +439,7 @@ class ReportController extends Controller
 
             $pdf = PDF::loadView("exports.$param", $data)->setPaper('f4', 'landscape');
 
-            return $pdf->stream("$param.$factory->name.pdf");
+            return $pdf->download("$param.$factory->name.pdf");
         }
 
         if ($param == 'laporan_realisasi_maintenance') {
@@ -447,7 +447,7 @@ class ReportController extends Controller
 
         $pdf = PDF::loadView("exports.$param", $data);
 
-        return $pdf->stream("$param.$factory->name.pdf");
+        return $pdf->download("$param.$factory->name.pdf");
     }
 
     public function laporanRealisasiMaintenance(Maintenance $maintenance)
@@ -478,7 +478,7 @@ class ReportController extends Controller
         $fileName = $maintenance->tool->name;
 
         $pdf = PDF::loadView("exports.laporan_realisasi_maintenance", $data);
-        return $pdf->stream("laporan_realisasi_maintenance_$fileName.pdf");
+        return $pdf->download("laporan_realisasi_maintenance_$fileName.pdf");
 
         // return view("exports.laporan_realisasi_maintenance", $data);
     }
@@ -534,6 +534,6 @@ class ReportController extends Controller
         $fileName = $factory->name . "_" . $tahun;
 
         $pdf = PDF::loadView("exports.laporan_riwayat_maintenance", $data)->setPaper('a4', 'landscape');
-        return $pdf->stream("laporan_riwayat_maintenance_$fileName.pdf");
+        return $pdf->download("laporan_riwayat_maintenance_$fileName.pdf");
     }
 }
