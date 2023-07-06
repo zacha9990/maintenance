@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Staff;
 use App\Models\Factory;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -97,6 +98,16 @@ class UserController extends Controller
         $staff->factory_id = $request->input('factory_id');
         // Set other fields as needed
         $staff->save();
+
+        $position = Position::find($staff->position_id);
+
+        if ($position->role_id > 1) {
+            $role =  Role::where('id', $position->role_id)->first();
+
+            $user->assignRole([$role->id]);
+        }
+
+
 
         return redirect()->route('users.index')->with('success', 'Pengguna berhasil dibuat');
     }

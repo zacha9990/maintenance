@@ -45,7 +45,8 @@ class PositionController extends Controller
      */
     public function create()
     {
-        //
+        $roles = Role::pluck('name', 'id')->toArray();
+        return view('positions.create', compact('roles'));
     }
 
     /**
@@ -56,7 +57,12 @@ class PositionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $position = new Position();
+        $position->name = $request->input('name');
+        $position->role_id = $request->role_id;
+        $position->save();
+
+        return redirect()->route('positions.index')->with('success', 'Posisi diperbarui dengan sukses. ');
     }
 
     /**
