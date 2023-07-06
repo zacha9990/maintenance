@@ -42,7 +42,9 @@
                         <span>Master Data</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('factories.index') }}"><i class="fas fa-industry"></i><span>Pabrik</span></a></li>
+                        @if (Auth::user()->hasRole(['Operator']))
+                            <li><a href="{{ route('factories.index') }}"><i class="fas fa-industry"></i><span>Pabrik</span></a></li>
+                        @endif
                         <li><a href="{{ route('tool_categories.index') }}"><i class="fas fa-tools"></i><span>Kategori Peralatan</span></a></li>
                         <li><a href="{{ route('tools.index') }}"><i class="fas fa-tools"></i><span>Peralatan</span></a></li>
                         <li><a href="{{ route('spareparts.index') }}"><i class="fas fa-cogs"></i><span>Sparepart</span></a></li>
