@@ -91,6 +91,8 @@ class RepairRequestController extends Controller
                 $approveButton = '';
                 $rejectButton = '';
 
+            if (Auth::user()->hasRole(['Operator', 'SuperAdmin'])) {
+
                 if ($repairRequest->approved == 0) {
                     $approveButton = '<button class="btn btn-success btn-sm approve-btn" data-id="' . $repairRequest->id . '"><i class="far fa-thumbs-up"></i></button>';
                     $rejectButton = '<button class="btn btn-danger btn-sm reject-btn" data-id="' . $repairRequest->id . '"><i class="far fa-thumbs-down"></i></button>';
@@ -99,6 +101,8 @@ class RepairRequestController extends Controller
                 } elseif ($repairRequest->approved == 99) {
                     $approveButton = '<span class="text-muted">Ditolak</span>';
                 }
+            }
+
 
                 return
                     $viewButton .

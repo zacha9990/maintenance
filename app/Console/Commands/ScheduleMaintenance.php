@@ -63,6 +63,9 @@ class ScheduleMaintenance extends Command
 
             while ($date->lt($endDate)) {
                 switch ($maintenanceType) {
+                    case 'daily':
+                        $date->addDays($maintenancePeriodValue);
+                        break;
                     case 'weekly':
                         $date->addWeeks($maintenancePeriodValue);
                         break;
