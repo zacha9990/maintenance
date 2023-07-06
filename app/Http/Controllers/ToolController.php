@@ -15,6 +15,7 @@ use App\Models\{
 };
 use Carbon\Carbon;
 use Auth;
+use QrCode;
 
 class ToolController extends Controller
 {
@@ -62,6 +63,7 @@ class ToolController extends Controller
             '<a class="btn btn-primary btn-sm btn-edit" href="' . route('tools.edit', $tool->id) . '"><i class="fas fa-edit"></i></a>' . " " .
             '<a class="btn btn-success btn-sm btn-view" href="' . route('tools.show', $tool->id) . '"><i class="fas fa-eye"></i></a>' . " " .
             '<a class="btn btn-danger btn-sm btn-maintenance-schedule" href="' . route('maintenances.show', $tool->id) . '"><i class="fas fa-calendar  "></i></a>' . " " .
+            '<a class="btn btn-info btn-sm btn-maintenance-schedule" data-toggle="tooltip" title="Lihat QrCode" href="' . route('tools.qrcode', $tool->id) . '"><i class="fas fa-qrcode  "></i></a>' . " " .
             '<a class="btn btn-outline-danger btn-sm btn-maintenance-history" data-toggle="tooltip" title="Riwayat Maintenance" href="' . route('reports.laporanRiwayatMaintenance', $tool->id) . '"><i class="fas fa-history  "></i></a>';
             })
             ->rawColumns(['information_buttons'])
@@ -169,7 +171,28 @@ class ToolController extends Controller
             $tool->spareparts()->attach($validatedData['spareparts']);
         }
 
+        $appUrl = ENV('APP_URL');
+
+        $qrCodeUrl = $appUrl . "qrcode/$tool->id";
+
+        $directory = storage_path('app\public\qrcodes');
+        if (!file_exists($directory)) {
+            mkdir($directory, 0777, true);
+        }
+
+        QrCode::format('png')->size(400)->generate($qrCodeUrl, storage_path("app/public/qrcodes/$tool->id.png"));
+
+        $tool->qrcode = "qrcodes/$tool->id.png";
+
+        $tool->save();
+
         return redirect()->route('tools.index')->with('success', 'Data peralatan berhasil disimpan.');
+    }
+
+    public function qrcode(Tool $tool)
+    {
+        $qrCodePath = env('APP_URL') . "/storage/" . $tool->qrcode;
+        return view('tools.qrcode', compact('tool', 'qrCodePath'));
     }
 
     public function edit($id)

@@ -94,13 +94,13 @@
         </tr>
         <tr>
             <td>
-                <p class="text-center">---</p>
+                <p class="text-center">{{ $kepala_pabrik }}</p>
             </td>
             <td>
-                <p class="text-center">---</p>
+                <p class="text-center">{{ $nama_spv_prod_maint }}</p>
             </td>
             <td>
-                <p class="text-center">---</p>
+                <p class="text-center">{{ $nama_maintenance }}</p>
             </td>
         </tr>
     </table>

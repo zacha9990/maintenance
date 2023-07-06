@@ -8,9 +8,22 @@ $reports = [
             [
                 "id" => "no_laporan",
                 "text" => "Nomor Laporan"
-            ]
+            ],
+            [
+                "id" => "nama_maintenance",
+                "text" => "Nama maintenance"
+            ],
+            [
+                "id" => "nama_spv_prod_maint",
+                "text" => "Nama SPV Production dan Maintenance"
+            ],
+            [
+                "id" => "kepala_pabrik",
+                "text" => "Kepala pabrik"
+            ],
         ],
-        "description" => "Daftar Mesin dan Alat Produksi Pabrik"
+        "description" => "Daftar Mesin dan Alat Produksi Pabrik",
+        "no_laporan" => "KBM-IHH/F/SPR-MAINT/01"
     ],
     "daftar_permintaan_perbaikan_mesin_alat_produksi_external" => [
         "slug" => "daftar_permintaan_perbaikan_mesin_alat_produksi_external",
@@ -19,9 +32,22 @@ $reports = [
             [
                 "id" => "no_laporan",
                 "text" => "Nomor Laporan"
-            ]
+            ],
+            [
+                "id" => "nama_maintenance",
+                "text" => "Nama maintenance"
+            ],
+            [
+                "id" => "nama_spv_prod_maint",
+                "text" => "Nama SPV Production dan Maintenance"
+            ],
+            [
+                "id" => "kepala_pabrik",
+                "text" => "Kepala pabrik"
+            ],
         ],
-        "description" => ""
+        "description" => "",
+        "no_laporan" => "KBM-IHH/F/SPR-MAINT/06"
     ],
     "daftar_permintaan_perbaikan_mesin_alat_produksi_internal" => [
         "slug" => "daftar_permintaan_perbaikan_mesin_alat_produksi_internal",
@@ -29,10 +55,20 @@ $reports = [
         "input" => [
             [
                 "id" => "no_laporan",
-                "text" => "Nomor Laporan"
-            ]
+                "text" => "Nomor Laporan",
+
+            ],
+            [
+                "id" => "nama_maintenance",
+                "text" => "Nama maintenance"
+            ],
+            [
+                "id" => "nama_spv_prod_maint",
+                "text" => "Nama SPV Production dan Maintenance"
+            ],
         ],
-        "description" => ""
+        "description" => "",
+        "no_laporan" => "KBM-IHH/F/SPR-MAINT/05"
     ],
     "berita_acara_pemeriksaan_kerusakan_mesin_alat_produksi" => [
         "slug" => "berita_acara_pemeriksaan_kerusakan_mesin_alat_produksi",
@@ -49,9 +85,14 @@ $reports = [
             [
                 "id" => "kepala_shift",
                 "text" => "Nama Kepala Shift"
-            ]
+            ],
+            [
+                "id" => "nama_spv_prod_maint",
+                "text" => "Nama SPV Production dan Maintenance"
+            ],
         ],
-        "description" => "Daftar Maintenance diambil dari proses maintenance yang sudah selesai, yang tipenya adalah laporan kerusakan"
+        "description" => "Daftar Maintenance diambil dari proses maintenance yang sudah selesai, yang tipenya adalah laporan kerusakan",
+        "no_laporan" => "KBM-IHH/F/SPR-MAINT/07"
     ],
     "daftar_rekap_pelaksanaan_pekerjaan_perawatan_dan_perbaikan_mesin_alat_produksi" => [
         "slug" => "daftar_rekap_pelaksanaan_pekerjaan_perawatan_dan_perbaikan_mesin_alat_produksi",
@@ -60,9 +101,22 @@ $reports = [
             [
                 "id" => "no_laporan",
                 "text" => "Nomor Laporan"
-            ]
+            ],
+            [    "id" => "nama_maintenance",
+                "text" => "Nama maintenance"
+            ],
+            [
+                "id" => "nama_spv_prod_maint",
+                "text" => "Nama SPV Production dan Maintenance"
+            ],
+            [
+                "id" => "kepala_pabrik",
+                "text" => "Kepala pabrik"
+            ],
         ],
-        "description" => ""
+        "description" => "",
+        "no_laporan" => "KBM-IHH/F/SPR-MAINT/09"
+
 
     ],
     "laporan_realisasi_maintenance" => [
@@ -90,7 +144,8 @@ $reports = [
                 "text" => "Realisasi dari Formulir"
             ]
         ],
-        "description" => "Daftar Maintenance diambil dari proses maintenance yang sudah selesai. Bisa juga mencetaknya dari menu daftar maintenance."
+        "description" => "Daftar Maintenance diambil dari proses maintenance yang sudah selesai. Bisa juga mencetaknya dari menu daftar maintenance.",
+        "no_laporan" => "KBM-IHH/F/SPR-MAINT/08"
     ],
     "laporan_riwayat_maintenance" => [
         "slug" => "laporan_riwayat_maintenance",

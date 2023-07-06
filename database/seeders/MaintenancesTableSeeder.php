@@ -90,7 +90,14 @@ class MaintenancesTableSeeder extends Seeder
 
             $details = null;
             if ($status != 'completed') {
-                $details = $faker->text;
+                $tool = Tool::find($toolId);
+                $criterias = $tool->category->maintenanceCriteria;
+                foreach ($criterias as $criteria)
+                {
+                    $details['criterias'][$criteria->id] = (random_int(0, 1) === 0) ? 'good' : 'not_good';
+                }
+                $details['details'] = $faker->text;    
+                $details = json_encode($details);        
             }
 
             $actionTakenInternal = null;
@@ -102,6 +109,10 @@ class MaintenancesTableSeeder extends Seeder
             if ($type == 'Internal' && $status == 'completed') {
                 $actionTakenExternal = $faker->text(120);
             }
+
+
+
+            
 
             Maintenance::create([
                 'tool_id' => $toolId,

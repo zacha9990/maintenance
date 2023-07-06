@@ -16,7 +16,10 @@
         }
     </style>
 
+    @if($preview)
+        <a href="{{ route('reports.laporanRealisasiMaintenance', $maintenance->id) }}" class="btn btn-danger">Kembali</a>
 
+    @endif
     <div class="document-number">
         <p>No Dokumen: {{ $no_laporan }}</p>
     </div>

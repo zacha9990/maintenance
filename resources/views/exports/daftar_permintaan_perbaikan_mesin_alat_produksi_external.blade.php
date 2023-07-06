@@ -19,6 +19,9 @@
     <div class="document-number">
         <p>No Dokumen: {{ $no_laporan }}</p>
     </div>
+       @if($preview)
+            <a href="{{ route('reports.reportForm', $param) }}" class="btn btn-danger">Kembali</a>
+        @endif
     <div class="table-title text-center">
         <h3>DAFTAR PERMINTAAN PERBAIKAN MESIN ALAT PRODUKSI EXTERNAL</h3>
     </div>
@@ -91,13 +94,13 @@
         </tr>
         <tr>
             <td>
-                <p class="text-center">---</p>
+                <p class="text-center">{{ $nama_spv_prod_maint }}</p>
             </td>
             <td>
-                <p class="text-center">---</p>
+                <p class="text-center">{{ $kepala_pabrik }}</p>
             </td>
             <td>
-                <p class="text-center">---</p>
+                <p class="text-center">{{ $nama_maintenance }}</p>
             </td>
         </tr>
     </table>

@@ -141,7 +141,7 @@ class MaintenanceController extends Controller
         $maintenance = Maintenance::findOrFail($id);
 
         // Cek apakah pengguna memiliki akses untuk menyelesaikan maintenance
-        if (Auth::user()->hasRole('Teknisi') && $maintenance->status === 'on_progress') {
+        if (Auth::user()->hasRole(['Teknisi', 'SuperAdmin', 'Operator']) && $maintenance->status === 'on_progress') {
             $maintenance->result = $request->input('result');
             $maintenance->details = $request->input('details');
             $maintenance->status = 'completed';

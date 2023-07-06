@@ -197,6 +197,7 @@ return [
 
         Spatie\Permission\PermissionServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
 
     ],
 
@@ -214,5 +215,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
     ])->toArray(),
+
+    'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class
 
 ];

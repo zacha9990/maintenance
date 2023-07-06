@@ -102,6 +102,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::delete('/{maintenance_criteria}', [MaintenanceCriteriaController::class, 'destroy'])->name('maintenance-criterias.destroy');
     });
 
+    Route::get('tools/qrcode/{tool}', [ToolController::class, 'qrcode'])->name('tools.qrcode');
+
     Route::get('tools/list', [ToolController::class, 'list'])->name('tools.list');
     Route::get('tools/{tool}/spareparts', [ToolController::class, 'getToolSpareparts'])->name('tools.sparepart');
     Route::get('tools/{tool}/maintenance', [ToolController::class, 'getToolMaintenancePeriod'])->name('tools.maintenance');
