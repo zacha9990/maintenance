@@ -51,9 +51,11 @@
                         </tbody>
                     </table>
                 </div>
+                @if(request()->route()->getName() !== 'qrcode')
                 <div class="card-footer text-center">
                     <a href="{{ route('tools.index') }}" class="btn btn-secondary"><i class="fas fa-chevron-left"></i> Halaman Alat</a>
                 </div>
+                @endif
             </div>
         </div>
     </div>

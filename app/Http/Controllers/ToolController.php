@@ -32,6 +32,12 @@ class ToolController extends Controller
         return view('tools.index', compact('factories'));
     }
 
+    public function scan(Request $request, $id)
+    {
+        $tool = Tool::find($id);
+        return view('tools.show', compact('tool'));
+    }
+
     public function list(Request $request)
     {
         $factoryId = $request->input('factory_id');

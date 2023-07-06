@@ -133,3 +133,4 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 Route::get('/', [LoginController::class, 'showLoginForm']);
+Route::get('qrcode/{id}', [ToolController::class, 'scan'])->name('qrcode');
