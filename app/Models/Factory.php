@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Tool;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Models\Staff;
+use App\Models\Sparepart;
 
 class Factory extends Model
 {
@@ -20,7 +21,7 @@ class Factory extends Model
 
     public function spareparts(): BelongsToMany
     {
-        return $this->belongsToMany(SparePart::class, 'factory_sparepart')
+        return $this->belongsToMany(Sparepart::class, 'factory_sparepart')
         ->withPivot('quantity')
         ->withTimestamps();
     }
