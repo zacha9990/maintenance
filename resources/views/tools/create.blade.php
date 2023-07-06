@@ -24,7 +24,7 @@
 
                         <div class="mb-3">
                             <label for="serial_type" class="form-label">Tipe Seri</label>
-                            <input type="text" class="form-control" id="serial_type" name="serial_type" required>
+                            <input type="text" class="form-control" id="serial_type" name="serial_type">
                         </div>
 
                         <div class="mb-3">

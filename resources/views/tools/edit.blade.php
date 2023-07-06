@@ -23,7 +23,7 @@
             <div class="row mb-3">
                 <label for="serial_number" class="col-sm-2 col-form-label">Nomor seri</label>
                 <div class="col-sm-10">
-                    <input class="form-control" type="text" id="serial_number" name="serial_number" value="{{ $tool->serial_number }}" required>
+                    <input class="form-control" type="text" id="serial_number" name="serial_number" value="{{ $tool->serial_number }}">
                 </div>
             </div>
 

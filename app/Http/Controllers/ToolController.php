@@ -94,7 +94,6 @@ class ToolController extends Controller
             'serial_number' => 'required|string|unique:tools',
             'function' => 'required|string',
             'brand' => 'required|string',
-            'serial_type' => 'required|string',
             'purchase_date' => 'required|date',
             'technical_specification' => 'required|string',
             'tool_type_id' => 'required|exists:tool_categories,id',
