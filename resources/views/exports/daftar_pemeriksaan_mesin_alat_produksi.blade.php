@@ -17,7 +17,9 @@
         }
     </style>
 
-
+@if($preview)
+<a href="{{ route('reports.reportForm', $param) }}" class="btn btn-danger">Kembali</a>
+@endif
     <div class="document-number">
         <p>No Dokumen: {{ $no_laporan }}</p>
     </div>

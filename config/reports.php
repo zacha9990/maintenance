@@ -168,7 +168,8 @@ $reports = [
                 "text" => "Kepala Pabrik"
             ],
         ],
-        "description" => ""
+        "description" => "",
+        "no_laporan" => "KBM-IHH/F/SPR-MAINT/02"
     ],
     "daftar_pemeriksaan_mesin_alat_produksi" => [
         "slug" => "daftar_pemeriksaan_mesin_alat_produksi",
@@ -187,7 +188,8 @@ $reports = [
                 "text" => "Kepala Pabrik"
             ],
         ],
-        "description" => ""
+        "description" => "",
+        "no_laporan" => "KBM-IHH/F/SPR-MAINT/03"
     ],
     "daftar_pemeriksaan_generator_set" => [
         "slug" => "daftar_pemeriksaan_generator_set",
@@ -206,7 +208,8 @@ $reports = [
                 "text" => "Kepala Pabrik"
             ],
         ],
-        "description" => ""
+        "description" => "",
+        "no_laporan" => "KBM-IHHBK/F/WDJ-MAINT/02B"
     ],
     "daftar_pemeriksaan_gedung_dan_sarana_lainnya" => [
         "slug" => "daftar_pemeriksaan_gedung_dan_sarana_lainnya",
@@ -225,7 +228,8 @@ $reports = [
                 "text" => "Kepala Pabrik"
             ],
         ],
-        "description" => ""
+        "description" => "",
+        "no_laporan" => "KBM-IHH/F/SPR-MAINT/11"
     ],
     "daftar_pemeriksaan_alat_pemadam_kebakaran" => [
         "slug" => "daftar_pemeriksaan_alat_pemadam_kebakaran",
@@ -244,7 +248,8 @@ $reports = [
                 "text" => "Kepala Pabrik"
             ],
         ],
-        "description" => ""
+        "description" => "",
+        "no_laporan" => "KBM-IHH/F/SPR-MAINT/13"
     ],
     "daftar_pemeliharaan_komputer" => [
         "slug" => "daftar_pemeliharaan_komputer",
@@ -267,7 +272,8 @@ $reports = [
                 "text" => "Nama SPV Production dan Maintenance"
             ],
         ],
-        "description" => ""
+        "description" => "",
+        "no_laporan" => "KBM-IHH/F/SPR-MAINT/12"
     ],
     // "penggunaan_spare_part" => [
     //     "slug" => "penggunaan_spare_part",
