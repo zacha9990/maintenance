@@ -52,6 +52,9 @@ class ReportService
             case 'daftar_pemeliharaan_komputer':
                 $data = self::daftarPemeliharaanKomputer($key);
                 break;
+            case 'penggunaan_spare_part':
+                $data = self::penggunaanSparePart($key);
+                break;
 
         }
 
@@ -59,6 +62,14 @@ class ReportService
     }
 
     public static function daftarPemeliharaanKomputer($key)
+    {
+        $builder = config("reports.$key");
+        $builder['factories'] = Factory::all();
+
+        return $builder;
+    }
+
+    public static function penggunaanSparePart($key)
     {
         $builder = config("reports.$key");
         $builder['factories'] = Factory::all();

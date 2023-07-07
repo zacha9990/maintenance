@@ -12,6 +12,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Maintenance;
 use Carbon\Carbon;
 use App\Models\MaintenanceCriteria;
+use App\Models\Sparepart;
 
 class ReportController extends Controller
 {
@@ -185,6 +186,25 @@ class ReportController extends Controller
                 'nama_spv_prod_maint' => $nama_spv_prod_maint,
                 'nama_maintenance' => $nama_maintenance,
                 'param' => $param
+            ];
+        }
+
+        if ($param == 'penggunaan_spare_part') {
+            $factory = Factory::findOrFail($request->input('factory_id'));
+            $no_laporan = $request->input('no_laporan');
+            $yang_menyerahkan = $request->input('yang_menyerahkan');
+            $yang_menerima = $request->input('yang_menerima');
+            $tanggal = $request->input('tanggal');
+            $mengetahui = $request->input('mengetahui');
+            $data = [
+                'no_laporan' => $no_laporan, // Replace with your variable values
+                'factory' => $factory,
+                'yang_menyerahkan' => $yang_menyerahkan,
+                'yang_menerima' => $yang_menerima,
+                'tanggal' => Carbon::parse($tanggal)->translatedFormat('l, d F Y'),
+                'mengetahui' => $mengetahui,
+                'param' => $param,
+                'spareparts' => Sparepart::find($request->input('spareparts')),
             ];
         }
 

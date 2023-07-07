@@ -275,25 +275,30 @@ $reports = [
         "description" => "",
         "no_laporan" => "KBM-IHH/F/SPR-MAINT/12"
     ],
-    // "penggunaan_spare_part" => [
-    //     "slug" => "penggunaan_spare_part",
-    //     "name" => "Penggunaan spare part",
-    //     "input" => [
-    //         [
-    //             "id" => "no_laporan",
-    //             "text" => "Nomor Laporan"
-    //         ],
-    //         [
-    //             "id" => "nama_maintenance",
-    //             "text" => "Nama Maintenance"
-    //         ],
-    //         [
-    //             "id" => "kepala_pabrik",
-    //             "text" => "Kepala Pabrik"
-    //         ],
-    //     ],
-    //     "description" => ""
-    // ],
+    "penggunaan_spare_part" => [
+        "slug" => "penggunaan_spare_part",
+        "name" => "Penggunaan spare part",
+        "input" => [
+            [
+                "id" => "no_laporan",
+                "text" => "Nomor Laporan"
+            ],
+            [
+                "id" => "yang_menyerahkan",
+                "text" => "Yang Menyerahkan"
+            ],
+            [
+                "id" => "yang_menerima",
+                "text" => "Yang Menerima"
+            ],
+            [
+                "id" => "mengetahui",
+                "text" => "Mengetahui"
+            ],
+        ],
+        "description" => "",
+        "no_laporan" => "KBM-IHH/F/SPR-MAINT/10"
+    ],
 
 ];
 
