@@ -16,7 +16,8 @@ use App\Http\Controllers\{
     RepairRequestController,
     MaintenanceCriteriaController,
     TestController,
-    ReportController
+    ReportController,
+    DocumentController,
 };
 
 
@@ -130,6 +131,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('positions/getData', [PositionController::class, 'getData'])->name('positions.getData');
     Route::resource('positions', PositionController::class);
+
+    Route::resource('documents', DocumentController::class);
 });
 
 Route::get('/', [LoginController::class, 'showLoginForm']);

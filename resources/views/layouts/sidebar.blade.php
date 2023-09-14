@@ -86,6 +86,15 @@
                     </li>
                 @endif
 
+                @if (Auth::user()->hasRole(['Operator', 'SuperAdmin']))
+                    <li>
+                        <a href="{{ route('documents.index') }}" class="waves-effect">
+                            <i class="fas fa-file-alt"></i>
+                            <span>Upload Laporan</span>
+                        </a>
+                    </li>
+                @endif
+
                 @if (Auth::user()->hasRole(['SuperAdmin']))
                 <li>
                     <a href="{{ route('reports.index') }}" class="waves-effect">
