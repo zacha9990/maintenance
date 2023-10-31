@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Staff;
 use App\Models\Factory;
 use Spatie\Permission\Models\Role;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
@@ -20,7 +22,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $positions = Position::all();
         return view('users.index', compact('positions'));
@@ -42,8 +44,9 @@ class UserController extends Controller
 
             return DataTables::of($users)
                 ->addColumn('action', function ($user) {
-                    return '<a href="' . route('users.edit', $user->id) . '" class="btn btn-primary btn-sm mx-1">Edit</a>' .
-                        '<a href="' . route('users.show', $user->id) . '" class="btn btn-primary btn-sm mx-1">View</a>';;
+                    return '<a href="' . route('users.edit', $user->id) . '" class="btn btn-primary btn-sm mx-1">Ubah</a>' .
+                        '<a href="' . route('users.show', $user->id) . '" class="btn btn-primary btn-sm mx-1">Lihat</a>'.
+                        '<button class="btn btn-primary btn-sm mx-1 act-change-password" data-id="'.$user->id.'">Ganti Password</button>';
                 })
                 ->filter(function ($query) use ($request) {
                     if ($request->has('position') && $request->position != '') {
@@ -61,7 +64,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         $positions = Position::all();
         $factories = Factory::query();
@@ -81,7 +84,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
@@ -128,7 +131,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id): View
     {
         $user = User::findOrFail($id);
 
@@ -141,7 +144,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id): View
     {
         $user = User::findOrFail($id);
         $positions = Position::pluck('name', 'id');
@@ -163,7 +166,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): RedirectResponse
     {
         $user = User::findOrFail($id);
         $staff = $user->staff;
@@ -180,14 +183,39 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function getUser($id)
     {
-        //
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        return response()->json(['user' => $user], 200);
+    }
+
+    public function changePassword(Request $request)
+    {
+        $newPassword = $request->input('newPassword');
+        $confirmPassword = $request->input('confirmPassword');
+        $userId = $request->input('userId');
+
+        if ($newPassword === $confirmPassword) {
+           $user = User::find($userId); 
+           $user->password = Hash::make($newPassword);
+           $user->save();
+
+
+           return response()->json(['message' => 'Password changed successfully']);
+        } else {
+            return response()->json(['error' => 'Password and confirm password do not match'], 400);
+        }
+    }
+
+    public function showChangePasswordForm($id) 
+    {
+        $user = User::find($id);        
+
+        return view('changePassword.edit',compact('user'));
     }
 }

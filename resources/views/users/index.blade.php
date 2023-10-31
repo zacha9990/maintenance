@@ -48,6 +48,36 @@
             </div>
         </div> <!-- end card body-->
     </div>
+
+    <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter" aria-hidden="true">
+        <div class="modal-dialog my-modal modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailTitle">Ganti Password User: <span id="span-user-name"></span></h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body" id="detailBody" style="overflow-y: none;">
+                    <form id="changePasswordForm" method="POST">        
+                        <input type="hidden" name="userId">               
+                        <div class="mb-3">
+                            <label for="newPassword" class="form-label">Password Baru</label>
+                            <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Ulangi Password</label>
+                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" type="button" data-bs-dismiss="modal" data-bs-original-title="" title=""><i class="fa fa-times"></i> &nbsp;Close</button>
+                    <button class="btn btn-primary" type="button" id="changePasswordButton"><i class="fa fa-save"></i> &nbsp;Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @section('scripts')
@@ -93,6 +123,76 @@
 
             $('#position-filter').on('change', function() {
                 table.draw();
+            });
+
+            $(document).on('click', '.act-change-password', function(event) {
+                event.preventDefault();
+                let id = $(this).data("id");
+                $.ajax({
+                    url: "api/users/"+id,
+                    beforeSend: function() {
+                        $('#loader').show();
+                    },
+                    // return the result
+                    success: function(result) {
+                        $('#passwordModal').modal({
+                            backdrop: 'static',
+                            keyboard: false
+                        });
+                        $('#detailBody').show();
+                        $('#span-user-name').text(result.user.name)
+                        $('#passwordModal').modal("show");
+                        $("#changePasswordForm").attr("action", "api/users-change-password/"+result.user.id);
+                        $("#changePasswordForm input[name='userId']").val(result.user.id);
+                    },
+                    complete: function() {
+                        $('#loader').hide();
+                    },
+                    error: function(jqXHR, testStatus, error) {
+                        console.log(error);
+                        alert("Page " + href + " cannot open. Error:" + error);
+                        $('#loader').hide();
+                    },
+                    timeout: 8000
+                })
+            });
+
+            $('#changePasswordButton').on('click', function (e) {
+                e.preventDefault();
+                let newPassword = $('#newPassword').val();
+                let confirmPassword = $('#confirmPassword').val();
+
+
+                if (newPassword != confirmPassword)
+                {
+                    console.log("password tidak sama")
+                    alert("Password tidak sama")
+                }else
+                {
+                    let form = $('#changePasswordForm');
+
+                    $.ajax({
+                        url: form.attr("action"),
+                        type: form.attr("method"),
+                        data: form.serialize(),
+                        dataType: "json",
+                        beforeSend: function() {
+                            $('#loader').show();
+                        },
+                        success: function (data) {
+                            alert('password berhasil diganti')
+                        },
+                        complete: function() {
+                            $('#loader').hide();
+                            $('#passwordModal').modal("hide");
+                        },
+                        error: function(jqXHR, testStatus, error) {
+                            console.log(error);
+                            alert("Gagal ganti password");
+                            $('#loader').hide();
+                        },
+                    });
+                }
             });
         });
     </script>

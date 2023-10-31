@@ -59,10 +59,10 @@
                     <td class="narrow" rowspan="{{ $rowspan }}"></td>
 
 
-                    <td>{{ $tool->category->maintenanceCriteria ? $tool->category->maintenanceCriteria[0]->name : '' }}
+                    <td>{{ $tool->category->maintenanceCriteria->count() > 0 ? $tool->category->maintenanceCriteria[0]->name : '' }}
                     </td>
                     @php
-                        if (count($maintenances) > 0) {
+                        if (count($maintenances) > 0 && $tool->category->maintenanceCriteria->count() > 0) {
                             foreach ($maintenances as $maintenance) {
                                 $result = '';
                                 if (isset($maintenance->details['criterias'])) {

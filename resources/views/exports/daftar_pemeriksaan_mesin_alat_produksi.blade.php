@@ -63,11 +63,11 @@
                     <td class="narrow" rowspan="{{ $rowspan }}">{{ $i }}</td>
                     <td rowspan="{{ $rowspan }}">{{ $tool->name }}</td>
 
-                    <td>{{ $tool->category->maintenanceCriteria ? $tool->category->maintenanceCriteria[0]->name : '' }}
+                    <td>{{ $tool->category->maintenanceCriteria->count() > 0 ? $tool->category->maintenanceCriteria[0]->name : '' }}
                     </td>
                     @php
                         for ($day = 1; $day <= $totalDays; $day++) {
-                            if (count($maintenances)>0){
+                            if (count($maintenances)>0 && $tool->category->maintenanceCriteria->count()){
                                 $finalResult = "";
                                 foreach ($maintenances as $maintenance) {
                                     $criterias = $maintenance->details['criterias'];
