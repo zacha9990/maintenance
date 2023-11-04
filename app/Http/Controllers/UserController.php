@@ -14,6 +14,7 @@ use App\Models\Factory;
 use Spatie\Permission\Models\Role;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Arr;
 
 class UserController extends Controller
 {
@@ -201,7 +202,7 @@ class UserController extends Controller
         $userId = $request->input('userId');
 
         if ($newPassword === $confirmPassword) {
-           $user = User::find($userId); 
+           $user = User::find($userId);
            $user->password = Hash::make($newPassword);
            $user->save();
 
@@ -212,10 +213,30 @@ class UserController extends Controller
         }
     }
 
-    public function showChangePasswordForm($id) 
+    public function showChangePasswordForm($id)
     {
-        $user = User::find($id);        
+        $user = User::find($id);
 
         return view('changePassword.edit',compact('user'));
+    }
+
+    public function selfUpdatePassword(Request $request, int $id)
+    {
+        $this->validate($request, [
+            'password' => 'same:confirm-password',
+        ]);
+
+        $input = $request->all();
+        if(!empty($input['password'])){
+            $input['password'] = Hash::make($input['password']);
+        }else{
+            $input = Arr::except($input,array('password'));
+        }
+
+        $user = User::find($id);
+        $user->update($input);
+
+        return redirect()->route('dashboard.index', $id)
+                        ->with('message','Password berhasil diubah');
     }
 }

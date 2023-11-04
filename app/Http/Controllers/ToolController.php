@@ -186,9 +186,9 @@ class ToolController extends Controller
             mkdir($directory, 0777, true);
         }
 
-        QrCode::format('png')->size(400)->generate($qrCodeUrl, storage_path("app/public/qrcodes/$tool->id.png"));
+        // QrCode::format('png')->size(400)->generate($qrCodeUrl, storage_path("app/public/qrcodes/$tool->id.png"));
 
-        $tool->qrcode = "qrcodes/$tool->id.png";
+        // $tool->qrcode = "qrcodes/$tool->id.png";
 
         $tool->save();
 

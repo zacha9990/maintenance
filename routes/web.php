@@ -135,7 +135,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('documents', DocumentController::class);
 
     Route::get('changePassword/{id}', [UserController::class, 'showChangePasswordForm'])->name('changePassword.edit');
-    Route::post('changePassword/update/{id}', [UserController::class, 'selfUpdatePassword'])->name('changePassword.update');
+    Route::patch('changePassword/update/{id}', [UserController::class, 'selfUpdatePassword'])->name('changePassword.update');
 });
 
 Route::get('/', [LoginController::class, 'showLoginForm']);

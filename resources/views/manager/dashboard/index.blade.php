@@ -12,6 +12,13 @@
     </div>
 
     <div class="row">
+        @if (session()->has('message'))
+            <div class="col-12">
+                <div class="alert alert-success">
+                    {{ session()->get('message') }}
+                </div>
+            </div>
+        @endif
         <div class="col-xl-3 col-md-6">
             <div class="card">
                 <div class="card-body">

@@ -22,7 +22,7 @@
 
                 <li>
                     <a href="{{ route('dashboard.index') }}" class="waves-effect">
-                        <i class="fas fa-tachometer-alt"></i><span class="badge rounded-pill bg-success float-end">3</span>
+                        <i class="fas fa-tachometer-alt"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>

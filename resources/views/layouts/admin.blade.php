@@ -69,12 +69,12 @@
 
                             <a href="index.html" class="logo logo-light">
                                 <span class="logo-sm">
-                                    <img src="{{ asset('assets/images/logo-sm.png') }}" alt="logo-sm-light"
+                                    <img src="{{ asset('assets/images/logo-perhutani.png') }}" alt="logo-sm-light"
                                         height="22">
                                 </span>
                                 <span class="logo-lg">
-                                    <img src="{{ asset('assets/images/logo-perhutani .png') }}" alt="logo-light"
-                                        height="20">
+                                    <img src="{{ asset('assets/images/logo-perhutani.png') }}" alt="logo-light"
+                                        height="30">
                                 </span>
                             </a>
                         </div>

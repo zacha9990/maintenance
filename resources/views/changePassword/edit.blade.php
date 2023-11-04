@@ -32,7 +32,7 @@
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group mb-3">
-                                    <strong>Confirm Password</strong>
+                                    <strong>Konfirmasi password baru</strong>
                                     {!! Form::password('confirm-password', ['placeholder' => 'Confirm Password', 'class' => 'form-control']) !!}
                                 </div>
                             </div>
