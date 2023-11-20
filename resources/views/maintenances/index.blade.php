@@ -91,6 +91,7 @@
                     data: function(d) {
                         // Menambahkan filter status ke data yang dikirim ke server
                         d.statusFilter = $('#statusFilter').val();
+                        d.param = '{{ $param }}';
                     }
                 },
                 columns: [{

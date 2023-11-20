@@ -19,9 +19,11 @@ use Carbon\Carbon;
 
 class MaintenanceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('maintenances.index');
+        $param = $request->has('query') ? $request->input('query') : "";
+
+        return view('maintenances.index', compact('param'));
     }
 
     public function myMaintenances()
@@ -31,6 +33,7 @@ class MaintenanceController extends Controller
     public function getData(Request $request)
     {
         $query = Maintenance::query()->with('tool')->orderBy('created_at', 'desc');
+        $param = $request->has('param') ? $request->input('param') : "";
 
         if (Auth::user()->hasRole(['Operator'])) {
             $user = Auth::user();
@@ -49,6 +52,11 @@ class MaintenanceController extends Controller
             if ($statusFilter) {
                 $query->where('status', $statusFilter);
             }
+        }
+
+        if ($param == "this_month")
+        {
+            $query = $query->whereMonth('created_at', now()->month);
         }
 
          $query =  $query->get();

@@ -18,14 +18,17 @@ use Carbon\Carbon;
 
 class RepairRequestController extends Controller
 {
-    public function index()
-    {
-        return view('repair_requests.index');
+    public function index(Request $request)
+    {        
+        $param = $request->has('query') ? $request->input('query') : "";
+
+        return view('repair_requests.index', compact('param'));
     }
 
     public function getData(Request $request)
     {
         $approvedStatus = $request->input('approved_status');
+        $param = $request->has('param') ? $request->input('param') : "";
 
         $repairRequests = RepairRequest::with(['staff', 'tool'])
             ->when($approvedStatus != '', function ($query) use ($approvedStatus) {
@@ -51,6 +54,10 @@ class RepairRequestController extends Controller
             });
         }
 
+        if ($param == "this_month")
+        {
+            $repairRequests = $repairRequests->whereMonth('created_at', now()->month);
+        }
 
         $repairRequests = $repairRequests->get();
         return DataTables::of($repairRequests)

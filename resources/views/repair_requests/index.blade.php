@@ -55,6 +55,7 @@
                     url: "{{ route('repair_requests.data') }}",
                     data: function (d) {
                             d.approved_status =  $('#approved-status-filter').val();
+                            d.param = '{{ $param }}';
                         }
                     },
                 columns: [{

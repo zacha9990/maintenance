@@ -117,7 +117,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
         Route::get('/chart-data-factory-tools', [DashboardController::class, 'getChartDataFactoryTools'])->name('dashboard.chart-data-factory-tools');
         Route::get('/maintenance-status-over-the-years', [DashboardController::class, 'getChartDataMaintenanceStatusOverTheYears'])
-        ->name('dashboard.chart_data_maintenance_status_over_the_years');
+            ->name('dashboard.chart_data_maintenance_status_over_the_years');
         Route::get('/repair-requests-chart',  [DashboardController::class, 'getRepairRequestsChartData'])->name('dashboard.repair-requests-chart');
         Route::get('/tools-chart-by-category', [DashboardController::class, 'getToolsChartByCategoryData'])->name('dashboard.tools-chart-by-category');
     });

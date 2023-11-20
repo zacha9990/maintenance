@@ -14,72 +14,80 @@
                 </div>
             @endif
             <div class="col-xl-3 col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex">
-                            <div class="flex-grow-1">
-                                <p class="text-truncate font-size-14 mb-2">Total Peralatan</p>
-                                <h4 class="mb-2">{{ $toolsCount }}</h4>
+                <a href="{{ route('tools.index') }}" target="_blank" class="href">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <div class="flex-grow-1">
+                                    <p class="text-truncate font-size-14 mb-2">Total Peralatan</p>
+                                    <h4 class="mb-2">{{ $toolsCount }}</h4>
+                                </div>
+                                <div class="avatar-sm">
+                                    <span class="avatar-title bg-light text-primary rounded-3">
+                                        <i class="fas fa-tools font-size-24"></i>
+                                    </span>
+                                </div>
                             </div>
-                            <div class="avatar-sm">
-                                <span class="avatar-title bg-light text-primary rounded-3">
-                                    <i class="fas fa-tools font-size-24"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div><!-- end cardbody -->
-                </div><!-- end card -->
+                        </div><!-- end cardbody -->
+                    </div><!-- end card -->
+                </a>
             </div><!-- end col -->
             <div class="col-xl-3 col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex">
-                            <div class="flex-grow-1">
-                                <p class="text-truncate font-size-14 mb-2">Total Sparepart</p>
-                                <h4 class="mb-2">{{ $sparePartsCount }}</h4>
+                <a href="{{ route('spareparts.index') }}" target="_blank" class="href">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <div class="flex-grow-1">
+                                    <p class="text-truncate font-size-14 mb-2">Total Sparepart</p>
+                                    <h4 class="mb-2">{{ $sparePartsCount }}</h4>
+                                </div>
+                                <div class="avatar-sm">
+                                    <span class="avatar-title bg-light text-success rounded-3">
+                                        <i class="fas fa-cogs font-size-24"></i>
+                                    </span>
+                                </div>
                             </div>
-                            <div class="avatar-sm">
-                                <span class="avatar-title bg-light text-success rounded-3">
-                                    <i class="fas fa-cogs font-size-24"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div><!-- end cardbody -->
-                </div><!-- end card -->
+                        </div><!-- end cardbody -->
+                    </div><!-- end card -->
+                </a>
             </div><!-- end col -->
             <div class="col-xl-3 col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex">
-                            <div class="flex-grow-1">
-                                <p class="text-truncate font-size-14 mb-2">Laporan Kerusakan Bulan Ini</p>
-                                <h4 class="mb-2">{{ $repairRequests }}</h4>
+                <a href="{{ route('repair_requests.index', ["query" => "this_month"]) }}" target="_blank" class="hre">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <div class="flex-grow-1">
+                                    <p class="text-truncate font-size-14 mb-2">Laporan Kerusakan Bulan Ini</p>
+                                    <h4 class="mb-2">{{ $repairRequests }}</h4>
+                                </div>
+                                <div class="avatar-sm">
+                                    <span class="avatar-title bg-light text-danger rounded-3">
+                                        <i class="fas fa-exclamation-triangle font-size-24"></i>
+                                    </span>
+                                </div>
                             </div>
-                            <div class="avatar-sm">
-                                <span class="avatar-title bg-light text-danger rounded-3">
-                                    <i class="fas fa-exclamation-triangle font-size-24"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div><!-- end cardbody -->
-                </div><!-- end card -->
+                        </div><!-- end cardbody -->
+                    </div><!-- end card -->                    
+                </a>
             </div><!-- end col -->
             <div class="col-xl-3 col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex">
-                            <div class="flex-grow-1">
-                                <p class="text-truncate font-size-14 mb-2">Harus segera dilakukan maintenance</p>
-                                <h4 class="mb-2">{{ $countScheduledDate }}</h4>
+                <a href="{{ route('maintenances.index', ["query" => "this_month"]) }}" class="href" target="_blank">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <div class="flex-grow-1">
+                                    <p class="text-truncate font-size-14 mb-2">Harus segera dilakukan maintenance</p>
+                                    <h4 class="mb-2">{{ $countScheduledDate }}</h4>
+                                </div>
+                                <div class="avatar-sm">
+                                    <span class="avatar-title bg-light text-warning rounded-3">
+                                        <i class="fas fa-wrench font-size-24"></i>
+                                    </span>
+                                </div>
                             </div>
-                            <div class="avatar-sm">
-                                <span class="avatar-title bg-light text-warning rounded-3">
-                                    <i class="fas fa-wrench font-size-24"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div><!-- end cardbody -->
-                </div><!-- end card -->
+                        </div><!-- end cardbody -->
+                    </div><!-- end card -->                    
+                </a>
             </div><!-- end col -->
         </div><!-- end row -->
 
