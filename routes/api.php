@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\API\FactoryAPIController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,4 @@ Route::get('users/{id}', [UserController::class, 'getUser'])->name('api.get_user
 
 Route::post('users-change-password/{id}', [UserController::class, 'changePassword'])->name('api.get_user');
 
+Route::resource('factories', FactoryAPIController::Class, ['names' => 'api.factories']);

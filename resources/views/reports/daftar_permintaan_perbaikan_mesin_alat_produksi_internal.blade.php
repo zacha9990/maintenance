@@ -96,4 +96,9 @@
         dateEndInput.setAttribute('max', today.toISOString().split('T')[0]);
     });
 </script>
+<script>
+     var getFactoryByIdRoute = '/api/factories/';
+</script>
+<script src="{{ asset('js/page/report.js') }}"></script>
+
 @endsection

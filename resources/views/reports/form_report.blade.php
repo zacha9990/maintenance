@@ -40,3 +40,9 @@
         </div>
     </div>
 @endsection
+@section('scripts')
+    <script>
+         var getFactoryByIdRoute = '/api/factories/';
+    </script>
+    <script src="{{ asset('js/page/report.js') }}"></script>
+@endsection

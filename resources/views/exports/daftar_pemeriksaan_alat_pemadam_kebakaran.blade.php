@@ -23,7 +23,7 @@
         <p>No Dokumen: {{ $no_laporan }}</p>
     </div>
     <div class="table-title text-center">
-        <h3>DAFTAR PEMERIKSAAN GEDUNG DAN SARANA LAINNYA</h3>
+        <h3>DAFTAR PEMERIKSAAN ALAT PEMADAM KEBAKARAN</h3>
         <h6>Tahun: {{ $year }}</h6>
         <h6>{{ $factory->name }}</h3>
     </div>
