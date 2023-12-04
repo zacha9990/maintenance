@@ -56,7 +56,7 @@ class MaintenanceController extends Controller
 
         if ($param == "this_month")
         {
-            $query = $query->whereMonth('created_at', now()->month);
+            $query = $query->whereMonth('created_at', now()->month)->whereNotNull('scheduled_date');
         }
 
          $query =  $query->get();
