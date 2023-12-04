@@ -56,7 +56,10 @@ class MaintenanceController extends Controller
 
         if ($param == "this_month")
         {
-            $query = $query->whereMonth('created_at', now()->month)->whereNotNull('scheduled_date');
+            $startDate = Carbon::now();
+            $endDate = $startDate->copy()->addWeek();
+
+            $query = $query->whereBetween('scheduled_date', [$startDate, $endDate])->whereNotNull('scheduled_date');
         }
 
          $query =  $query->get();
