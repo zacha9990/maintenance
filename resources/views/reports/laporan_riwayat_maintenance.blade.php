@@ -67,9 +67,6 @@
 @endsection
 
 @section('scripts')
-
-@endsection
-@section('scripts')
     <script>
          var getFactoryByIdRoute = '/api/factories/';
     </script>
