@@ -3,17 +3,21 @@ function fetchDataAndReplaceSection() {
     var noLaporan = $("#no_laporan");
     var noLaporanVal = noLaporan.val();
 
-    $.ajax({
-        url: getFactoryByIdRoute + idValue,
-        method: 'GET',
-        data: {},
-        success: function (response) {
-            handleSuccessResponse(response, noLaporan, noLaporanVal);
-        },
-        error: function (xhr, status, error) {
-            console.error(xhr.responseText);
-        }
-    });
+    if (typeOf noLaporanVal !== 'undefined')
+    {
+        $.ajax({
+            url: getFactoryByIdRoute + idValue,
+            method: 'GET',
+            data: {},
+            success: function (response) {
+                handleSuccessResponse(response, noLaporan, noLaporanVal);
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
+    console.log("no factory id");
 }
 
 function handleSuccessResponse(response, noLaporan, noLaporanVal) {
