@@ -23,7 +23,7 @@ $reports = [
             ],
         ],
         "description" => "Daftar Mesin dan Alat Produksi Pabrik",
-        "no_laporan" => "KBM-IHH/F/SPR-MAINT/01"
+        "no_laporan" => "KBM-IBK/F/SPR-MAINT/01"
     ],
     "daftar_permintaan_perbaikan_mesin_alat_produksi_external" => [
         "slug" => "daftar_permintaan_perbaikan_mesin_alat_produksi_external",
@@ -47,7 +47,7 @@ $reports = [
             ],
         ],
         "description" => "",
-        "no_laporan" => "KBM-IHH/F/SPR-MAINT/06"
+        "no_laporan" => "KBM-IBK/F/SPR-MAINT/06"
     ],
     "daftar_permintaan_perbaikan_mesin_alat_produksi_internal" => [
         "slug" => "daftar_permintaan_perbaikan_mesin_alat_produksi_internal",
@@ -68,7 +68,7 @@ $reports = [
             ],
         ],
         "description" => "",
-        "no_laporan" => "KBM-IHH/F/SPR-MAINT/05"
+        "no_laporan" => "KBM-IBK/F/SPR-MAINT/05"
     ],
     "berita_acara_pemeriksaan_kerusakan_mesin_alat_produksi" => [
         "slug" => "berita_acara_pemeriksaan_kerusakan_mesin_alat_produksi",
@@ -92,7 +92,7 @@ $reports = [
             ],
         ],
         "description" => "Daftar Maintenance diambil dari proses maintenance yang sudah selesai, yang tipenya adalah laporan kerusakan",
-        "no_laporan" => "KBM-IHH/F/SPR-MAINT/07"
+        "no_laporan" => "KBM-IBK/F/SPR-MAINT/07"
     ],
     "daftar_rekap_pelaksanaan_pekerjaan_perawatan_dan_perbaikan_mesin_alat_produksi" => [
         "slug" => "daftar_rekap_pelaksanaan_pekerjaan_perawatan_dan_perbaikan_mesin_alat_produksi",
@@ -115,7 +115,7 @@ $reports = [
             ],
         ],
         "description" => "",
-        "no_laporan" => "KBM-IHH/F/SPR-MAINT/09"
+        "no_laporan" => "KBM-IBK/F/SPR-MAINT/09"
 
 
     ],
@@ -145,7 +145,7 @@ $reports = [
             ]
         ],
         "description" => "Daftar Maintenance diambil dari proses maintenance yang sudah selesai. Bisa juga mencetaknya dari menu daftar maintenance.",
-        "no_laporan" => "KBM-IHH/F/SPR-MAINT/08"
+        "no_laporan" => "KBM-IBK/F/SPR-MAINT/08"
     ],
     "laporan_riwayat_maintenance" => [
         "slug" => "laporan_riwayat_maintenance",
@@ -169,7 +169,7 @@ $reports = [
             ],
         ],
         "description" => "",
-        "no_laporan" => "KBM-IHH/F/SPR-MAINT/02"
+        "no_laporan" => "KBM-IBK/F/SPR-MAINT/02"
     ],
     "daftar_pemeriksaan_mesin_alat_produksi" => [
         "slug" => "daftar_pemeriksaan_mesin_alat_produksi",
@@ -189,7 +189,7 @@ $reports = [
             ],
         ],
         "description" => "",
-        "no_laporan" => "KBM-IHH/F/SPR-MAINT/03"
+        "no_laporan" => "KBM-IBK/F/SPR-MAINT/03"
     ],
     "daftar_pemeriksaan_generator_set" => [
         "slug" => "daftar_pemeriksaan_generator_set",
@@ -209,7 +209,7 @@ $reports = [
             ],
         ],
         "description" => "",
-        "no_laporan" => "KBM-IHHBK/F/WDJ-MAINT/02B"
+        "no_laporan" => "KBM-IBKBK/F/WDJ-MAINT/02B"
     ],
     "daftar_pemeriksaan_gedung_dan_sarana_lainnya" => [
         "slug" => "daftar_pemeriksaan_gedung_dan_sarana_lainnya",
@@ -229,7 +229,7 @@ $reports = [
             ],
         ],
         "description" => "",
-        "no_laporan" => "KBM-IHH/F/SPR-MAINT/11"
+        "no_laporan" => "KBM-IBK/F/SPR-MAINT/11"
     ],
     "daftar_pemeriksaan_alat_pemadam_kebakaran" => [
         "slug" => "daftar_pemeriksaan_alat_pemadam_kebakaran",
@@ -249,7 +249,7 @@ $reports = [
             ],
         ],
         "description" => "",
-        "no_laporan" => "KBM-IHH/F/SPR-MAINT/13"
+        "no_laporan" => "KBM-IBK/F/SPR-MAINT/13"
     ],
     "daftar_pemeliharaan_komputer" => [
         "slug" => "daftar_pemeliharaan_komputer",
@@ -273,7 +273,7 @@ $reports = [
             ],
         ],
         "description" => "",
-        "no_laporan" => "KBM-IHH/F/SPR-MAINT/12"
+        "no_laporan" => "KBM-IBK/F/SPR-MAINT/12"
     ],
     "penggunaan_spare_part" => [
         "slug" => "penggunaan_spare_part",
@@ -297,7 +297,7 @@ $reports = [
             ],
         ],
         "description" => "",
-        "no_laporan" => "KBM-IHH/F/SPR-MAINT/10"
+        "no_laporan" => "KBM-IBK/F/SPR-MAINT/10"
     ],
 
 ];
