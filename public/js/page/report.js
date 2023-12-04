@@ -3,7 +3,7 @@ function fetchDataAndReplaceSection() {
     var noLaporan = $("#no_laporan");
     var noLaporanVal = noLaporan.val();
 
-    if (typeof noLaporanVal !== 'undefined')
+    if (typeof idValue !== 'undefined')
     {
         $.ajax({
             url: getFactoryByIdRoute + idValue,
