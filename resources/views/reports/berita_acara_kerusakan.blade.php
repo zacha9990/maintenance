@@ -24,6 +24,7 @@
                     @csrf
 
                     <input type="hidden" name="maintenance_id" value="{{ $maintenance->id }}">
+                    <input type="hidden" name="factory_id" value="{{ $maintenance->tool->factory->id }}">
 
                     @foreach ($builder['input'] as $input)
                         <div class="row mb-3">
