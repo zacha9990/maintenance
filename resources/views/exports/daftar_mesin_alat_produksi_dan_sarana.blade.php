@@ -20,7 +20,7 @@
                 <a href="{{ route('reports.reportForm', $param) }}" class="btn btn-danger">Kembali</a>
             @endif
             <div class="table-title text-center">
-                <h3>DAFTAR MESIN/ALAT PRODUKSI DAN SARANA LAINNYA {{ $factory->name }} KBM IHHBK JATENG</h3>
+                <h3>DAFTAR MESIN/ALAT PRODUKSI DAN SARANA LAINNYA {{ $factory->name }} KBM IBK JATENG</h3>
             </div>
 
             <table class="table table-bordered">
