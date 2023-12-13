@@ -65,15 +65,19 @@
                         if (count($maintenances) > 0 && $tool->category->maintenanceCriteria->count() > 0) {
                             foreach ($maintenances as $maintenance) {
                                 $result = '';
-                                if (isset($maintenance->details['criterias'])) {
-                                    $criterias = $maintenance->details['criterias'];
+                                if(!is_string($maintenance->details))
+                                {
+                                    if (isset($maintenance->details['criterias'])) {
+                                        $criterias = $maintenance->details['criterias'];
 
-                                    foreach ($criterias as $criteria) {
-                                        if ($criteria['id'] == $tool->category->maintenanceCriteria[0]->id) {
-                                            $result = $criteria['result'] == 'good' ? 'V' : 'X';
+                                        foreach ($criterias as $criteria) {
+                                            if ($criteria['id'] == $tool->category->maintenanceCriteria[0]->id) {
+                                                $result = $criteria['result'] == 'good' ? 'V' : 'X';
+                                            }
                                         }
                                     }
                                 }
+
                             }
                             echo '<td class="narrow text-center">' . $result . '</td>';
                         } else {

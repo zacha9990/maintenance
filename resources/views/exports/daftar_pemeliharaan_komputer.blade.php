@@ -73,18 +73,21 @@
                         for ($day = 1; $day <= $totalDays; $day++) {
                             if (count($maintenances) > 0) {
                                 foreach ($maintenances as $maintenance) {
-                                    $criterias = $maintenance->details['criterias'];
-                                    $carbonDate = Carbon::parse($maintenance->scheduled_date);
-                                    if ($carbonDate->month == $day) {
-                                        // foreach ($criterias as $criteria) {
-                                        //     if ($criteria['id'] == $tool->category->maintenanceCriteria[0]->id) {
-                                        //         $result = $criteria['result'] == 'good' ? 'V' : 'X';
-                                        //     }
-                                        // }
-                                        echo '<td class="narrow text-center">' . "R" . '</td>';
-                                        continue;
-                                    } else {
-                                        echo '<td class="narrow text-center"></td>';
+                                    if(!is_string($maintenance->details))
+                                    {
+                                        $criterias = $maintenance->details['criterias'];
+                                        $carbonDate = Carbon::parse($maintenance->scheduled_date);
+                                        if ($carbonDate->month == $day) {
+                                            // foreach ($criterias as $criteria) {
+                                            //     if ($criteria['id'] == $tool->category->maintenanceCriteria[0]->id) {
+                                            //         $result = $criteria['result'] == 'good' ? 'V' : 'X';
+                                            //     }
+                                            // }
+                                            echo '<td class="narrow text-center">' . "R" . '</td>';
+                                            continue;
+                                        } else {
+                                            echo '<td class="narrow text-center"></td>';
+                                        }
                                     }
                                 }
                             } else {
@@ -98,19 +101,22 @@
                         for ($day = 1; $day <= $totalDays; $day++) {
                             if (count($maintenances) > 0) {
                                 foreach ($maintenances as $maintenance) {
-                                    $criterias = $maintenance->details['criterias'];
-                                    $carbonDate = Carbon::parse($maintenance->scheduled_date);
-                                    if ($carbonDate->month == $day) {
-                                        foreach ($criterias as $criteria) {
-                                            if ($criteria['id'] == $tool->category->maintenanceCriteria[0]->id) {
-                                                $result = $criteria['result'] == 'good' ? 'V' : 'X';
+                                    if(!is_string($maintenance->details))
+                                    {
+                                        $criterias = $maintenance->details['criterias'];
+                                        $carbonDate = Carbon::parse($maintenance->scheduled_date);
+                                        if ($carbonDate->month == $day) {
+                                            foreach ($criterias as $criteria) {
+                                                if ($criteria['id'] == $tool->category->maintenanceCriteria[0]->id) {
+                                                    $result = $criteria['result'] == 'good' ? 'V' : 'X';
+                                                }
                                             }
+                                            echo '<td class="narrow text-center">' . $result . '</td>';
+                                            continue;
+                                        } else {
+                                            echo '<td class="narrow text-center"></td>';
+                                            continue;
                                         }
-                                        echo '<td class="narrow text-center">' . $result . '</td>';
-                                        continue;
-                                    } else {
-                                        echo '<td class="narrow text-center"></td>';
-                                        continue;
                                     }
                                 }
                             } else {
@@ -127,14 +133,17 @@
                             for ($day = 1; $day <= $totalDays; $day++) {
                                 if (count($maintenances) > 0) {
                                     foreach ($maintenances as $maintenance) {
-                                        $criterias = $maintenance->details['criterias'];
-                                        $carbonDate = Carbon::parse($maintenance->scheduled_date);
-                                        if ($carbonDate->month == $day) {
-                                            echo '<td class="narrow text-center">' . "R" . '</td>';
-                                            continue;
-                                        } else {
-                                            echo '<td class="narrow text-center"></td>';
-                                            continue;
+                                        if(!is_string($maintenance->details))
+                                        {
+                                            $criterias = $maintenance->details['criterias'];
+                                            $carbonDate = Carbon::parse($maintenance->scheduled_date);
+                                            if ($carbonDate->month == $day) {
+                                                echo '<td class="narrow text-center">' . "R" . '</td>';
+                                                continue;
+                                            } else {
+                                                echo '<td class="narrow text-center"></td>';
+                                                continue;
+                                            }
                                         }
                                     }
                                 } else {
@@ -146,19 +155,22 @@
                         for ($day = 1; $day <= $totalDays; $day++) {
                             if (count($maintenances) > 0) {
                                 foreach ($maintenances as $maintenance) {
-                                    $criterias = $maintenance->details['criterias'];
-                                    $carbonDate = Carbon::parse($maintenance->scheduled_date);
-                                    if ($carbonDate->month == $day) {
-                                        foreach ($criterias as $criteria) {
-                                            if ($criteria['id'] == $tool->category->maintenanceCriteria[0]->id) {
-                                                $result = $criteria['result'] == 'good' ? 'V' : 'X';
+                                    if(!is_string($maintenance->details))
+                                    {
+                                        $criterias = $maintenance->details['criterias'];
+                                        $carbonDate = Carbon::parse($maintenance->scheduled_date);
+                                        if ($carbonDate->month == $day) {
+                                            foreach ($criterias as $criteria) {
+                                                if ($criteria['id'] == $tool->category->maintenanceCriteria[0]->id) {
+                                                    $result = $criteria['result'] == 'good' ? 'V' : 'X';
+                                                }
                                             }
+                                            echo '<td class="narrow text-center">' . $result . '</td>';
+                                            continue;
+                                        } else {
+                                            echo '<td class="narrow text-center"></td>';
+                                            continue;
                                         }
-                                        echo '<td class="narrow text-center">' . $result . '</td>';
-                                        continue;
-                                    } else {
-                                        echo '<td class="narrow text-center"></td>';
-                                        continue;
                                     }
                                 }
                             } else {

@@ -37,27 +37,27 @@
                 <th class="narrow" rowspan="2">No</th>
                 <th rowspan="2">Komponen</th>
                 <th rowspan="2">Kriteria Kondisi Baik</th>
-                @php
+                <?php
                     $totalDays = cal_days_in_month(CAL_GREGORIAN, $month, $year);
-                @endphp
+                ?>
                 <th colspan="{{ $totalDays }}">Kondisi Alat Tanggal</th>
                 <th rowspan="2">Keterangan</th>
             </tr>
             <tr>
-                @php
+                <?php
                     for ($day = 1; $day <= $totalDays; $day++) {
                         echo '<th class="narrow">' . $day . '</th>';
                     }
-                @endphp
+                ?>
             </tr>
         </thead>
         <tbody>
-            @php $i = 1; @endphp
+            <?php $i = 1; ?>
             @foreach ($tools as $tool)
-                @php
+                <?php
                     $rowspan = $tools->first()->category->maintenanceCriteria->count() > 1 ? $tools->first()->category->maintenanceCriteria->count() : 1;
                     $maintenances = $tool->maintenances;
-                @endphp
+                ?>
 
                 <tr>
                     <td class="narrow" rowspan="{{ $rowspan }}">{{ $i }}</td>
@@ -65,20 +65,23 @@
 
                     <td>{{ $tool->category->maintenanceCriteria->count() > 0 ? $tool->category->maintenanceCriteria[0]->name : '' }}
                     </td>
-                    @php
+                    <?php
                         for ($day = 1; $day <= $totalDays; $day++) {
                             if (count($maintenances)>0 && $tool->category->maintenanceCriteria->count()){
                                 $finalResult = "";
                                 foreach ($maintenances as $maintenance) {
-                                    $criterias = $maintenance->details['criterias'];
-                                    $carbonDate = Carbon::parse($maintenance->scheduled_date);
-                                    if ($carbonDate->day == $day && $carbonDate->month == $month && $carbonDate->year == $year) {
-                                        foreach ($criterias as $criteria) {
-                                            if ($criteria['id'] == $tool->category->maintenanceCriteria[0]->id) {
-                                                $result = $criteria['result'] == 'good' ? 'V' : 'X';
+                                    if(!is_string($maintenance->details))
+                                    {
+                                        $criterias = $maintenance->details['criterias'];
+                                        $carbonDate = Carbon::parse($maintenance->scheduled_date);
+                                        if ($carbonDate->day == $day && $carbonDate->month == $month && $carbonDate->year == $year) {
+                                            foreach ($criterias as $criteria) {
+                                                if ($criteria['id'] == $tool->category->maintenanceCriteria[0]->id) {
+                                                    $result = $criteria['result'] == 'good' ? 'V' : 'X';
+                                                }
                                             }
-                                        }
-                                        $finalResult = $finalResult . " " . $result ;
+                                            $finalResult = $finalResult . " " . $result ;
+                                        }                                        
                                     }
                                 }
                                 echo '<td class="narrow">' . $finalResult . '</td>';
@@ -87,7 +90,7 @@
                             }
 
                         }
-                    @endphp
+                    ?>
                     <td></td>
 
                 </tr>
@@ -101,15 +104,17 @@
                                 {
                                     $finalResult = "";
                                     foreach ($maintenances as $maintenance) {
-                                        $criterias = $maintenance->details['criterias'];
-                                        $carbonDate = Carbon::parse($maintenance->scheduled_date);
-                                        if ($carbonDate->day == $day && $carbonDate->month == $month && $carbonDate->year == $year) {
-                                            foreach ($criterias as $criteria) {
-                                                if ($criteria['id'] == $tool->category->maintenanceCriteria[$j]->id) {
-                                                    $result = $criteria['result'] == 'good' ? 'V' : 'X';
+                                        if (is_array($maintenance->details)) {
+                                            $criterias = $maintenance->details['criterias'];
+                                            $carbonDate = Carbon::parse($maintenance->scheduled_date);
+                                            if ($carbonDate->day == $day && $carbonDate->month == $month && $carbonDate->year == $year) {
+                                                foreach ($criterias as $criteria) {
+                                                    if ($criteria['id'] == $tool->category->maintenanceCriteria[$j]->id) {
+                                                        $result = $criteria['result'] == 'good' ? 'V' : 'X';
+                                                    }
                                                 }
+                                                $finalResult = $finalResult . " " . $result ;
                                             }
-                                            $finalResult = $finalResult . " " . $result ;
                                         }
                                     }
                                     echo '<td class="narrow">' . $finalResult . '</td>';
