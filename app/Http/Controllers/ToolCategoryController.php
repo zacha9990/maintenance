@@ -23,7 +23,9 @@ class ToolCategoryController extends Controller
 
             return DataTables::of($tools)
                 ->addColumn('action', function ($tool) {
-                    return '<a href="#" class="btn btn-primary">Detail</a>';
+                    
+                    $button = '<a href="'. route('tools.show', $tool->id) .'"" class="btn btn-primary">Detail</a>';
+                    return $button;
                 })
                 ->make(true);
         }
