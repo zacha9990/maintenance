@@ -73,7 +73,7 @@
                         for ($day = 1; $day <= $totalDays; $day++) {
                             if (count($maintenances) > 0) {
                                 foreach ($maintenances as $maintenance) {
-                                    if(!is_string($maintenance->details))
+                                    if(is_array($maintenance->details))
                                     {
                                         $criterias = $maintenance->details['criterias'];
                                         $carbonDate = Carbon::parse($maintenance->scheduled_date);
@@ -101,7 +101,7 @@
                         for ($day = 1; $day <= $totalDays; $day++) {
                             if (count($maintenances) > 0) {
                                 foreach ($maintenances as $maintenance) {
-                                    if(!is_string($maintenance->details))
+                                    if(is_array($maintenance->details))
                                     {
                                         $criterias = $maintenance->details['criterias'];
                                         $carbonDate = Carbon::parse($maintenance->scheduled_date);
@@ -133,7 +133,7 @@
                             for ($day = 1; $day <= $totalDays; $day++) {
                                 if (count($maintenances) > 0) {
                                     foreach ($maintenances as $maintenance) {
-                                        if(!is_string($maintenance->details))
+                                        if(is_array($maintenance->details))
                                         {
                                             $criterias = $maintenance->details['criterias'];
                                             $carbonDate = Carbon::parse($maintenance->scheduled_date);
@@ -155,7 +155,7 @@
                         for ($day = 1; $day <= $totalDays; $day++) {
                             if (count($maintenances) > 0) {
                                 foreach ($maintenances as $maintenance) {
-                                    if(!is_string($maintenance->details))
+                                    if(is_array($maintenance->details))
                                     {
                                         $criterias = $maintenance->details['criterias'];
                                         $carbonDate = Carbon::parse($maintenance->scheduled_date);

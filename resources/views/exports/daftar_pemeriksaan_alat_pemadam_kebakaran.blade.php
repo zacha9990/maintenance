@@ -65,7 +65,7 @@
                         if (count($maintenances) > 0 && $tool->category->maintenanceCriteria->count() > 0) {
                             foreach ($maintenances as $maintenance) {
                                 $result = '';
-                                if(!is_string($maintenance->details))
+                                if(is_array($maintenance->details))
                                 {
                                     if (isset($maintenance->details['criterias'])) {
                                         $criterias = $maintenance->details['criterias'];

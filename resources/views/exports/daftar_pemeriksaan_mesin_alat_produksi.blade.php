@@ -70,7 +70,7 @@
                             if (count($maintenances)>0 && $tool->category->maintenanceCriteria->count()){
                                 $finalResult = "";
                                 foreach ($maintenances as $maintenance) {
-                                    if(!is_string($maintenance->details))
+                                    if(is_array($maintenance->details))
                                     {
                                         $criterias = $maintenance->details['criterias'];
                                         $carbonDate = Carbon::parse($maintenance->scheduled_date);
