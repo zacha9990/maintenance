@@ -75,6 +75,7 @@
                                         $criterias = $maintenance->details['criterias'];
                                         $carbonDate = Carbon::parse($maintenance->scheduled_date);
                                         if ($carbonDate->day == $day && $carbonDate->month == $month && $carbonDate->year == $year) {
+                                            $result = "";
                                             foreach ($criterias as $criteria) {
                                                 if ($criteria['id'] == $tool->category->maintenanceCriteria[0]->id) {
                                                     $result = $criteria['result'] == 'good' ? 'V' : 'X';
@@ -108,6 +109,7 @@
                                             $criterias = $maintenance->details['criterias'];
                                             $carbonDate = Carbon::parse($maintenance->scheduled_date);
                                             if ($carbonDate->day == $day && $carbonDate->month == $month && $carbonDate->year == $year) {
+                                                $result = "";
                                                 foreach ($criterias as $criteria) {
                                                     if ($criteria['id'] == $tool->category->maintenanceCriteria[$j]->id) {
                                                         $result = $criteria['result'] == 'good' ? 'V' : 'X';
