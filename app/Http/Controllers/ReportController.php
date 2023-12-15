@@ -366,6 +366,12 @@ class ReportController extends Controller
                     $maintenanceDetails['details'] = $details['details'];
                     $maintenanceDetails['criterias'] = $maintenanceResultCriteria;
                     $maintenance->details = $maintenanceDetails;
+                }else if (isset($details['details']))
+                {
+                    $maintenance->details = $details['details'];
+                }
+                else{
+                    $maintenance->details = "--Teknisi tidak menyertakan detail maintenance--";
                 }
             }
 
