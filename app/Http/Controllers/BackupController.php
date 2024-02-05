@@ -24,6 +24,6 @@ class BackupController extends Controller
         $backupFile = Storage::disk('local')->files('Laravel')[0];
 
         // Download the backup file
-        return response()->download(storage_path("app/Laravel/$backupFile"));
+        return response()->download(storage_path("app/$backupFile"));
     }
 }
