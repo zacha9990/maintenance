@@ -16,14 +16,12 @@ class BackupController extends Controller
      
     public function createBackup()
     {
-        $backupDestination = BackupDestination::create('local', 'maintenance-db-backup');
+        Artisan::call('backup:run', ['--only-db' => true]);
 
-        $backupJob = BackupJobFactory::createFromArray(config('backup.backup'));
+        // Get the path to the last backup file
+        $backupFile = Storage::disk('local')->files('backups')[0];
 
-        $backupJob->run($backupDestination);
-
-        $backupPath = $backupDestination->getFilesystemFile($backupJob->backupDestination());
-
-        return response()->download($backupPath);
+        // Download the backup file
+        return response()->download(storage_path("app/$backupFile"));
     }
 }
