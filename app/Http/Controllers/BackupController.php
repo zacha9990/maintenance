@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Spatie\Backup\BackupDestination\Backup;
 use Spatie\Backup\BackupDestination\BackupDestination;
 use Spatie\Backup\Tasks\Backup\BackupJobFactory;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Storage;
 
 class BackupController extends Controller
 {
