@@ -113,6 +113,13 @@
                     </ul>
                 </li>
 
+                <li>
+                    <a href="{{ route('backup.index') }}" class="waves-effect">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Backup</span>
+                    </a>
+                </li>
+
                 @endif
                </ul>
         </div>

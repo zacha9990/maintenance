@@ -24,6 +24,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('users/{id}', [UserController::class, 'getUser'])->name('api.get_user');
 
-Route::post('users-change-password/{id}', [UserController::class, 'changePassword'])->name('api.get_user');
+Route::post('users-change-password/{id}', [UserController::class, 'changePassword'])->name('api.users-change-password');
 
 Route::resource('factories', FactoryAPIController::Class, ['names' => 'api.factories']);
