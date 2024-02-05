@@ -21,9 +21,9 @@ class BackupController extends Controller
         Artisan::call('backup:run', ['--only-db' => true]);
 
         // Get the path to the last backup file
-        $backupFile = Storage::disk('local')->files('backups')[0];
+        $backupFile = Storage::disk('local')->files('Laravel')[0];
 
         // Download the backup file
-        return response()->download(storage_path("app/$backupFile"));
+        return response()->download(storage_path("app/Laravel/$backupFile"));
     }
 }
