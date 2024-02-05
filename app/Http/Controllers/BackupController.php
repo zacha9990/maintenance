@@ -16,7 +16,7 @@ class BackupController extends Controller
      
     public function createBackup()
     {
-        $backupDestination = BackupDestination::create('local');
+        $backupDestination = BackupDestination::create('local', 'maintenance-db-backup');
 
         $backupJob = BackupJobFactory::createFromArray(config('backup.backup'));
 
