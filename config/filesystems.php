@@ -36,6 +36,12 @@ return [
             'throw' => false,
         ],
 
+        // add your own disk to the project
+        'localBackup' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/backup') // your folder,
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
