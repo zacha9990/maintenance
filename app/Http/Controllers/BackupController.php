@@ -40,6 +40,7 @@ class BackupController extends Controller
     {
          // Create a new BackupJob
         $backupJob = new BackupJob();
+        $backupJob->disableSignals();
 
         // Execute the backup
         $backupJob->run();
