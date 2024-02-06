@@ -6,7 +6,7 @@
             <div class="card-body bg-dark">
                 <form action="{{ route('backup.create') }}" method="GET">
                 @csrf
-                <button class="btn btn-primary" type="submit">Backup and Download</button>
+                <button class="btn btn-primary" type="submit">Backup</button>
             </form>
 
             <h2>File List</h2>
