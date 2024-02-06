@@ -8,7 +8,7 @@ use Spatie\Backup\BackupDestination\BackupDestination;
 use Spatie\Backup\Tasks\Backup\BackupJobFactory;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
-use File;
+
 
 class BackupController extends Controller
 {
@@ -23,7 +23,7 @@ class BackupController extends Controller
             $fileDetails[] = [
                 'name' => pathinfo($file, PATHINFO_FILENAME),
                 'created_at' => File::lastModified(storage_path("app/$file")),
-                'download_link' => route('file.download', ['filename' => $file]),
+                'download_link' => asset("storage/app/$file"),
             ];
         }
 
@@ -33,13 +33,6 @@ class BackupController extends Controller
         });
 
         return view('backup.index', compact('fileDetails'));
-    }
-
-    public function download($filename)
-    {
-        $path = storage_path("app/Laravel/$filename");
-
-        return response()->download($path);
     }
      
     public function createBackup()

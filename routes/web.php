@@ -145,5 +145,4 @@ Route::get('qrcode/{id}', [ToolController::class, 'scan'])->name('qrcode');
 Route::prefix('backup')->group(function () {
     Route::get('/', [BackupController::class, 'index'])->name('backup.index');    
     Route::get('/create-backup', [BackupController::class, 'createBackup'])->name('backup.create');
-    Route::get('/download/{filename}', [BackupController::class, 'download'])->name('file.download');
 });

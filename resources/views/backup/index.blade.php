@@ -20,10 +20,10 @@
                 </thead>
                 <tbody>
                     @foreach($fileDetails as $file)
-                        <tr>
+                       <tr>
                             <td>{{ $file['name'] }}</td>
                             <td>{{ \Carbon\Carbon::createFromTimestamp($file['created_at'])->toDateTimeString() }}</td>
-                            <td><a href="{{ $file['download_link'] }}" class="btn btn-primary">Download</a></td>
+                            <td><a href="{{ $file['download_link'] }}" class="btn btn-primary" download>Download</a></td>
                         </tr>
                     @endforeach
                 </tbody>
