@@ -142,7 +142,8 @@ Route::group(['middleware' => ['auth']], function () {
 Route::get('/', [LoginController::class, 'showLoginForm']);
 Route::get('qrcode/{id}', [ToolController::class, 'scan'])->name('qrcode');
 
-Route::prefix('backup')->group(function () {
+    Route::prefix('backup')->group(function () {
     Route::get('/', [BackupController::class, 'index'])->name('backup.index');    
     Route::get('/create-backup', [BackupController::class, 'createBackup'])->name('backup.create');
+    Route::get('/files/download/{filename}', [BackupController::class, 'download'])->name('file.download');
 });
