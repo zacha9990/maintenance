@@ -9,6 +9,7 @@ use Spatie\Backup\Tasks\Backup\BackupJobFactory;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
 use File;
+use Spatie\Backup\Tasks\Backup\BackupJob;
 
 class BackupController extends Controller
 {
@@ -37,8 +38,13 @@ class BackupController extends Controller
      
     public function createBackup()
     {
-        Artisan::call('backup:run', ['--only-db' => true]);
+         // Create a new BackupJob
+        $backupJob = new BackupJob();
 
-        return Redirect::back();
+        // Execute the backup
+        $backupJob->run();
+
+        // Optionally, you can redirect to a success page or display a success message
+        return redirect()->back()->with('success', 'Database backup completed successfully!');
     }
 }
